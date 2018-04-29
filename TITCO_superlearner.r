@@ -4,7 +4,7 @@
 #' This is the main study function and runs the entire study
 #' @param data_path Path to data set. Should be a character vector of length 1. Defaults to c("../data/mdf.csv")
 #' @export
-nuså
+
 make.study <- function(
                        data_path = c("../data/mdf.csv")
                        )
