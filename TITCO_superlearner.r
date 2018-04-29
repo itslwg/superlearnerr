@@ -4,9 +4,7 @@
 #' This is the main study function and runs the entire study
 #' @param data_path Path to data set. Should be a character vector of length 1. Defaults to c("../data/mdf.csv")
 #' @export
-här är jag och
 
-och så 
 make.study <- function(
                        data_path = c("../data/mdf.csv")
                        )
@@ -237,7 +235,9 @@ keep.variabes <- function (
 set.seed(123)
 
 ## * Prepare data for superlearner
-prep_data_for_superlearner <- function(mothertree, outcome) {
+prep_data_for_superlearner <- function(mothertree,
+                                       outcome)
+{
 
     ## Order dataframe by date
     df <- mothertree[order(mothertree$doar),]
@@ -266,75 +266,59 @@ prep_data_for_superlearner <- function(mothertree, outcome) {
 }
 
 ## * Predictions with SuperLearner
-dichtomise <- function(vec, levels, category){
-    
-    vec[vec > levels[1] & vec <= levels[2]] <- category
-    
-    return (vec)
-    
-}
 
-predictions_with_superlearner <- function(mothertree, outcome, all = FALSE){
+predictions_with_superlearner <- function(mothertree,
+                                          outcome,
+                                          all = FALSE)
+{
 
     ## Retrive training and review data as well as outcome for training and review
     data <- prep_data_for_superlearner(mothertree, outcome)
-
     ## Train algorithm with training set
     train_algo <- SuperLearner(Y = data$outcome$y_train,
                                X = data$sets_wo_tc$x_train,
                                family = binomial(),
                                SL.library = c('SL.mean', 'SL.glmnet', 'SL.randomForest'))
-    
     ## Predict with algorithm on review set
     predictions <- predict(train_algo,
                            data$sets_wo_tc$x_review,
                            onlySL = T)
-    
+    ## Subset continous predictions for categorisation
     pred <- predictions$pred
-    
     ## Get quantiles of predictions
     quantiles <- quantile(predictions$pred, probs = c(0.25, 0.50, 0.75))
-
     ## Use those to categorise predictions
     labels <- c("green", "yellow", "orange", "red") # define labels
-    pred_cat <- cut(pred, breaks = c(0, quantiles, 1), labels = labels, include.lowest = TRUE) # use cut to categorise
-    
+    pred_cat <- cut(pred, breaks = c(0, quantiles, 1), labels = labels, include.lowest = TRUE) 
     ## Return different data depending on analysis; to alleviate analysis
-
     alleviated_data <- list(pred_con = pred,
                             pred_cat = pred_cat,
                             clinicians_predictions = data$sets_w_tc$x_review$tc,
                             outcome_review = data$outcome$y_review)                        
     if (all){
-
         return (list(pred_con = pred,
                      pred_cat = pred_cat,
                      data = data))
-    }
-
-    else {
-
+    }else {
         return (alleviated_data)
-        
     }    
 }
 
 ## * Model review (AUROCC, Calibration, Reclassification)
 ## ** AUROCC
 
-review_aurocc <- function(mothertree, outcome) {
-
+review_aurocc <- function(mothertree,
+                          outcome)
+{
+    
     ## Get predictions from Superlearner and various data
     predictions_and_data <- predictions_with_superlearner(mothertree,
                                                           outcome)
-
-    
     ## Set up prediction object for SuperLearner and clinicians; ROCR package
     pred_rocr <- list(SuperLearner = ROCR::prediction(as.numeric(predictions_and_data$pred_cat),
                                                       predictions_and_data$outcome_review),
                       clin = ROCR::prediction(predictions_and_data$clinicians_predictions,
                                               predictions_and_data$outcome_review))
-    
     ## Calculate the Area Under the Receiver Operating Charecteristics Curve
     AUROCC <- lapply(pred_rocr,
                      function(model) ROCR::performance(model,
@@ -346,19 +330,19 @@ review_aurocc <- function(mothertree, outcome) {
 
 ## ** Reclassification
 
-review_reclassification <- function(mothertree, outcome) {
+review_reclassification <- function(mothertree,
+                                    outcome)
+{
 
     ## Get predictions from Superlearner and various data
     predictions_and_data <- predictions_with_superlearner(mothertree,
                                                           outcome,
                                                           all = TRUE)
-    
     ## Compute reclassification of SuperLearner model and clinicians 
     reclassification <- nribin(event = predictions_and_data$data$outcome$y_review,
                                p.std = predictions_and_data$data$sets_w_tc$x_review$tc,
                                p.new = predictions_and_data$predictions,
                                cut = c(2,3,4))
-
     return (reclassification)
     
 }
@@ -366,29 +350,26 @@ review_reclassification <- function(mothertree, outcome) {
 ## * Significance testing (P-value) and Confidence intervals (95 %)
 ## ** Confidence intervals
 
-confidence_intervals <- function(mothertree, outcome, n) { #Where n is the number of b-samples
+confidence_intervals <- function(mothertree,
+                                 outcome,
+                                 n) #Where n is the number of b-samples
+{ 
 
     ## Get point estimates of AUROCC
     analysis <- review_aurocc(mothertree, outcome)
-    
     ## Bootstrap n bootstrap samples
     simulated_dfs <- lapply(1:n,
                             function(i) mothertree[sample(1:nrow(mothertree),
                                                           replace = TRUE),])
-    
     ## Train, predict and aurocc on every sample
     train_predict_aurocc <- lapply(simulated_dfs,
                                    function (df) review_aurocc(df, outcome))
-    
     ## Matrixify samples
     matrixify <- sapply(train_predict_aurocc, unlist)
-    
     ## Calculate Deltastar
     deltastar <- apply(matrixify, 2, function(col) col - unlist(analysis))
-
     ## Get 2.5 and 97.5 percentiles
     quantiles <- apply(deltastar, 1, function (row) quantile(row, c(.025, 0.975)))
-    
     ## Generate confidence intervals
     confidence_intervals <- cbind(apply(quantiles,
                                         1,
@@ -402,19 +383,18 @@ confidence_intervals <- function(mothertree, outcome, n) { #Where n is the numbe
 ## ** Significance testing
 
 ## Create function for boot for p-value on difference of point estimates
-diff <- function(d1,i){
+diff <- function(d1,
+                 i)
+{
 
     d = d1;
     d$x <- d$x[i];  # randomly re-assign groups
-
     ## Subset d1 for model and clinicians
     sp_df <- d[d$x %in% "sp", ]
     tc_df <- d[d$x %in% "tc", ]
-
     ## List for looping 
     dfs <- list(super_learner = sp_df,
                 clinicians = tc_df)
-
     ## Calculate AUROOC for each df
     AUROCCS <- lapply(dfs, function(df) ROCR::performance(ROCR::prediction(df$Variable,
                                                                            labels = df$s30d),
@@ -426,11 +406,13 @@ diff <- function(d1,i){
     
 }
 
-significance_testing <- function(mothertree, outcome, n){
+significance_testing <- function(mothertree,
+                                 outcome,
+                                 n)  #Where n is the number of b-samples
+{
 
     ## Get data for significance testing
     data <- predictions_with_superlearner(mothertree, outcome)
-    
     ## Create dataframe for significance testing
     df <- data.frame(x = c(rep("sp",
                                each = length(data$predictions)),
@@ -439,7 +421,6 @@ significance_testing <- function(mothertree, outcome, n){
                      Variable = c(data$predictions,
                                   data$clinicians_predictions),
                      s30d = as.factor(rep(data$outcome_review, 2)))
-
     ## Bootstrap diff on n bootstrap samples
     boot_strapped <- boot(data = df,
                           statistic = diff,
@@ -453,25 +434,23 @@ significance_testing <- function(mothertree, outcome, n){
 
 ## * COMPLETE ANALYSIS
 
-complete_analysis <- function (mothertree, outcome, bs_samples) {
+complete_analysis <- function (mothertree,
+                               outcome,
+                               bs_samples)
+{
 
     ## Discrimination 
     AUROCC <- confidence_intervals(mothertree, outcome, bs_samples)
-
     ## Reclassification
     reclassification <- review_reclassification(mothertree, outcome)
-
     ## P-value on difference of discrimination
     h_testing <- significance_testing(mothertree, outcome, bs_samples)
-
     ## List statistics
     statistics <- list(AUROCC = AUROCC,
                        Reclassification = reclassification,
                        P_value = h_testing)
-
     ## Save rdata to file
     saveRDS(statistics, file = sprintf('complete_analysis_%s.Rdata', bs_samples))
-    
     ## Return list with statistics
     return (statistics)
 
