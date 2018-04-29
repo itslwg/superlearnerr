@@ -209,18 +209,18 @@ keep.variabes <- function (
                            study_data
                            ){
     ## keep only relevant variables
-    mdf <- mdf[, c("age",
-                   "sex",
-                   "sbp",
-                   "hr",
-                   "rr",
-                   "gcs",
-                   "avpu",
-                   "nsi",
-                   "tc",
-                   "moi",
-                   "s30d",
-                   "doar")]
+    mdf <- study_data[, c("age",
+                          "sex",
+                          "sbp",
+                          "hr",
+                          "rr",
+                          "gcs",
+                          "avpu",
+                          "nsi",
+                          "tc",
+                          "moi",
+                          "s30d",
+                          "doar")]
 
     ## order the dataset according to data of arrival and s30d
     mdf <- mdf[order(-mdf$s30d, mdf$doar), ]
@@ -231,9 +231,7 @@ keep.variabes <- function (
     ## create omitted object
     omitted <- nrow(all) - nrow(mdfm)
 
-    
 }
-
 
 ## * Set seed for reproducabilility
 set.seed(123)
@@ -243,28 +241,20 @@ prep_data_for_superlearner <- function(mothertree, outcome) {
 
     ## Order dataframe by date
     df <- mothertree[order(mothertree$doar),]
-
     ## Find midpoint of dates
     dates <- df$doar
-
     mid <- dates[1] + floor(tail(dates, n = 1) - dates[1])/2
-
     ## Create set for training the model
     train <- df[df$doar < mid, ]
-    
     ## Create set for review of model performance
     review <- df[df$doar >= mid, ]
-    
     ## Set sets
     x_sets <- list(x_train = train,
                    x_review = review)
-
     ## Dfs without outcome
     x_wo_outcome <- lapply(x_sets, function(x) x[, !(names(x) %in% outcome)])
-
     ## Dfs without triage category and outcome
     x_wo_tc_outcome  <- lapply(x_sets, function(x) x[, !(names(x) %in% c('tc', outcome))])
-
     ## Extract outcome variables for training and review set
     y_training_and_review <- lapply(x_sets, function(x) x[, outcome])
     names(y_training_and_review) <- c('y_train', 'y_review')
