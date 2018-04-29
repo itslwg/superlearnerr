@@ -27,8 +27,16 @@ make.study <- function(
     study_data$avpu <- as.factor(study_data$avpu)
     ## Add collapsed mechanism of injury data
     study_data <- add.collapsed.moi(study_data)
-    ## And then below here all the other functions should come, so that to run
-    ## the entire study all you have to do is to run make.study()
+    ## Set patients to dead if dead at discharge or at 24 hours
+    ## and alive if coded alive and admitted to other hospital
+    study_data <- set.to.outcome(study_data)
+    ## Create omitted object, i.e. number of patients with missing
+    ## information, and df with patients with complete information
+    study_data <- cc.and.omitted(study_data)
+    ## Prep data for model predictions
+    prep <- prep_data_for_superlearner(study_data$study_data)
+    
+    
 }
 
 ## * Load required packages
@@ -136,6 +144,10 @@ make.gcs.components.factors <- function(
     if (!all(gcs_components_names %in% colnames(study_data))) stop("not all components are in the dataset")
     ## Make components factors
     study_data[, gcs_components_names] <- lapply(study_data[, gcs_components_names], as.factor)
+    ## Make dummy variables from gcs components; and set
+    study_data <- cbind(study_data,
+                        model.matrix( ~ egcs + mgcs + vgcs,
+                                     data = study_data)[,-1])
     return(study_data)
 }
 
@@ -185,7 +197,7 @@ add.collapsed.moi <- function(
     return (study_data)
 }
 
-## * Set patients to dead according to comple of parameters
+## * Set patients to dead according to couple of parameters
 set.to.outcome <- function(
                            study_data
                            )
@@ -201,42 +213,32 @@ set.to.outcome <- function(
     return (study_data)
 }
 
-## * Keep relevant variabels
-## summarize mechanism of injury in categories
-keep.variabes <- function (
-                           study_data
-                           ){
-    ## keep only relevant variables
-    mdf <- study_data[, c("age",
-                          "sex",
-                          "sbp",
-                          "hr",
-                          "rr",
-                          "gcs",
-                          "avpu",
-                          "nsi",
-                          "tc",
-                          "moi",
-                          "s30d",
-                          "doar")]
+## * Create omitted object and complete.case object
 
+cc.and.omitted <- function (
+                            study_data
+                            )
+{
     ## order the dataset according to data of arrival and s30d
-    mdf <- mdf[order(-mdf$s30d, mdf$doar), ]
+    mdf <- study_data[order(-study_data$s30d, study_data$doar), ]
     ## identify complete cases
-    mdfm <- mdf[complete.cases(mdf), ]
-    ## and all cases
-    all <- mdf
+    cc <- mdf[complete.cases(mdf), ]
     ## create omitted object
-    omitted <- nrow(all) - nrow(mdfm)
-
+    omitted <- nrow(mdf) - nrow(cc)
+    
+    return(list(study_data = cc,
+                omitted = omitted))
 }
 
 ## * Set seed for reproducabilility
 set.seed(123)
 
 ## * Prepare data for superlearner
-prep_data_for_superlearner <- function(mothertree,
-                                       outcome)
+prep_data_for_superlearner <- function(
+                                       mothertree,
+                                       outcome = 's30d',
+                                       gcs_components_names = c('egcs', 'mgcs', 'vgcs')
+                                       )
 {
 
     ## Order dataframe by date
@@ -252,14 +254,18 @@ prep_data_for_superlearner <- function(mothertree,
     x_sets <- list(x_train = train,
                    x_review = review)
     ## Dfs without outcome
-    x_wo_outcome <- lapply(x_sets, function(x) x[, !(names(x) %in% outcome)])
-    ## Dfs without triage category and outcome
-    x_wo_tc_outcome  <- lapply(x_sets, function(x) x[, !(names(x) %in% c('tc', outcome))])
+    x_wo_outcome <- lapply(x_sets,
+                           function(x) x[, !(names(x) %in% outcome)])
+    ## Dfs without triage category,outcome and original gcs components 
+    x_wo_tc_gcs_outcome <- lapply(x_sets,
+                                  function(x) x[, !(names(x) %in% c('tc',
+                                                                    gcs_components_names,
+                                                                    outcome))])
     ## Extract outcome variables for training and review set
     y_training_and_review <- lapply(x_sets, function(x) x[, outcome])
     names(y_training_and_review) <- c('y_train', 'y_review')
 
-    return (list(sets_wo_tc = x_wo_tc_outcome,
+    return (list(sets_wo_tc = x_wo_tc_gcs_outcome,
                  sets_w_tc = x_wo_outcome,
                  outcome = y_training_and_review))
     
@@ -288,7 +294,7 @@ predictions_with_superlearner <- function(mothertree,
     ## Get quantiles of predictions
     quantiles <- quantile(predictions$pred, probs = c(0.25, 0.50, 0.75))
     ## Use those to categorise predictions
-    labels <- c("green", "yellow", "orange", "red") # define labels
+    labels <- c('green', 'yellow', 'orange', 'red') # define labels
     pred_cat <- cut(pred, breaks = c(0, quantiles, 1), labels = labels, include.lowest = TRUE) 
     ## Return different data depending on analysis; to alleviate analysis
     alleviated_data <- list(pred_con = pred,
@@ -298,6 +304,7 @@ predictions_with_superlearner <- function(mothertree,
     if (all){
         return (list(pred_con = pred,
                      pred_cat = pred_cat,
+
                      data = data))
     }else {
         return (alleviated_data)
@@ -323,7 +330,7 @@ review_aurocc <- function(mothertree,
     AUROCC <- lapply(pred_rocr,
                      function(model) ROCR::performance(model,
                                                        measure = 'auc',
-                                                       x.measure =  "cutoff")@y.values[[1]])
+                                                       x.measure =  'cutoff')@y.values[[1]])
     return (AUROCC)
     
 }
@@ -390,44 +397,48 @@ diff <- function(d1,
     d = d1;
     d$x <- d$x[i];  # randomly re-assign groups
     ## Subset d1 for model and clinicians
-    sp_df <- d[d$x %in% "sp", ]
-    tc_df <- d[d$x %in% "tc", ]
+    model_1_df <- d[d$x %in% 'model_1', ]
+    model_2_df <- d[d$x %in% 'model_2', ]
     ## List for looping 
-    dfs <- list(super_learner = sp_df,
-                clinicians = tc_df)
+    dfs <- list(model_1 = model_1_df,
+                model_2 = model_2_df) 
     ## Calculate AUROOC for each df
     AUROCCS <- lapply(dfs, function(df) ROCR::performance(ROCR::prediction(df$Variable,
                                                                            labels = df$s30d),
                                                           'auc')@y.values)
     ## Calculate difference of estimates
-    Diff <- AUROCCS$super_learner[[1]] - AUROCCS$clinicians[[1]]
+    Diff <- AUROCCS$model_1[[1]] - AUROCCS$model_2[[1]]
 
     Diff
     
 }
 
+#pred_con, pred_cat, clinicians_predictions
 significance_testing <- function(mothertree,
                                  outcome,
-                                 n)  #Where n is the number of b-samples
+                                 which_predictions,
+                                 n)
 {
-
+   
     ## Get data for significance testing
-    data <- predictions_with_superlearner(mothertree, outcome)
+    data <- predictions_with_superlearner(mdfm,
+                                          's30d')
+    which_predictions <- c('predictions', 'clinicians_predictions')
     ## Create dataframe for significance testing
-    df <- data.frame(x = c(rep("sp",
-                               each = length(data$predictions)),
-                           rep("tc",
-                               each = length(data$clinicians_predictions))),
-                     Variable = c(data$predictions,
-                                  data$clinicians_predictions),
+    df <- data.frame(x = c(rep('model_1',
+                               each = length(data[[which_predictions[1]]])),
+                           rep('model_2',
+                               each = length(data[[which_predictions[2]]]))),
+                     Variable = c(data[[which_predictions[[1]]]],
+                                  data[[which_predicitons[2]]]),
                      s30d = as.factor(rep(data$outcome_review, 2)))
     ## Bootstrap diff on n bootstrap samples
     boot_strapped <- boot(data = df,
                           statistic = diff,
                           R = n)
-    ## Generate p-value
+    ##Generate p-value
     p_value<- mean(abs(boot_strapped$t) > abs(boot_strapped$t0))
-
+    
     return (p_value)
     
 }
@@ -455,4 +466,16 @@ complete_analysis <- function (mothertree,
     return (statistics)
 
 }
+
+
+
+## * test space
+
+df.original <-data.frame(eggs = c('foo', 'foo', 'bar', 'bar', 'bar', 'foo'),
+                         ham = c(1,2,3,4, 'apa', 'korv'),
+                         apa = factor(c(1,2,3,4,5,6)))
+t1 = data.frame(model.matrix( ~ ham + apa, data =df.original))[,-1]
+t2 = cbind(df.original, t1); t2[, c('eggs', 'apa')] <- NULL
+t2
+t2 = model.matrix( ~., data =df.original)[,-1]
 
