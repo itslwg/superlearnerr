@@ -3,16 +3,20 @@
 #'
 #' This is the main study function and runs the entire study.
 #' @param data_path Path to data set. Should be a character vector of length 1. Defaults to c("../data/mdf.csv")
+#' @param bs_samples The number of bootstrap samples to be generated as int. Defaults to 10
 #' @export
 
 make.study <- function(
-                       data_path = c("../data/mdf.csv")
+                       data_path =  c("../data/mdf.csv"),
+                       bs_samples = 10
                        )
 {
+    ##Set seed for reproducability
+    set.seed(123)
     ## Load all required packages
     load.required.packages()
     ## Import study data
-    study_data <- read.csv('mdf.csv')
+    study_data <- read.csv(data_path)
     ## Drop obsevations collected before all centres started collecting triage
     ## category data and observations later than one month prior to creating
     ## this dataset
@@ -21,22 +25,38 @@ make.study <- function(
     study_data <- keep.relevant.variables(study_data)
     ## Define 999 as missing
     study_data[study_data == 999] <- NA
+    ## Define 99 in gcs components as missing
+    study_data[, gcs_components_names][study_data[, gcs_components_names] == 99] <- NA
     ## Create omitted object, i.e. number of patients with missing
     ## information, and df with patients with complete information
-    study_data <- cc.and.omitted(study_data)
-    ## Make Glasgow coma scale components factors
-    study_data <- make.gcs.components.factors(study_data$study_data)
-    ## Make AVPU factor
-    study_data$avpu <- as.factor(study_data$avpu)
-    ## Add collapsed mechanism of injury data
-    study_data <- add.collapsed.moi(study_data)
+    study_data <- cc.and.omitted(study_data)$study_data
+    ## Transform GCS, MOI, and AVPU into factor variables
+    study_data <- to.factor.variables(study_data)
+    ## Transform GCS, MOI, and AVPU into dummy variables,
+    ## but keep original variables for table1
+    study_data <- cbind(study_data,
+                        model.matrix( ~.,
+                                     data = study_data)[, -1])
     ## Set patients to dead if dead at discharge or at 24 hours
     ## and alive if coded alive and admitted to other hospital
     study_data <- set.to.outcome(study_data)
-    ##
-
-
-    return (analysis)
+    ## Train model on training set and predict on review set. Then,
+    ## estimate 95 % CIs around AUROCC of categorised SuperLearner (see
+    ## function predictions.with.superlearner() for categorisation
+    ## procedure) and clinicians triage.
+    conf <- generate.confidence.intervals(study_data, bs_samples)
+    ## Conduct reclassification analysis and generate nribin-object
+    reclass <- model.review.reclassification(study_data)
+    ## Generate p-value on difference of AUROCCs of categorised SuperLearner
+    ## and clinicians triage, as well as on difference of categorised and
+    ## continous SuperLearner predictions
+    pvalues <- generate.pvalue(study_data, bs_samples)
+    ## Return list of model AUROCCs and their respective confidence
+    ## intervals, nribin object and p-values.
+    statistics <- list(CIs = conf,
+                       Reclassification = reclass,
+                       Pvalues = pvalues)
+    return (statistics)
 }
 
 ## * Load required packages
@@ -46,9 +66,7 @@ load.required.packages <- function()
 {
     ## Vector of names of required packages
     packages <- c("SuperLearner",
-                  "ggplot2",
                   "nricens",
-                  "PredictABEL",
                   "dplyr",
                   "boot")
     ## Require those packages using a loop
@@ -127,42 +145,16 @@ keep.relevant.variables <- function(
     return(study_data)
 }
 
-## * Make GCS components factors
-#' Make GCS components factors function
+## * Transform GCS, AVPU and MOI into factors
+## ** Collapse mechanism of injury variable
+#' Collapse mechanism of injury function
 #'
-#' This function transform GCS components into factors and transforms levels to dummy variables
-#' @param study_data The study data as a data frame. No default
-#' @param gcs_components_names Character vector of GCS components. Defaults to c("egcs", "mgcs", "vgcs")
-#' @export
-make.gcs.components.factors <- function(
-                                        study_data,
-                                        gcs_components_names = c("egcs", "mgcs", "vgcs")
-                                        )
-{
-    ## Test that study data if a data frame, stop if not
-    if (!is.data.frame(study_data)) stop("study_data is not a data frame")
-    ## Make sure all components are in the dataset
-    if (!all(gcs_components_names %in% colnames(study_data))) stop("not all components are in the dataset")
-    ## Make components factors
-    study_data[, gcs_components_names] <- lapply(study_data[, gcs_components_names], as.factor)
-    ## Make dummy variables from gcs components; and set
-    study_data <- cbind(study_data,
-                        model.matrix( ~ egcs + mgcs + vgcs,
-                                     data = study_data)[,-1])
-
-    return(study_data)
-}
-
-## * Add collapsed mechanism of injury
-#' Add collapsed mechanism of injury function
-#'
-#' Takes the main data as input and generates a new mechanism of injury variable
-#' with overall levels instead of codes
+#' Takes the main data as input and generates a new mechanism of injury variable with overall levels instead of codes.
 #' @param study_data The study data as a data frame. No default
 #' @export
-add.collapsed.moi <- function(
-                              study_data
-                              )
+collapse.moi <- function(
+                         study_data
+                         )
 {
     ## Test that study data if a data frame, stop if not
     if (!is.data.frame(study_data)) stop("study_data is not a data frame")
@@ -194,10 +186,39 @@ add.collapsed.moi <- function(
     ## Replace codes with levels in the new copy
     for (m in moi_list)
         new_moi[grep(paste0(m$codes, collapse = "|"), study_data$moi)] <- m$level
-    ## Replace old moi with new in the study data
+    ## Replace old moi with new, factor moi in dataset
     study_data <- data.frame(study_data, cmoi = as.factor(new_moi))
+    study_data$moi <- NULL
 
     return (study_data)
+}
+
+## ** Transform some variables into factors (Formulering)
+#' Make variables to factor function
+#'
+#' This function transform variables into factors.
+#' @param study_data The study data as a data frame. No default
+#' @param variables_to_factor Character vector of variables. Defaults to c("egcs", "mgcs", "vgcs", "avpu", "cmoi")
+#' @export
+to.factor.variables <- function(
+                                study_data,
+                                variables_to_factor = c("egcs",
+                                                        "mgcs",
+                                                        "vgcs",
+                                                        "avpu",
+                                                        "cmoi")
+                                )
+{
+    ## Collapse mechanism of injury
+    study_data <- collapse.moi(study_data)
+    ## Test that study data if a data frame, stop if not
+    if (!is.data.frame(study_data)) stop("study_data is not a data frame")
+    ## Make sure all components are in the dataset
+    if (!all(variables_to_factor %in% colnames(study_data))) stop("not all components are in the dataset")
+    ## Make variables as factors
+    study_data[, variables_to_factor] <- lapply(study_data[, variables_to_factor], as.factor)
+
+    return(study_data)
 }
 
 ## * Set outcome variable
@@ -221,10 +242,10 @@ set.to.outcome <- function(
     return (study_data)
 }
 
-## * Create omitted object and complete case object
-#' Number of patients omitted and complete case function
+## * Count omitted patients and create complete case dataset
+#' Number of patients omitted and complete case dataset function
 #'
-#' This function counts number of patients with missing data. Then, the patients with missing data are omitted from the study data.
+#' This function counts the number of patients with missing data. Then, the patients with missing data are omitted from the study data to create a complete case dataset.
 #' @param study_data The study data as a data frame. No default
 #' @export
 cc.and.omitted <- function (
@@ -242,21 +263,22 @@ cc.and.omitted <- function (
                 omitted = omitted))
 }
 
-## * Set seed for reproducabilility
-set.seed(123)
-
 ## * Prepare data for superlearner
 #' Prepare data function
 #'
-#' This function prepares and generates training and review sets by splitting the dataset in half according to date of arrival.
+#' This function prepares and generates training and review sets by splitting the dataset in half according to date of arrival. Factor variables are removed.
 #' @param study_data The study data as a data frame. No default
 #' @param outcome The outcome variable as a string. Default: 's30d'.
-#' @param gcs_components_names The names of gcs components. Default: c('egcs', 'mgcs', 'vgcs')
+#' @param factors_to_remove Character vector describing factor variables to remove from datasets. Default: c('mgcs','egcs','vgcs','avpu','cmoi')
 #' @export
 prep.data.for.superlearner <- function(
                                        study_data,
                                        outcome = 's30d',
-                                       gcs_components_names = c('egcs', 'mgcs', 'vgcs')
+                                       factors_to_remove = c('mgcs',
+                                                             'egcs',
+                                                             'vgcs',
+                                                             'avpu',
+                                                             'cmoi')
                                        )
 {
     ## Order dataframe by date
@@ -274,38 +296,36 @@ prep.data.for.superlearner <- function(
     ## Dfs without outcome
     x_wo_outcome <- lapply(x_sets,
                            function(x) x[, !(names(x) %in% outcome)])
-    ## Dfs without triage category,outcome and original gcs components
-    x_wo_tc_gcs_outcome <- lapply(x_sets,
-                                  function(x) x[, !(names(x) %in% c('tc',
-                                                                    gcs_components_names,
-                                                                    outcome))])
+    ## Dfs without triage category, outcome and factor variables
+    x_wo_tc_outcome_factors <- lapply(x_sets,
+                              function(x) x[, !(names(x) %in% c('tc',
+                                                                factors_to_remove,
+                                                                outcome))])
     ## Extract outcome variables for training and review set
     y_training_and_review <- lapply(x_sets, function(x) x[, outcome])
     names(y_training_and_review) <- c('y_train', 'y_review')
 
-    return (list(sets_wo_tc = x_wo_tc_gcs_outcome,
+    return (list(sets_wo_tc = x_wo_tc_outcome_factors,
                  sets_w_tc = x_wo_outcome,
                  outcome = y_training_and_review))
 }
 
 ## * Predictions with SuperLearner
-#' Generate predictions with SuperLearner function
+#' Generate predictions with SuperLearner
 #'
 #' This function trains SuperLearner on the training set. Then, predictions are divided byquantiles into four colour-coded groups. The groups are green, yellow, orange, and red. They respectively include ranges from the 0% quantile to 25% quantile, 25% to 50%, 50% to 75%, and 75% to 100% of the continous predictions. Lastly, SuperLearner uses groups to make predictions on the review set.
 #' @param study_data The study data as a data frame. No default
 #' @param outcome The outcome variable as a string. Default: 's30d'.
 #' @param models Models to include in SuperLearner. Default: SL.mean and SL.glmnet.
-#' @param all Boolean value determining whether to return the dataset with the predictions. Default: FALSE, i.e. not to include the dataset.
+#' @param all Boolean value to determine whether data should be included in return(). Default: FALSE, i.e. not to include the dataset.
 predictions.with.superlearner <- function(
                                           study_data,
-                                          outcome = 's30d',
                                           models = c('SL.mean', 'SL.glmnet'),
                                           all = FALSE
                                           )
 {
-
     ## Retrive training and review data as well as outcome for training and review
-    data <- prep.data.for.superlearner(study_data, outcome)
+    data <- prep.data.for.superlearner(study_data)
     ## Train algorithm with training set
     train_algo <- SuperLearner(Y = data$outcome$y_train,
                                X = data$sets_wo_tc$x_train,
@@ -331,38 +351,37 @@ predictions.with.superlearner <- function(
                             pred_cat = pred_cat,
                             outcome_review = data$outcome$y_review)
     if (all == TRUE){
-        return (list(alleviated_data,
-                     data))
+        return (list(preds = alleviated_data,
+                     data = data))
     }else {
         return (alleviated_data)
     }
 }
 
-## * Model review (AUROCC, Calibration, Reclassification)
+## * Model review (AUROCC, Reclassification)
 ## ** AUROCC
-#' Area Under Receiver Operating Characteristics Curve (AUROCC) function - clinicians and dichtomised SuperLearner
+#' Area Under Receiver Operating Characteristics Curve (AUROCC) function
 #'
-#' This function calculates the AUROCC of SuperLearner and clincians.
+#' This function calculates the AUROCC of specified models.
 #' @param study_data The study data as a data frame. No default
-#' @param outcome The outcome variable as string. Default: s30d.
-#' @param models Which models to include as vector. Default: c('pred_cat', 'clinicians_predictions')
+#' @param models Character vector describing which models to calculate AUROCCs on. Default: c('pred_cat', 'clinicians_predictions')
 #' @export
-model.review.AUROCC <- function(
+ model.review.AUROCC <- function(
                                 study_data,
                                 models = c('pred_cat',
-                                           'clinicians_predictions'),
-                                outcome = 's30d'
+                                           'clinicians_predictions')
                                 )
 {
-    ## Get predictions from Superlearner and various data
-    predictions_and_data <- predictions.with.superlearner(study_data,
-                                                          outcome)
-
+    ## Get predictions from Superlearner and review as well as training dataset
+    predictions_and_data <- predictions.with.superlearner(study_data)
+    ## Setup prediction obejects for ROCR
     pred_rocr <- lapply(models,
                         function(model) ROCR::prediction(
                                                   as.numeric(
                                                       predictions_and_data[[model]]),
                                                   predictions_and_data$outcome_review))
+    ## Set names for models
+    names(pred_rocr) <- models
     ## Calculate the Area Under the Receiver Operating Charecteristics Curve
     AUROCC <- lapply(pred_rocr,
                      function(model) ROCR::performance(model,
@@ -373,72 +392,30 @@ model.review.AUROCC <- function(
 }
 
 ## ** Reclassification
-#' Generate reclassification tables and Net Reclassification Index (NRI) function
+#' Generate reclassification tables and Net Reclassification Index (NRI)
 #'
-#' This function cross tabulates categorisation patients performed by SuperLearner and clinicians, and generates net proportion of upward and downward movement in categories as well as NRI.
+#' This function generates an nribin object for cut SuperLearner and clinicians, i.e. cross tabulations of categorisation of the two, description of net proportions patient movements upwards and downwards in categories, and NRI.
 #' @param study_data The study data as a data frame. No default
-#' @param outcome The outcome variable as string. Default: s30d.
 #' @export
 model.review.reclassification <- function(
-                                          mothertree,
-                                          outcome = 's30d'
+                                          study_data
                                           )
 {
     ## Get predictions from Superlearner and various data
-    predictions_and_data <- predictions.with.superlearner(mothertree,
-                                                          outcome,
+    predictions_and_data <- predictions.with.superlearner(study_data,
                                                           all = TRUE)
     ## Compute reclassification of SuperLearner model and clinicians
     reclassification <- nricens::nribin(event = predictions_and_data$data$outcome$y_review,
                                         p.std = predictions_and_data$data$sets_w_tc$x_review$tc,
-                                        p.new = predictions_and_data$predictions,
+                                        p.new = as.numeric(predictions_and_data$preds$pred_cat),
                                         cut = c(2,3,4))
 
     return (reclassification)
 }
 ## * Significance testing (P-value) and Confidence intervals (95 %)
-## ** Confidence intervals
-#' Confidence interval function
-#'
-#' This function generates confidence intervals around AUROCC of Superlearner and clinicians using bootstrapping.
-#' @param study_data The study data as a data frame. No default
-#' @param outcome The outcome variable as string. Default: s30d.
-#' @param bs_samples The number of bootstrap samples to be generated as int. Default: 3.
-#' @export
-generate.confidence.intervals <- function(
-                                          study_data,
-                                          outcome = 's30d',
-                                          bs_samples = 3
-                                          )
-{
-
-    ## Get point estimates of AUROCC
-    analysis <- model.review.AUROCC(study_data, outcome)
-    ## Bootstrap n bootstrap samples
-    simulated_dfs <- lapply(1:bs_samples,
-                            function(i) study_data[sample(1:nrow(study_data),
-                                                          replace = TRUE),])
-    ## Train, predict and aurocc on every sample
-    train_predict_aurocc <- lapply(simulated_dfs,
-                                   function (df) model.review.AUROCC(df, outcome))
-    ## Matrixify samples
-    matrixify <- sapply(train_predict_aurocc, unlist)
-    ## Calculate Deltastar
-    deltastar <- apply(matrixify, 2, function(col) col - unlist(analysis))
-    ## Get 2.5 and 97.5 percentiles
-    quantiles <- apply(deltastar, 1, function (row) quantile(row, c(.025, 0.975)))
-    ## Generate confidence intervals
-    confidence_intervals <- cbind(apply(quantiles,
-                                        1,
-                                        function(row) unlist(analysis) - row),
-                                  point_estimate = unlist(analysis))
-
-    return(confidence_intervals)
-}
-
 ## ** Significance testing
 ## *** Statistic function for boot
-#' 'Statistic' function for the boot package
+#' 'Statistic' function to use with the "boot"-package
 #'
 #' This function is used as 'Statistic' in the generate.pvalue function.
 #' @param d1 The study data as data frame. No default.
@@ -451,7 +428,7 @@ diff <- function(
 {
     d = d1;
     d$x <- d$x[i];  # randomly re-assign groups
-    ## Subset d1 for model and clinicians
+    ## Subset d1 for models
     model_1_df <- d[d$x %in% 'model_1', ]
     model_2_df <- d[d$x %in% 'model_2', ]
     ## List for looping
@@ -467,25 +444,22 @@ diff <- function(
     Diff
 }
 ## *** P-value function
-#' Significance testing function
+#' P-value generating function
 #'
 #' This function generates p-value of difference in AUROCC using a permutation test.
 #' @param study_data The study data as a data frame. No default
-#' @param outcome The outcome variable as string. Default: s30d.
-#' @param which_models Models to compare as vector. Default: c('pred_cat', 'clinicians_predictions').
-#' @param bs_samples The number of bootstrap samples to be generated. Default: 3.
+#' @param which_models Character vector describing models to compare in AUROCCs. Default: c('pred_cat', 'clinicians_predictions').
+#' @param bs_samples The number of bootstrap samples to be generated. Specified in main.study()
 #' @export
 significance.testing <- function(
-                                 study_Data,
-                                 outcome = 's30d',
+                                 study_data,
                                  which_models = c('pred_cat',
-                                                  'clinicians_predictions'),#Borde ha så att man bara kan stoppa in vissa värden och att vektorn inte är längre än 2
-                                 bs_samples = 3
+                                                  'clinicians_predictions'),
+                                 bs_samples
                                  )
 {
     ## Get data for significance testing
-    data <- predictions.with.superlearner(study_data,
-                                          outcome)
+    data <- predictions.with.superlearner(study_data)
     ## Create dataframe for significance testing
     df <- data.frame(x = c(rep('model_1',
                                each = length(data[[which_models[1]]])),
@@ -494,62 +468,74 @@ significance.testing <- function(
                      Variable = c(data[[which_models[1]]],
                                   data[[which_models[2]]]),
                      s30d = as.factor(rep(data$outcome_review, 2)))
-    ## Bootstrap diff on n bootstrap samples
+    ## Bootstrap diff on bs_samples bootstrap samples
     boot_strapped <- boot::boot(data = df,
                                 statistic = diff,
                                 R = bs_samples)
     ##Generate p-value
-    p_value<- mean(abs(boot_strapped$t) > abs(boot_strapped$t0))
+    p_value <- mean(abs(boot_strapped$t) > abs(boot_strapped$t0))
 
     return (p_value)
 }
 ## *** Generate p-values between model_cat and model_con, as well as between SuperLearner and clinicians
-#' Vector of p-values function
+#' Generate p-values function
 #'
-#' This function generate p-values of difference of AUROCC between categorised SuperLearner predictions and clinicians triage category, as well as between continous and categorised SuperLearner predictions. The latter in purpose of evaluating the chosen quantile-cutoffs.
+#' This function generate p-values of difference of AUROCC between categorised SuperLearner predictions and clinicians triage category, as well as between continous and categorised SuperLearner predictions - the latter to evaluate the chosen cutoffs for the cut predicitons.
 #' @param study_data The study data as a data frame. No default
-#' @param outcome The outcome variable as string. Default: s30d.
+#' @param bs_samples The number of bootstrap samples to be generated. Specified in main.study()
 #' @export
 generate.pvalue <- function(
                             study_data,
-                            outcome
+                            bs_samples
                             )
 {
     ## Generate p-value on difference of AUROCC of SuperLearner and clinicians
-    p1 <- significance.testing(mothertree,
+    p1 <- significance.testing(study_data,
                                which_models = c('pred_cat',
-                                                'clinicians_predictions'))
+                                                'clinicians_predictions'),
+                               bs_samples)
     ## Generate p-value on difference of AUROCC of SuperLearner's continous
     ## predictions and categorised predictions
-    p2 <- significance.testing(mothertree,
+    p2 <- significance.testing(study_data,
                                which_models = c('pred_con',
-                                                'pred_cat'))
+                                                'pred_cat'),
+                               bs_samples)
     return (c(p1,p2))
 }
-#
-## * Extra material
-#
-#complete_analysis <- function (
-#                               mothertree,
-#                               outcome = 's30d',
-#                               bs_samples = 3
-#                               )
-#{
-#
-#    ## Discrimination
-#    AUROCC <- confidence_intervals(mothertree, outcome, bs_samples)
-#    ## Reclassification
-#    reclassification <- review_reclassification(mothertree, outcome)
-#    ## P-value on difference of discrimination
-#    h_testing <- significance_testing(mothertree, outcome, bs_samples)
-#    ## List statistics
-#    statistics <- list(AUROCC = AUROCC,
-#                       Reclassification = reclassification,
-#                       P_value = h_testing)
-#    ## Save rdata to file
-#    saveRDS(statistics, file = sprintf('complete_analysis_%s.Rdata', bs_samples))
-#    ## Return list with statistics
-#    return (statistics)
-#
-#}
-#
+
+## ** Estimate confidence intervals
+#' Confidence interval function
+#'
+#' This function generates confidence intervals around AUROCC of Superlearner and clinicians using bootstrapping.
+#' @param study_data The study data as a data frame. No default
+#' @param bs_samples The number of bootstrap samples to be generated as int. Specified in main.study()
+#' @export
+generate.confidence.intervals <- function(
+                                          study_data,
+                                          bs_samples
+                                          )
+{
+
+    ## Get point estimates of AUROCC
+    analysis <- model.review.AUROCC(study_data)
+    ## Bootstrap n bootstrap samples
+    simulated_dfs <- lapply(1:bs_samples,
+                            function(i) study_data[sample(1:nrow(study_data),
+                                                          replace = TRUE),])
+    ## Train, predict and aurocc on every sample
+    train_predict_aurocc <- lapply(simulated_dfs,
+                                   function (df) model.review.AUROCC(df))
+    ## Matrixify samples
+    matrixify <- sapply(train_predict_aurocc, unlist)
+    ## Calculate Deltastar
+    deltastar <- apply(matrixify, 2, function(col) col - unlist(analysis))
+    ## Get 2.5 and 97.5 percentiles
+    quantiles <- apply(deltastar, 1, function (row) quantile(row, c(.025, 0.975)))
+    ## Generate confidence intervals
+    confidence_intervals <- cbind(apply(quantiles,
+                                        1,
+                                        function(row) unlist(analysis) - row),
+                                  point_estimate = unlist(analysis))
+
+    return(confidence_intervals)
+}
