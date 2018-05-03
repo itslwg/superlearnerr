@@ -1,6 +1,7 @@
 * Things to do
 ** DONE Add todo
-** TODO Add README
+** DONE Add README
+** TODO Draft paper
 
 * Issues
-None yet 
+  None yet 
