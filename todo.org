@@ -1,7 +1,9 @@
 * Things to do
+#+BEGIN_SRC org
 ** DONE Add todo
 ** DONE Add README
 ** TODO Draft paper
-
+** TODO Update this file to have TODO|DONE show on github
+#+END_SRC
 * Issues
   None yet 
