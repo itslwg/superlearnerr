@@ -4,7 +4,8 @@
 ** DONE Add todo
 ** DONE Add README
 ** INPROGRESS Draft paper
-   CLOCK: [2018-05-03 Thu 12:24]
+   CLOCK: [2018-05-03 Thu 15:28]
+   CLOCK: [2018-05-03 Thu 12:24]--[2018-05-03 Thu 15:13] =>  2:49
 ** DONE Update this file to have TODO|DONE show on github
    <2018-05-03 Thu>
 #+END_SRC
