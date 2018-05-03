@@ -3,7 +3,8 @@
 ** DONE Add todo
 ** DONE Add README
 ** TODO Draft paper
-** TODO Update this file to have TODO|DONE show on github
+** DONE Update this file to have TODO|DONE show on github
+   <2018-05-03 Thu>
 #+END_SRC
 * Issues
   None yet 
