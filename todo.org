@@ -1,3 +1,4 @@
+#+TODO: TODO INPROGRESS | DONE
 * Things to do
 #+BEGIN_SRC org
 ** DONE Add todo
