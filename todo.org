@@ -1,7 +1,10 @@
 * Things to do
+#+BEGIN_SRC org
 ** DONE Add todo
 ** DONE Add README
 ** TODO Draft paper
-
+** DONE Update this file to have TODO|DONE show on github
+   <2018-05-03 Thu>
+#+END_SRC
 * Issues
   None yet 
