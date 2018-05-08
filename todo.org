@@ -3,7 +3,38 @@
 #+BEGIN_SRC org
 ** DONE Add todo
 ** DONE Add README
-** TODO Draft paper
+** INPROGRESS Draft paper [14%]
+   CLOCK: [2018-05-06 Sun 08:27]--[2018-05-07 Mon 11:03] => 26:36
+   CLOCK: [2018-05-03 Thu 15:28]--[2018-05-04 Fri 06:52] => 15:24
+   CLOCK: [2018-05-03 Thu 12:24]--[2018-05-03 Thu 15:13] =>  2:49
+   - [X] Identify all sections
+   - [-] Title [1/2]
+     - [ ] Working title
+     - [X] Final title
+   - [ ] Authors
+   - [ ] Affiliations
+   - [ ] Current address
+   - [ ] Abstract
+   - [ ] Author Summary
+   - [X] Introduction
+   - [-] Materials and Methods [6/9]
+     - [X] Study Design
+     - [X] Setting
+     - [X] Participants
+     - [X] Variables
+     - [X] Data Sources and Measurement
+     - [ ] Bias
+     - [ ] Study Size
+     - [X] Quantitative Variables
+     - [-] Statistical Methods
+       - [X]  Drafted something
+       - [ ]  Get expert input
+   - [ ] Results
+   - [ ] Discussion
+   - [ ] Conclusion
+   - [ ] Acknowledgments
+   - [ ] Bibliography
+** TODO Finalise paper
 ** DONE Update this file to have TODO|DONE show on github
    <2018-05-03 Thu>
 #+END_SRC
