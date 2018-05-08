@@ -37,6 +37,8 @@
 ** TODO Finalise paper
 ** DONE Update this file to have TODO|DONE show on github
    <2018-05-03 Thu>
+** TODO Add sample data
+** TODO Write sample table function
 #+END_SRC
 * Issues
   None yet 
