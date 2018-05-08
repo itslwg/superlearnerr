@@ -26,6 +26,9 @@ make.study <- function(
     ## Define 999 as missing
     study_data[study_data == 999] <- NA
     ## Define 99 in gcs components as missing
+    gcs_components_names <- c('mgcs',
+                              'egcs',
+                              'vgcs')
     study_data[, gcs_components_names][study_data[, gcs_components_names] == 99] <- NA
     ## Create omitted object, i.e. number of patients with missing
     ## information, and df with patients with complete information
@@ -41,15 +44,12 @@ make.study <- function(
     ## and alive if coded alive and admitted to other hospital
     study_data <- set.to.outcome(study_data)
     ## Train model on training set and predict on review set. Then,
-    ## estimate 95 % CIs around AUROCC of categorised SuperLearner (see
-    ## function predictions.with.superlearner() for categorisation
-    ## procedure) and clinicians triage.
+    ## estimate 95 % CIs around difference of AUROCCs of categorised
+    ## SuperLearner (seefunction predictions.with.superlearner() for
+    ## categorisationprocedure) and clinicians triage.
     conf <- generate.confidence.intervals(study_data, bs_samples)
     ## Conduct reclassification analysis and generate nribin-object
     reclass <- model.review.reclassification(study_data)
-    ## Generate p-value on difference of AUROCCs of categorised SuperLearner
-    ## and clinicians triage, as well as on difference of categorised and
-    ## continous SuperLearner predictions
     pvalues <- generate.pvalue(study_data, bs_samples)
     ## Return list of model AUROCCs and their respective confidence
     ## intervals, nribin object and p-values.
@@ -368,7 +368,8 @@ predictions.with.superlearner <- function(
 #' @export
  model.review.AUROCC <- function(
                                 study_data,
-                                models = c('pred_cat',
+                                models = c('pred_con',
+                                           'pred_cat',
                                            'clinicians_predictions')
                                 )
 {
@@ -408,10 +409,12 @@ model.review.reclassification <- function(
     reclassification <- nricens::nribin(event = predictions_and_data$data$outcome$y_review,
                                         p.std = predictions_and_data$data$sets_w_tc$x_review$tc,
                                         p.new = as.numeric(predictions_and_data$preds$pred_cat),
-                                        cut = c(2,3,4))
+                                        cut = c(2,3,4),
+                                        niter = 0)
 
     return (reclassification)
 }
+
 ## * Significance testing (P-value) and Confidence intervals (95 %)
 ## ** Significance testing
 ## *** Statistic function for boot
@@ -506,7 +509,7 @@ generate.pvalue <- function(
 ## ** Estimate confidence intervals
 #' Confidence interval function
 #'
-#' This function generates confidence intervals around AUROCC of Superlearner and clinicians using bootstrapping.
+#' This function generates confidence intervals around AUROCC of Superlearner and clinicians using empirical bootstrapping.
 #' @param study_data The study data as a data frame. No default
 #' @param bs_samples The number of bootstrap samples to be generated as int. Specified in main.study()
 #' @export
@@ -518,6 +521,11 @@ generate.confidence.intervals <- function(
 
     ## Get point estimates of AUROCC
     analysis <- model.review.AUROCC(study_data)
+    ## Calculate difference of AUROCCs of categorised SuperLearner predictions
+    ## and clinicians, as well as between categorised and continous
+    ## SuperLearner predictions
+    diff <- list(analysis$pred_cat - analysis$clinicians_predictions,
+                 analysis$pred_cat - analysis$pred_con)
     ## Bootstrap n bootstrap samples
     simulated_dfs <- lapply(1:bs_samples,
                             function(i) study_data[sample(1:nrow(study_data),
@@ -527,15 +535,20 @@ generate.confidence.intervals <- function(
                                    function (df) model.review.AUROCC(df))
     ## Matrixify samples
     matrixify <- sapply(train_predict_aurocc, unlist)
-    ## Calculate Deltastar
-    deltastar <- apply(matrixify, 2, function(col) col - unlist(analysis))
-    ## Get 2.5 and 97.5 percentiles
-    quantiles <- apply(deltastar, 1, function (row) quantile(row, c(.025, 0.975)))
+    ## Calculate difference between AUROCCs in every sample
+    diff_samples <- list(matrixify['pred_cat',] - matrixify['clinicians_predictions',],
+                         matrixify['pred_cat',] - matrixify['pred_con',])
+    ## Calculate deltastar
+    deltastar <- mapply('-', diff_samples, diff, SIMPLIFY = FALSE)
+    ## Get 2.5% and 97.5% percentiles from difference of samples
+    quantiles <- lapply(deltastar,
+                        function (vec)quantile(vec,
+                                               c(.025, 0.975)))
     ## Generate confidence intervals
-    confidence_intervals <- cbind(apply(quantiles,
-                                        1,
-                                        function(row) unlist(analysis) - row),
-                                  point_estimate = unlist(analysis))
+    confidence_intervals <- mapply('-',
+                                   diff,
+                                   quantiles,
+                                   SIMPLIFY = FALSE)
 
     return(confidence_intervals)
 }
