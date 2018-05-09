@@ -38,6 +38,7 @@
 ** DONE Update this file to have TODO|DONE show on github
    <2018-05-03 Thu>
 ** INPROGRESS Add sample data
+   CLOCK: [2018-05-08 Tue 14:40]
 ** TODO Write sample table function
 #+END_SRC
 * Issues
