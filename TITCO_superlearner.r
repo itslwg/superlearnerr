@@ -6,7 +6,7 @@
 #' @param bs_samples The number of bootstrap samples to be generated as int. Defaults to 10
 #' @export
 make.study <- function(
-                       data_path =  c("../data/mdf.csv"),
+                       data_path =  c("./extdata/sample.csv"),
                        bs_samples = 10
                        )
 {
