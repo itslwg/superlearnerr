@@ -5,10 +5,14 @@
 #' @param data_path Path to data set. Should be a character vector of length 1. Defaults to c("../data/mdf.csv")
 #' @param bs_samples The number of bootstrap samples to be generated as int. Defaults to 10
 #' @export
-
 make.study <- function(
+<<<<<<< HEAD
                        data_path =  c("mdf.csv"),
                        bs_samples = 3
+=======
+                       data_path =  c("./extdata/sample.csv"),
+                       bs_samples = 10
+>>>>>>> 67f8abcc55c2eeedefb039b37a585a9f1de4f7fc
                        )
 {
     ##Set seed for reproducability
@@ -67,7 +71,16 @@ make.study <- function(
     names(CIs) <- c('AUROCC',
                     'reclassification')
     ## intervals, nribin object and p-values.
+<<<<<<< HEAD
     return (CIs)
+=======
+    statistics <- list(CIs = conf,
+                       Reclassification = reclass,
+                       Pvalues = pvalues)
+    ## Compile manuscript
+    compile.manuscript("superlearner_vs_clinicians_manuscript.rtex")
+    return (statistics)
+>>>>>>> 67f8abcc55c2eeedefb039b37a585a9f1de4f7fc
 }
 
 ## * Load required packages
@@ -79,7 +92,8 @@ load.required.packages <- function()
     packages <- c("SuperLearner",
                   "nricens",
                   "dplyr",
-                  "boot")
+                  "boot",
+                  "knitr")
     ## Require those packages using a loop
     for (p in packages) require(p, character.only = TRUE)
 }
@@ -599,4 +613,21 @@ generate.confidence.intervals <- function(
     return(confidence_intervals)
 }
 
+<<<<<<< HEAD
 
+=======
+#' Compile manuscript function
+#'
+#' This function compiles the Superlearner vs clinicians manuscript
+#' @param manuscript_file_name The file name of the manuscript as a character vector of length 1. No default.
+#' @param compiler The compiler to use when compiling the rtex manuscript into a pdf. Defaults to pdflatex.
+#' @export
+compile.manuscript <- function(
+                               manuscript_file_name,
+                               compiler = "pdflatex"
+                               )
+{
+    ## Compile manuscript using knit2pdf
+    knit2pdf(manuscript_file_name, compiler = compiler)
+}
+>>>>>>> 67f8abcc55c2eeedefb039b37a585a9f1de4f7fc
