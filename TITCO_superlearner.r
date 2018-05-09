@@ -6,13 +6,8 @@
 #' @param bs_samples The number of bootstrap samples to be generated as int. Defaults to 10
 #' @export
 make.study <- function(
-<<<<<<< HEAD
-                       data_path =  c("mdf.csv"),
-                       bs_samples = 3
-=======
                        data_path =  c("./extdata/sample.csv"),
                        bs_samples = 10
->>>>>>> 67f8abcc55c2eeedefb039b37a585a9f1de4f7fc
                        )
 {
     ##Set seed for reproducability
@@ -70,17 +65,10 @@ make.study <- function(
     ## Set names of cis
     names(CIs) <- c('AUROCC',
                     'reclassification')
-    ## intervals, nribin object and p-values.
-<<<<<<< HEAD
-    return (CIs)
-=======
-    statistics <- list(CIs = conf,
-                       Reclassification = reclass,
-                       Pvalues = pvalues)
     ## Compile manuscript
     compile.manuscript("superlearner_vs_clinicians_manuscript.rtex")
-    return (statistics)
->>>>>>> 67f8abcc55c2eeedefb039b37a585a9f1de4f7fc
+
+    return (CIs)
 }
 
 ## * Load required packages
@@ -613,9 +601,7 @@ generate.confidence.intervals <- function(
     return(confidence_intervals)
 }
 
-<<<<<<< HEAD
-
-=======
+## * Compile manuscript
 #' Compile manuscript function
 #'
 #' This function compiles the Superlearner vs clinicians manuscript
@@ -630,4 +616,4 @@ compile.manuscript <- function(
     ## Compile manuscript using knit2pdf
     knit2pdf(manuscript_file_name, compiler = compiler)
 }
->>>>>>> 67f8abcc55c2eeedefb039b37a585a9f1de4f7fc
+
