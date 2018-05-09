@@ -5,7 +5,7 @@
 #' @param data_path Path to data set. Should be a character vector of length 1. Defaults to c("../data/mdf.csv")
 #' @param bs_samples The number of bootstrap samples to be generated as int. Defaults to 10
 #' @export
-"../data/mdf.csv"
+
 make.study <- function(
                        data_path =  c("mdf.csv"),
                        bs_samples = 3
@@ -324,18 +324,18 @@ prep.data.for.superlearner <- function(
 ## * Predictions with SuperLearner
 #' Generate predictions with SuperLearner
 #'
-#' This function trains SuperLearner on the training set. Then, predictions are divided byquantiles into four colour-coded groups. The groups are green, yellow, orange, and red. They respectively include ranges from the 0% quantile to 25% quantile, 25% to 50%, 50% to 75%, and 75% to 100% of the continous predictions. Lastly, SuperLearner uses groups to make predictions on the review set.
-#' @param sample The study data as a data frame. No default
+#' This function trains SuperLearner on the training set and makes predictions on the review set. Then, predictions are divided by quantiles into four colour-coded groups. The groups are green, yellow, orange, and red. They respectively include ranges from the 0% quantile to 25% quantile, 25% to 50%, 50% to 75%, and 75% to 100% of the continous predictions.
+#' @param study_sample. The study_sample as dataframe No default
 #' @param outcome The outcome variable as a string. Default: 's30d'.
 #' @param models Models to include in SuperLearner. Default: SL.mean and SL.glmnet.
 #' @export
 predictions.with.superlearner <- function(
-                                          sample,
+                                          study_sample,
                                           models = c('SL.mean', 'SL.glmnet')
                                           )
 {
     ## Retrive training and review data as well as outcome for training and review
-    data <- prep.data.for.superlearner(sample)
+    data <- prep.data.for.superlearner(study_sample)
     ## Train algorithm with training set
     train_algo <- SuperLearner(Y = data$outcome$y_train,
                                X = data$sets_wo_tc$x_train,
@@ -363,29 +363,33 @@ predictions.with.superlearner <- function(
 
     return (list(preds = pred_data,
                  data = data))
-}
+Z}
 
 ## * Model review (AUROCC, Reclassification)
 ## ** AUROCC
 #' Area Under Receiver Operating Characteristics Curve (AUROCC) function
 #'
-#' This function calculates the AUROCC of specified models.
-#' @param study_sample The study data as a data frame. No default
-#' @param models Character vector describing which models to calculate AUROCCs on. Default: c('pred_cat', 'clinicians_predictions')
+#' This function calculates AUROCC of the specified predictions.
+#' @param study_sample The study sample as a data frame. No default
+#' @param which_preds Character vector with predictions. Default: c('pred_cat', 'clinicians_predictions')
 #' @export
  model.review.AUROCC <- function(
                                 study_sample,
-                                models
+                                which_preds
                                 )
- {
+{
+    ### Stop if user inputs more than two predicitons
+    #if (length(which_preds) > 2) stop('Input two predictions')
+    ### Stop if study_sample isn't a dataframe
+    #if (!(is.data.frame(study_sample))) stop('Input study_sample as dataframe')
     ## Set up prediction obejects for ROCR
-    pred_rocr <- lapply(models,
-                        function(model) ROCR::prediction(
-                                                  as.numeric(
-                                                      study_sample$preds[[model]]),
-                                                  study_sample$preds$outcome_review))
-    ## Set names for models
-    names(pred_rocr) <- models
+    pred_rocr <- lapply(which_preds,
+                        function(pred) ROCR::prediction(
+                                                 as.numeric(
+                                                     study_sample$preds[[pred]]),
+                                                 study_sample$preds$outcome_review))
+    ## Set names for AUROCCs
+    names(pred_rocr) <- which_preds
     ## Calculate the Area Under the Receiver Operating Charecteristics Curve
     AUROCC <- lapply(pred_rocr,
                      function(model) ROCR::performance(model,
@@ -393,14 +397,14 @@ predictions.with.superlearner <- function(
                                                        x.measure =  'cutoff')@y.values[[1]])
 
     return (AUROCC)
-}
+ }
 
 ## ** Reclassification
 #' Generate reclassification tables and Net Reclassification Index (NRI)
 #'
-#' This function generates an compares categorisation of categorised SuperLearner predictions and clinicians predictions. It is conducted with nribin, which creates cross tabulations of categorisation of the two, description of net proportions patient movements upwards and downwards in categories, and generates NRI.
+#' This function compares categorisation of categorised SuperLearner predictions and clinician's predictions. Analysis is conducted with nribin which creates cross tabulations of categorisation of the two, description of net proportions patient movements upwards and downwards in categories, and NRI.
 #' @param study_sample Sample as data frame. No default
-#' @param which_point_estimates Character vector describing which reclassification proportions return. No default.
+#' @param which_point_estimates Character vector describing which reclassification proportions to return, for example NRI+ and NRI. No default.
 #' @param for_tables Boolean value determining whether function should return all nribin elements or solely point estimates. Default: FALSE, i.e. not to include all nribin elements.
 #' @export
 model.review.reclassification <- function(
@@ -465,19 +469,19 @@ diff <- function(
 #' P-value generating function
 #'
 #' This function generates p-value of difference in AUROCC using a permutation test.
-#' @param sample The study data as a data frame. No default
+#' @param study_sample The study sample as a data frame. No default
 #' @param which_models Character vector describing models to compare in AUROCCs. Default: c('pred_cat', 'clinicians_predictions').
 #' @param bs_samples The number of bootstrap samples to be generated. Specified in main.study()
 #' @export
 significance.testing <- function(
-                                 sample,
+                                 study_sample,
                                  which_models = c('pred_cat',
                                                   'clinicians_predictions'),
                                  bs_samples
                                  )
 {
     ## Get data for significance testing
-    data <- predictions.with.superlearner(sample)
+    data <- predictions.with.superlearner(study_sample)
     ## Create dataframe for significance testing
     df <- data.frame(x = c(rep('model_1',
                                each = length(data[[which_models[1]]])),
@@ -499,22 +503,22 @@ significance.testing <- function(
 #' Generate p-values function
 #'
 #' This function generate p-values of difference of AUROCC between categorised SuperLearner predictions and clinicians triage category, as well as between continous and categorised SuperLearner predictions - the latter to evaluate the chosen cutoffs for the cut predicitons.
-#' @param sample The study data as a data frame. No default
+#' @param study_sample The study data as a data frame. No default
 #' @param bs_samples The number of bootstrap samples to be generated. Specified in main.study()
 #' @export
 generate.pvalue <- function(
-                            sample,
+                            study_sample,
                             bs_samples
                             )
 {
     ## Generate p-value on difference of AUROCC of SuperLearner and clinicians
-    p1 <- significance.testing(sample,
+    p1 <- significance.testing(study_sample,
                                which_models = c('pred_cat',
                                                 'clinicians_predictions'),
                                bs_samples)
     ## Generate p-value on difference of AUROCC of SuperLearner's continous
     ## predictions and categorised predictions
-    p2 <- significance.testing(sample,
+    p2 <- significance.testing(study_sample,
                                which_models = c('pred_con',
                                                 'pred_cat'),
                                bs_samples)
@@ -525,9 +529,9 @@ generate.pvalue <- function(
 ## *** Generate bootstrap samples
 #' Function to generate bootstrap samples
 #'
-#' This function generates
+#' This function generates bootstrap samples from the study_data.
 #' @param study_data The study data as a data frame. No default
-#' @param bs_samples Integer value describing the number of bootstrap samples to be generated. Specified in main.study()
+#' @param bs_samples Integer value describing the number of bootstrap samples to be generated. Specified as argument in main.study()
 #' @export
 generate.bootstrap.samples <- function(
                                        study_data,
@@ -545,8 +549,8 @@ generate.bootstrap.samples <- function(
 ## *** Train and predict on each sample
 #' Function to train and predict SuperLearner on each sample
 #'
-#' This trains SuperLearner on every sample training set and predicts on every sample review set
-#' @param samples Bootstrap samples as list of data frames. No default
+#' This trains SuperLearner on every sample training set and reviews SuperLearner on every sample review set.
+#' @param samples Bootstrap samples as list of data frames. No default.
 #' @export
 train.predict.bssamples <- function(
                                     samples
@@ -561,10 +565,10 @@ train.predict.bssamples <- function(
 ## *** Generate confidence intervals
 #' Confidence interval function
 #'
-#' This function generates confidence intervals around difference of point estimates using empirical bootstrapping.
-#' @param sample The study data as a data frame. No default
+#' This function generates confidence intervals around difference of two given point estimates using empirical bootstrapping.
+#' @param study_data The study data as data frame. No default
 #' @param func Function that generates key statistic. For example, model.review.AUROCC that generates AUROCC of a given model, or model.review.reclassification that generates reclassification elements. No default.
-#' @param model_or_pointestimate Character vector describing which models to analyse. No default.
+#' @param model_or_pointestimate Character vector describing predictions or point estimates to analyse. For example, pred_cat and clinicians_predictions predictions for model.review.AUROCC or NRI+ and NRI- point estimates for model.review.reclassification. No default.
 #' @param samples Boostrap samples from study data. No default
 #' @export
 generate.confidence.intervals <- function(
@@ -595,4 +599,4 @@ generate.confidence.intervals <- function(
     return(confidence_intervals)
 }
 
-make.study()
+
