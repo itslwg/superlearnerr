@@ -41,8 +41,9 @@
    CLOCK: [2018-05-08 Tue 14:40]--[2018-05-09 Wed 08:03] => 17:23
 ** TODO Write sample table function				      :todo7:
 ** INPROGRESS Add missing indicator funtion			      :todo8:
-   CLOCK: [2018-05-10 Thu 08:19]
-** TODO Modify drop.observations function			      :todo9:
+   CLOCK: [2018-05-10 Thu 08:19]--[2018-05-10 Thu 09:22] =>  1:03
+** INPROGRESS Modify drop.observations function			      :todo9:
+   CLOCK: [2018-05-10 Thu 09:22]
    Should exclude patients enrolled before 2016-07-28 and after 2018-04-07
 #+END_SRC
 * Issues
