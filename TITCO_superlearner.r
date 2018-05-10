@@ -24,11 +24,6 @@ make.study <- function(
     study_data <- keep.relevant.variables(study_data)
     ## Define 999 as missing
     study_data[study_data == 999] <- NA
-    ## Define 99 in gcs components as missing
-    gcs_components_names <- c('mgcs',
-                              'egcs',
-                              'vgcs')
-    study_data[, gcs_components_names][study_data[, gcs_components_names] == 99] <- NA
     ## Create omitted object, i.e. number of patients with missing
     ## information, and df with patients with complete information
     study_data <- cc.and.omitted(study_data)$study_data
