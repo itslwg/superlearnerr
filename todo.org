@@ -40,7 +40,8 @@
 ** DONE Add sample data						      :todo6:
    CLOCK: [2018-05-08 Tue 14:40]--[2018-05-09 Wed 08:03] => 17:23
 ** TODO Write sample table function				      :todo7:
-** TODO Add missing indicator funtion				      :todo8:
+** INPROGRESS Add missing indicator funtion			      :todo8:
+   CLOCK: [2018-05-10 Thu 08:19]
 #+END_SRC
 * Issues
   None yet 
