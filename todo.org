@@ -44,7 +44,9 @@
    CLOCK: [2018-05-10 Thu 08:19]--[2018-05-10 Thu 09:22] =>  1:03
 ** DONE Modify drop.observations function			      :todo9:
    CLOCK: [2018-05-10 Thu 09:22]--[2018-05-10 Thu 09:38] =>  0:16
-   Should exclude patients enrolled before 2016-07-28 and after 2018-04-07
+   Should exclude patients enrolled before 2016-07-28 and after
+   2018-04-07
+** TODO Change make.study()                                          :todo10:
 #+END_SRC
 * Issues
   None yet 
