@@ -47,6 +47,27 @@
    Should exclude patients enrolled before 2016-07-28 and after
    2018-04-07
 ** TODO Change make.study()                                          :todo10:
+** DONE Reformate code structure [1/1]                               :todo11:
+   CLOCK: [2018-05-10 Thu 19:52]
+   - [X] Create files [100%]
+     - [X] make.study
+     - [X] load.required.packages
+     - [X] drop.observations
+     - [X] keep.relevant.variables
+     - [X] collapse.moi
+     - [X] to.factor.variables
+     - [X] set.to.outcome
+     - [X] cc.and.omitted
+     - [X] prep.data.for.superlearner
+     - [X] predictions.with.superlearner
+     - [X] model.review.AUROCC
+     - [X] model.review.reclassification
+     - [X] diff
+     - [X] significance.testing
+     - [X] generate.pvalue
+     - [X] generate.bootstrap.samples
+     - [X] train.predict.bssamples
+     - [X] generate.confidence.intervals
 #+END_SRC
 * Issues
   None yet 
