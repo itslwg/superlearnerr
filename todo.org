@@ -1,9 +1,9 @@
 #+TODO: TODO INPROGRESS | DONE
 * Things to do
 #+BEGIN_SRC org
-** DONE Add todo
-** DONE Add README
-** INPROGRESS Draft paper [14%]
+** DONE Add todo						      :todo1:
+** DONE Add README						      :todo2:
+** INPROGRESS Draft paper [14%]					      :todo3:
    CLOCK: [2018-05-06 Sun 08:27]--[2018-05-07 Mon 11:03] => 26:36
    CLOCK: [2018-05-03 Thu 15:28]--[2018-05-04 Fri 06:52] => 15:24
    CLOCK: [2018-05-03 Thu 12:24]--[2018-05-03 Thu 15:13] =>  2:49
@@ -34,12 +34,13 @@
    - [ ] Conclusion
    - [ ] Acknowledgments
    - [ ] Bibliography
-** TODO Finalise paper
-** DONE Update this file to have TODO|DONE show on github
+** TODO Finalise paper						      :todo4:
+** DONE Update this file to have TODO|DONE show on github	      :todo5:
    <2018-05-03 Thu>
-** DONE Add sample data
+** DONE Add sample data						      :todo6:
    CLOCK: [2018-05-08 Tue 14:40]--[2018-05-09 Wed 08:03] => 17:23
-** TODO Write sample table function
+** TODO Write sample table function				      :todo7:
+** TODO Add missing indicator funtion				      :todo8:
 #+END_SRC
 * Issues
   None yet 
