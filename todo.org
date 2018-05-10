@@ -48,7 +48,7 @@
    2018-04-07
 ** TODO Change make.study()                                          :todo10:
 ** DONE Reformate code structure [1/1]                               :todo11:
-   CLOCK: [2018-05-10 Thu 19:52]
+   CLOCK: [2018-05-10 Thu 19:52]--[2018-05-10 Thu 21:16] =>  1:24
    - [X] Create files [100%]
      - [X] make.study
      - [X] load.required.packages
