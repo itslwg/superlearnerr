@@ -71,7 +71,7 @@
      - [X] generate.confidence.intervals
 ** TODO Clean repository [0/1] 					     :todo12:
    - [ ] Remove empty git
-** TODO Rename TITCO_superlearner.r to make.study.r		     :todo13:
+** DONE Rename TITCO_superlearner.r to make.study.r		     :todo13:
 ** TODO Add play_ground.r					     :todo14:
    File for testing
 #+END_SRC
