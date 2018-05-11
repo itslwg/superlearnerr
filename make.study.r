@@ -9,9 +9,11 @@ make.study <- function(
                        bs_samples = 10
                        )
 {
-    ##Set seed for reproducability
+    ## Set seed for reproducability
     set.seed(123)
-    ## Load all required packages
+    ## Source all functions (remove when turned into package)
+    for(f in list.files(".", pattern = ".r$", full.names = TRUE)) source(f)
+    ## Load all required packages (remove when turned into package)
     load.required.packages()
     ## Import study data
     study_data <- read.csv(data_path)
