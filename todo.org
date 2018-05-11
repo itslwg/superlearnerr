@@ -74,6 +74,8 @@
 ** DONE Rename TITCO_superlearner.r to make.study.r		     :todo13:
 ** TODO Add play_ground.r					     :todo14:
    File for testing
+** TODO Modify prep.data.for.superlearner [0/1]                      :todo15:
+   - [ ] Fix date issue
 #+END_SRC
 * Issues
   None yet 
