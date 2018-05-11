@@ -72,9 +72,10 @@
 ** TODO Clean repository [0/1] 					     :todo12:
    - [ ] Remove empty git
 ** DONE Rename TITCO_superlearner.r to make.study.r		     :todo13:
-** TODO Add play_ground.r					     :todo14:
+** TODO Add playground.r					     :todo14:
    File for testing
-** TODO Modify prep.data.for.superlearner [0/1]                      :todo15:
+** TODO Exclude only those with missing in outcome		     :todo15:
+** TODO Modify prep.data.for.superlearner [0/1]                      :todo16:
    - [ ] Fix date issue
 #+END_SRC
 * Issues
