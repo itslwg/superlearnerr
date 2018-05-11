@@ -213,7 +213,7 @@ collapse.moi <- function(
 ## ** Transform some variables into factors (Formulering)
 #' Make variables to factor function
 #'
-#' This function transform variables into factors.
+#' This function transforms variables into factors.
 #' @param study_data The study data as a data frame. No default
 #' @param variables_to_factor Character vector of variables. Defaults to c("egcs", "mgcs", "vgcs", "avpu", "cmoi")
 #' @export
