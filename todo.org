@@ -1,6 +1,6 @@
 #+TODO: TODO INPROGRESS | DONE
 * Things to do
-#+BEGIN_SRC org
+##+BEGIN_SRC org
 ** DONE Add todo						      :todo1:
 ** DONE Add README						      :todo2:
 ** INPROGRESS Draft paper [14%]					      :todo3:
@@ -41,13 +41,14 @@
    CLOCK: [2018-05-08 Tue 14:40]--[2018-05-09 Wed 08:03] => 17:23
 ** TODO Write sample table function				      :todo7:
 ** INPROGRESS Add missing indicator funtion			      :todo8:
+   CLOCK: [2018-05-10 Thu 09:41]
    CLOCK: [2018-05-10 Thu 08:19]--[2018-05-10 Thu 09:22] =>  1:03
 ** DONE Modify drop.observations function			      :todo9:
    CLOCK: [2018-05-10 Thu 09:22]--[2018-05-10 Thu 09:38] =>  0:16
    Should exclude patients enrolled before 2016-07-28 and after
    2018-04-07
 ** TODO Change make.study()                                          :todo10:
-** DONE Reformate code structure [1/1]                               :todo11:
+** DONE Reformat code structure [1/1] 				     :todo11:
    CLOCK: [2018-05-10 Thu 19:52]--[2018-05-10 Thu 21:16] =>  1:24
    - [X] Create files [100%]
      - [X] make.study
@@ -68,6 +69,11 @@
      - [X] generate.bootstrap.samples
      - [X] train.predict.bssamples
      - [X] generate.confidence.intervals
+** TODO Clean repository [/]					     :todo12:
+   - [ ] Remove empty git
+** TODO Rename TITCO_superlearner.r to make.study.r		     :todo13:
+** TODO Add play_ground.r					     :todo14:
+   File for testing
 #+END_SRC
 * Issues
   None yet 
