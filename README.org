@@ -1,3 +1,7 @@
 * README
 This is the code repository of the "SuperLearner vs clinicians" (working title)
-study. 
+study. The main function is make.study.r, which calls, either directly or
+indirectly, the functions in remaining .r files. 
+
+** make.study.r
+Start here
