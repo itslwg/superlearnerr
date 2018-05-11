@@ -1,6 +1,6 @@
 #+TODO: TODO INPROGRESS | DONE
 * Things to do
-##+BEGIN_SRC org
+#+BEGIN_SRC org
 ** DONE Add todo						      :todo1:
 ** DONE Add README						      :todo2:
 ** INPROGRESS Draft paper [14%]					      :todo3:
@@ -69,7 +69,7 @@
      - [X] generate.bootstrap.samples
      - [X] train.predict.bssamples
      - [X] generate.confidence.intervals
-** TODO Clean repository [/]					     :todo12:
+** TODO Clean repository [0/1] 					     :todo12:
    - [ ] Remove empty git
 ** TODO Rename TITCO_superlearner.r to make.study.r		     :todo13:
 ** TODO Add play_ground.r					     :todo14:
