@@ -78,6 +78,7 @@
    CLOCK: [2018-05-11 Fri 11:31]--[2018-05-12 Sat 08:16] => 20:45
 ** TODO Modify prep.data.for.superlearner [0/1]                      :todo16:
    - [ ] Fix date issue
+** TODO Add a create table of missing data function                  :todo17:
 #+END_SRC
 * Issues
   None yet 
