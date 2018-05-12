@@ -15,6 +15,6 @@ set.to.outcome <- function(
     ## Set s30d to 0 if 2, i.e. to alive if coded alive and admitted to other hospital
     study_data[study_data$s30d == 2 & !is.na(study_data$s30d), "s30d"] <- 0
     ## Finally remove s24h from the dataset
-    study_data <- study_data[, -grep("s24h", colnames(study_data))]
+    study_data <- study_data[, -grep("s24h|hd", colnames(study_data))]
     return (study_data)
 }
