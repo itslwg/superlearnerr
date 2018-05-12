@@ -25,9 +25,13 @@ make.study <- function(
     study_data <- keep.relevant.variables(study_data)
     ## Define 999 as missing
     study_data[study_data == 999] <- NA
-    ## Create omitted object, i.e. number of patients with missing
-    ## information, and df with patients with complete information
-    study_data <- cc.and.omitted(study_data)$study_data
+    ## Set patients to dead if dead at discharge or at 24 hours
+    ## and alive if coded alive and admitted to other hospital
+    study_data <- set.to.outcome(study_data) 
+    ## Apply exclusion criteria, i.e. drop observations with missing outcome
+    ## data and save exclusions to results list 
+    results <- list() # List to hold results
+    study_data <- apply.exclusion.criteria(study_data)
     ## Transform GCS, MOI, and AVPU into factor variables
     study_data <- to.factor.variables(study_data)
     ## Transform GCS, MOI, and AVPU into dummy variables,
@@ -35,9 +39,6 @@ make.study <- function(
     study_data <- cbind(study_data,
                         model.matrix( ~.,
                                      data = study_data)[, -1])
-    ## Set patients to dead if dead at discharge or at 24 hours
-    ## and alive if coded alive and admitted to other hospital
-    study_data <- set.to.outcome(study_data)
     ## Train and review SuperLearner on study sample
     study_sample <- predictions.with.superlearner(study_data)
     ## Bootstrap samples
