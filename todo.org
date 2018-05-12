@@ -74,8 +74,8 @@
 ** DONE Rename TITCO_superlearner.r to make.study.r		     :todo13:
 ** TODO Add playground.r					     :todo14:
    File for testing
-** INPROGRESS Exclude only those with missing in outcome	     :todo15:
-   CLOCK: [2018-05-11 Fri 11:31]
+** DONE Exclude only those with missing in outcome		     :todo15:
+   CLOCK: [2018-05-11 Fri 11:31]--[2018-05-12 Sat 08:16] => 20:45
 ** TODO Modify prep.data.for.superlearner [0/1]                      :todo16:
    - [ ] Fix date issue
 #+END_SRC
