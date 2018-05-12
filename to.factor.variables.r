@@ -21,6 +21,5 @@ to.factor.variables <- function(
     if (!all(variables_to_factor %in% colnames(study_data))) stop("not all components are in the dataset")
     ## Make variables as factors
     study_data[, variables_to_factor] <- lapply(study_data[, variables_to_factor], as.factor)
-
     return(study_data)
 }
