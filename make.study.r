@@ -27,13 +27,14 @@ make.study <- function(
     study_data[study_data == 999] <- NA
     ## Set patients to dead if dead at discharge or at 24 hours
     ## and alive if coded alive and admitted to other hospital
-    study_data <- set.to.outcome(study_data) 
+    study_data <- set.to.outcome(study_data)
+    ## Transform GCS, MOI, and AVPU into factor variables, after collapsing
+    ## mechanism of injury
+    study_data <- to.factor.variables(study_data)
     ## Apply exclusion criteria, i.e. drop observations with missing outcome
     ## data and save exclusions to results list 
     results <- list() # List to hold results
     study_data <- apply.exclusion.criteria(study_data)
-    ## Transform GCS, MOI, and AVPU into factor variables
-    study_data <- to.factor.variables(study_data)
     ## Transform GCS, MOI, and AVPU into dummy variables,
     ## but keep original variables for table1
     study_data <- cbind(study_data,
