@@ -35,6 +35,9 @@ make.study <- function(
     ## data and save exclusions to results list 
     results <- list() # List to hold results
     study_data <- apply.exclusion.criteria(study_data)
+    ## Create missing indicator variables and save table of number of missing
+    ## values per variable
+    study_data <- add.missing.indicator.variables(study_data)
     ## Transform GCS, MOI, and AVPU into dummy variables,
     ## but keep original variables for table1
     study_data <- cbind(study_data,
