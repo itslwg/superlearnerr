@@ -72,7 +72,7 @@
 ** DONE Clean repository [1/1]                                       :todo12:
    - [X] Remove empty git
 ** DONE Rename TITCO_superlearner.r to make.study.r		     :todo13:
-** TODO Add playground.r					     :todo14:
+** DONE Add playground.r                                             :todo14:
    File for testing
 ** DONE Exclude only those with missing in outcome		     :todo15:
    CLOCK: [2018-05-11 Fri 11:31]--[2018-05-12 Sat 08:16] => 20:45
