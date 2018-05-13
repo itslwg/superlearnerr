@@ -48,7 +48,7 @@
    Should exclude patients enrolled before 2016-07-28 and after
    2018-04-07
 ** TODO Change make.study()                                          :todo10:
-** DONE Reformat code structure [1/1] 				     :todo11:
+** DONE Reformate code structure [1/1]                               :todo11:
    CLOCK: [2018-05-10 Thu 19:52]--[2018-05-10 Thu 21:16] =>  1:24
    - [X] Create files [100%]
      - [X] make.study
@@ -69,8 +69,8 @@
      - [X] generate.bootstrap.samples
      - [X] train.predict.bssamples
      - [X] generate.confidence.intervals
-** TODO Clean repository [0/1] 					     :todo12:
-   - [ ] Remove empty git
+** DONE Clean repository [1/1]                                       :todo12:
+   - [X] Remove empty git
 ** DONE Rename TITCO_superlearner.r to make.study.r		     :todo13:
 ** TODO Add playground.r					     :todo14:
    File for testing
@@ -82,3 +82,4 @@
 #+END_SRC
 * Issues
   None yet 
+
