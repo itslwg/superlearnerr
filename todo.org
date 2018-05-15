@@ -39,7 +39,7 @@
    <2018-05-03 Thu>
 ** DONE Add sample data						      :todo6:
    CLOCK: [2018-05-08 Tue 14:40]--[2018-05-09 Wed 08:03] => 17:23
-** INPROGRESS Write sample table function			      :todo7:
+** DONE Write sample table function				      :todo7:
    CLOCK: [2018-05-13 Sun 18:33]--[2018-05-14 Mon 09:07] => 14:34
 ** DONE Add missing indicator funtion				      :todo8:
    CLOCK: [2018-05-10 Thu 09:41]--[2018-05-11 Fri 11:31] => 25:50
