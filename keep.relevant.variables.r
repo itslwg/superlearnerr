@@ -5,6 +5,7 @@
 #' @param study_data The study data as a data frame. No default
 #' @param variables_to_keep Character vector of variables to keep. Defaults to c("doar", "age", "sex", "sbp", "rr", "hr", "egcs", "mgcs", "vgcs", "avpu", "nsi", "tc", "hd", "moi", "s24h", "s30d")
 #' @param variables_to_drop Character vector of variables to drop. Defaults to NULL
+#' @param test Logical. If TRUE, then all observations are kept and before_date and after_date are ignored. Defaults to FALSE
 #' @export
 keep.relevant.variables <- function(
                                     study_data,
@@ -24,7 +25,8 @@ keep.relevant.variables <- function(
                                                           "moi",
                                                           "s24h",
                                                           "s30d"),
-                                    variables_to_drop = NULL
+                                    variables_to_drop = NULL,
+                                    test = FALSE
                                     )
 {
     ## Test that study data if a data frame, stop if not
@@ -39,7 +41,13 @@ keep.relevant.variables <- function(
     ## If variables_to_keep is NULL redefine it using all_vars and variables_to_drop
     if (is.null(variables_to_keep)) variables_to_keep <- all_vars[!(all_vars %in% variables_to_drop)]
     ## Keep only relevant variables
-    study_data <- study_data[variables_to_keep]
-
-    return(study_data)
+    if (test == TRUE){
+        variables_to_keep <- c(variables_to_keep,
+                               "seqn")
+        return(study_data[,variables_to_keep])
+    }
+    if (test == FALSE){
+        study_data <- study_data[,variables_to_keep]
+        return (study_data)
+    }
 }
