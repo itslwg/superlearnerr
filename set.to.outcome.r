@@ -11,9 +11,7 @@ set.to.outcome <- function(
     if (!is.data.frame(study_data)) stop("study_data is not a data frame")
     ## Set s30d to dead if we know that patients were dead on discharge or at 24
     ## hours
-    study_data[study_data$hd == 1 & !is.na(study_data $hd) | study_data$s24h == 1 & !is.na(study_data$s24h), "s30d"] <- 1
-    ## Set s30d to 0 if 2, i.e. to alive if coded alive and admitted to other hospital
-    study_data[study_data$s30d == 2 & !is.na(study_data$s30d), "s30d"] <- 0
+    study_data[study_data$hd == 1 & !is.na(study_data$hd) | study_data$s24h == 1 & !is.na(study_data$s24h), "s30d"] <- "Yes"
     ## Finally remove s24h from the dataset
     study_data <- study_data[, -grep("s24h|hd", colnames(study_data))]
     return (study_data)
