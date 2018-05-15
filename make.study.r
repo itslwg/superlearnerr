@@ -6,13 +6,15 @@
 #' @export
 make.study <- function(
                        data_path =  c("./extdata/sample.csv"),
-                       bs_samples = 10
+                       bs_samples = 3
                        )
 {
     ## Set seed for reproducability
     set.seed(123)
     ## Source all functions (remove when turned into package)
-    for(f in list.files(".", pattern = ".r$", full.names = TRUE)) source(f)
+    files <- list.files(".", pattern = ".r$", full.names = TRUE)
+    files <- files[!(files %in% "./make.study.r")]
+    for (f in files) source(f)
     ## Load all required packages (remove when turned into package)
     load.required.packages()
     ## Import study data
@@ -22,9 +24,11 @@ make.study <- function(
     ## this dataset
     study_data <- drop.observations(study_data, test = TRUE)
     ## Get data dictionary
-    data_dictionary <- get.data.dictionary()
+    data_dictionary <- get.data.dictionary(test = TRUE)
     ## Keep only variables relevant to this study
-    study_data <- keep.relevant.variables(study_data, variables_to_keep = names(data_dictionary))
+    study_data <- keep.relevant.variables(study_data,
+                                          variables_to_keep = names(data_dictionary),
+                                          test = TRUE)
     ## Define 999 as missing
     study_data[study_data == 999] <- NA
     ## Prepare study data using the data dictionary
@@ -37,7 +41,7 @@ make.study <- function(
     ## Collapse mechanism of injury
     study_data <- collapse.moi(study_data)
     ## Apply exclusion criteria, i.e. drop observations with missing outcome
-    ## data and save exclusions to results list 
+    ## data and save exclusions to results list
     results <- list() # List to hold results
     study_data <- apply.exclusion.criteria(study_data)
     ## Create missing indicator variables and save table of number of missing
@@ -49,16 +53,19 @@ make.study <- function(
     results$table_of_sample_characteristics <- create.table.of.sample.characteristics(study_data, data_dictionary)
     ## Transform GCS, MOI, and AVPU into dummy variables,
     ## but keep original variables for table1
-    study_data <- cbind(study_data,
-                        model.matrix( ~.,
-                                     data = study_data)[, -1])
+    study_data <-  as.data.frame(model.matrix( ~.,
+                                              data = study_data)[, -1])
+    ## Prepare data for SuperLearner predictions
+    prepped_data <- prep.data.for.superlearner(study_data, test = TRUE)
     ## Train and review SuperLearner on study sample
-    study_sample <- predictions.with.superlearner(study_data)
+    study_sample <- predictions.with.superlearner(prepped_data)
     ## Bootstrap samples
     samples <- generate.bootstrap.samples(study_data,
-                                          bs_samples)
+                                          3)
+    ## Prepare samples
+    prepped_samples <- prep.bssamples(samples)
     ## Train and review SuperLearner on boostrap samples
-    samples <- train.predict.bssamples(samples = samples)
+    samples <- train.predict.bssamples(samples = prepped_samples)
     ## Create list of analysis to conduct
     funcList <- list(list(func = 'model.review.AUROCC',
                           model_or_pe = c('pred_cat',
@@ -80,3 +87,4 @@ make.study <- function(
 
     return (CIs)
 }
+
