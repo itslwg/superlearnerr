@@ -80,7 +80,8 @@
 ** TODO Modify prep.data.for.superlearner [0/1]                      :todo16:
    - [ ] Fix date issue
 ** TODO Add a create table of missing data function                  :todo17:
-** TODO Add do.median.imputation function                            :todo18:
+** INPROGRESS Add do.median.imputation function			     :todo18:
+   CLOCK: [2018-05-15 Tue 17:54]
 #+END_SRC
 * Issues
   None yet 
