@@ -11,12 +11,15 @@ prepare.study.data <- function(
 {
     ## Error handling
     if (!is.data.frame(study_data)) stop ("Study data has to be a data frame")
+    ## If test, remove seqn to later bind it to the dataframe
+    seqn <- study_data$seqn
+    study_data <- study_data[, !(names(study_data) %in% "seqn")]
     ## Prepare study data using the data dictionary
     study_data[] <- lapply(names(study_data), function(n) {
         vdd <- data_dictionary[[n]] # Get variable specific data dictionary and assign that to vdd
         data <- study_data[, n]
         if (vdd$t == "qual") {
-            values <- vdd$vs # Get values 
+            values <- vdd$vs # Get values
             if (values != ""){
                 split_labels <- split.labels(values) # Get values without quotation marks and split on commas
                 value_labels <- split.labels(vdd$vls) # Get value labels
@@ -27,6 +30,6 @@ prepare.study.data <- function(
         }
         return(data)
     })
-    return(study_data)
-}    
+    return(cbind(study_data, seqn))
+}
 
