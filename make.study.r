@@ -16,21 +16,26 @@ make.study <- function(
     ## Load all required packages (remove when turned into package)
     load.required.packages()
     ## Import study data
-    study_data <- read.csv(data_path)
+    study_data <- read.csv(data_path, stringsAsFactors = FALSE)
     ## Drop obsevations collected before all centres started collecting triage
     ## category data and observations later than one month prior to creating
     ## this dataset
     study_data <- drop.observations(study_data, test = TRUE)
+    ## Get data dictionary
+    data_dictionary <- get.data.dictionary()
     ## Keep only variables relevant to this study
-    study_data <- keep.relevant.variables(study_data)
+    study_data <- keep.relevant.variables(study_data, variables_to_keep = names(data_dictionary))
     ## Define 999 as missing
     study_data[study_data == 999] <- NA
+    ## Prepare study data using the data dictionary
+    study_data <- prepare.study.data(study_data, data_dictionary)
     ## Set patients to dead if dead at discharge or at 24 hours
     ## and alive if coded alive and admitted to other hospital
     study_data <- set.to.outcome(study_data)
-    ## Transform GCS, MOI, and AVPU into factor variables, after collapsing
-    ## mechanism of injury
-    study_data <- to.factor.variables(study_data)
+    ## Make age numeric
+    study_data$age <- as.numeric(study_data$age)
+    ## Collapse mechanism of injury
+    study_data <- collapse.moi(study_data)
     ## Apply exclusion criteria, i.e. drop observations with missing outcome
     ## data and save exclusions to results list 
     results <- list() # List to hold results
@@ -38,6 +43,10 @@ make.study <- function(
     ## Create missing indicator variables and save table of number of missing
     ## values per variable
     study_data <- add.missing.indicator.variables(study_data)
+    ## Do median imputation
+    ## study_data <- do.median.imputation(study_data)
+    ## Create table of sample characteristics
+    results$table_of_sample_characteristics <- create.table.of.sample.characteristics(study_data, data_dictionary)
     ## Transform GCS, MOI, and AVPU into dummy variables,
     ## but keep original variables for table1
     study_data <- cbind(study_data,

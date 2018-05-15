@@ -38,8 +38,6 @@ collapse.moi <- function(
     for (m in moi_list)
         new_moi[grep(paste0(m$codes, collapse = "|"), study_data$moi)] <- m$level
     ## Replace old moi with new, factor moi in dataset
-    study_data <- data.frame(study_data, cmoi = as.factor(new_moi))
-    study_data$moi <- NULL
-
+    study_data$moi <- as.factor(new_moi)
     return (study_data)
 }
