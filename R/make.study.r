@@ -31,6 +31,7 @@ make.study <- function(
     study_data[study_data == 999] <- NA
     ## Prepare study data using the data dictionary
     study_data <- prepare.study.data(study_data, data_dictionary, test = TRUE)
+    str(study_data)
     ## Set patients to dead if dead at discharge or at 24 hours
     ## and alive if coded alive and admitted to other hospital
     study_data <- set.to.outcome(study_data)
