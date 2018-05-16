@@ -34,7 +34,8 @@ Catherine Juillard\textsuperscript{2}, %\Yinyang},
 Kapil Dev Soni\textsuperscript{2}, 
 Deepa Kizhakke Veetil\textsuperscript{2}, 
 Anurag Mishra\textsuperscript{2}, 
-Monty Khajanchi\textsuperscript{2}, 
+Monty Khajanchi\textsuperscript{2},
+Vineet Kumar\textsuperscript{2}, 
 Martin Gerdin Wärnberg\textsuperscript{1*\textcurrency}
 \\
 \bigskip
@@ -74,15 +75,14 @@ interventions, but also strengthened research on effective trauma care delivery.
 Trauma care is highly time sensitive and delays to treatment has been associated
 with increased mortality across settings
 \cite{Yeboah2014,OReilly2013,Roy2017}. Early identification and management of
-potentially fatal injuries and conditions is crucial for survival. A key
-component of trauma care is therefore the process of prioritizing patients to
-match level of care with clinical acuity \cite{EAST2010,NICE2016}. The existing
-literature on how to prioritise trauma patients focuses largely on two
-issues. First, in the prehospital setting the main focus has been to idenfity
-patients who merit transfer to a trauma centre \cite{Voskens2018}. Second, in
-the hospital setting a substantial body of research has focused on the
-appropriate criteria for trauma team activation
-\cite{VanRein2018,Tignanelli2018}.
+potentially life threatening injuries is crucial for survival. A key component
+of trauma care is therefore the process of prioritizing patients to match level
+of care with clinical acuity \cite{EAST2010,NICE2016}. The existing literature
+on how to prioritise trauma patients focuses largely on two issues. First, in
+the prehospital setting the main focus has been to idenfity patients who merit
+transfer to a trauma centre \cite{Voskens2018}. Second, in the hospital setting
+a substantial body of research has focused on the appropriate criteria for
+trauma team activation \cite{VanRein2018,Tignanelli2018}.
 
 Although both these issues are important, clinicians all over the world are on a
 daily basis faced with the more complex problem of how to decide in what order
@@ -167,13 +167,14 @@ rationale for this setup is that SSKM is the only referral centre for
 neurosurgical care in the Kolkata metropolitan area, which has a population of
 close to 15 million people. Because both MAMC and SSKM are tertiary referral
 hospitals a majority of patients arriving at their EDs are transferred from
-other health facilities. Prehospital care is rudimentary in all three cities,
-with no organised emergency medical services. Ambulances are predominatly used
-for inter-hospital transfers and most patients who arrive directly from the
-scene of the incident are brought by the police or in private vehicles. Patients
-arriving to the ED are at all centres first seen by a casualty medical officer
-on a largely first come first served basis. There is no formalised system for
-prioritising ED patients at any of the centres.
+other health facilities, with almost no transfer protocols in place. Prehospital
+care is rudimentary in all three cities, with no organised emergency medical
+services. Ambulances are predominatly used for inter-hospital transfers and most
+patients who arrive directly from the scene of the incident are brought by the
+police or in private vehicles. Patients arriving to the ED are at all centres
+first seen by a casualty medical officer on a largely first come first served
+basis. There is no formalised system for prioritising ED patients at any of the
+centres.
 
 \subsection*{Data Collection}
 Data was collected by one dedicated project officer at each site. The project
