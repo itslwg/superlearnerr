@@ -37,7 +37,9 @@
    - [ ] Bibliography
    - [-] Revise introduction and methods according to comments [1/8]
      - [X] Catherine
-     - [ ] Kapil
+     - [-] Kapil
+       - [X] Sent email asking for clarifications
+       - [ ] Incorporate changes
      - [ ] Deepa
      - [ ] Anurag
      - [ ] Monty
