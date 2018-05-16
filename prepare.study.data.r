@@ -3,17 +3,22 @@
 #' Prepares the study data using the data dictionary
 #' @param study_data The study data frame. No default.
 #' @param data_dictionary The data dictionary object. No default.
+#' @param test Logical. If TRUE seqn is preserved in study_data. Defaults to FALSE.
 #' @export
 prepare.study.data <- function(
                                study_data,
-                               data_dictionary
+                               data_dictionary,
+                               test = FALSE
                                )
 {
     ## Error handling
     if (!is.data.frame(study_data)) stop ("Study data has to be a data frame")
     ## If test, remove seqn to later bind it to the dataframe
-    seqn <- study_data$seqn
-    study_data <- study_data[, !(names(study_data) %in% "seqn")]
+    if (test) {
+        seqn <- study_data$seqn # Get seqn as object
+        seqn[is.na(seqn)] <- 999 # seqn = 999 should not be NA
+        study_data$seqn <- NULL # Remove from study_data
+    }
     ## Prepare study data using the data dictionary
     study_data[] <- lapply(names(study_data), function(n) {
         vdd <- data_dictionary[[n]] # Get variable specific data dictionary and assign that to vdd
@@ -30,6 +35,8 @@ prepare.study.data <- function(
         }
         return(data)
     })
-    return(cbind(study_data, seqn))
+    ## If test is TRUE add seqn again
+    if (test) study_data <- data.frame(study_data, seqn = seqn)
+    return(study_data)
 }
 

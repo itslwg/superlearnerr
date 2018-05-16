@@ -80,8 +80,16 @@
 ** TODO Modify prep.data.for.superlearner [0/1]                      :todo16:
    - [ ] Fix date issue
 ** TODO Add a create table of missing data function                  :todo17:
-** INPROGRESS Add do.median.imputation function			     :todo18:
-   CLOCK: [2018-05-15 Tue 17:54]
+** INPROGRESS Add do.median.imputation function 		     :todo18:
+** DONE Add documentation to functions [2/2]			     :todo19:
+   - [X] get.data.dictionary
+   - [X] keep.relevant.variables
+** DONE Reformat test statements				     :todo20:
+   CLOCK: [2018-05-16 Wed 07:51]--[2018-05-16 Wed 07:56] =>  0:05
+** DONE Add calculate time from injury to arrival function	     :todo21:
+   CLOCK: [2018-05-16 Wed 08:00]--[2018-05-16 Wed 09:20] =>  1:20
+** TODO Modify create table of sample characteristics function       :todo22:
+   Change Abbreviations: to Abbreviations and explanations:
 #+END_SRC
 * Issues
   None yet 
