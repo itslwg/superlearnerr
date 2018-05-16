@@ -35,7 +35,7 @@
    - [ ] Conclusion
    - [ ] Acknowledgments
    - [ ] Bibliography
-   - [-] Revise introduction and methods according to comments [4/8]
+   - [-] Revise introduction and methods according to comments [5/8]
      - [X] Catherine
      - [-] Kapil
        - [X] Sent email asking for clarifications
@@ -43,7 +43,7 @@
      - [X] Deepa
      - [X] Anurag
      - [X] Monty
-     - [ ] Vineet
+     - [X] Vineet
      - [ ] Alan
      - [ ] Sara
 ** TODO Finalise paper						      :todo4:
