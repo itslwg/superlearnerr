@@ -1,6 +1,6 @@
 #+TODO: TODO INPROGRESS | DONE
 * Things to do
-#+BEGIN_SRC org
+##+BEGIN_SRC org
 ** DONE Add todo						      :todo1:
 ** DONE Add README						      :todo2:
 ** INPROGRESS Draft paper [13%] 				      :todo3:
@@ -35,8 +35,8 @@
    - [ ] Conclusion
    - [ ] Acknowledgments
    - [ ] Bibliography
-   - [ ] Revise introduction and methods according to comments [0/8]
-     - [ ] Catherine
+   - [-] Revise introduction and methods according to comments [1/8]
+     - [X] Catherine
      - [ ] Kapil
      - [ ] Deepa
      - [ ] Anurag
