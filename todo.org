@@ -90,6 +90,7 @@
    CLOCK: [2018-05-16 Wed 08:00]--[2018-05-16 Wed 09:20] =>  1:20
 ** TODO Modify create table of sample characteristics function       :todo22:
    Change Abbreviations: to Abbreviations and explanations:
+** TODO Update descriptions of functions                             :todo23:
 #+END_SRC
 * Issues
   None yet 
