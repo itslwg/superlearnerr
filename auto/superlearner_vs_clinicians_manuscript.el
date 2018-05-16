@@ -5,6 +5,13 @@
                      '(("article" "10pt" "letterpaper")))
    (TeX-add-to-alist 'LaTeX-provided-package-options
                      '(("geometry" "top=0.85in") ("inputenc" "utf8x") ("lineno" "right") ("xcolor" "table")))
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperref")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperimage")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperbaseurl")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "nolinkurl")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "url")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "path")
+   (add-to-list 'LaTeX-verbatim-macros-with-delims-local "path")
    (TeX-run-style-hooks
     "latex2e"
     "article"
@@ -27,7 +34,9 @@
     "Brohi2017"
     "GBD2017"
     "UN2018"
-    "Fitzgerald2011"
+    "Yeboah2014"
+    "OReilly2013"
+    "Roy2017"
     "EAST2010"
     "NICE2016"
     "Voskens2018"
@@ -37,6 +46,9 @@
     "Benjamin2018"
     "VanRein2018"
     "SATG2012"
+    "ESI2012"
+    "Baker2013"
+    "Choi2017"
     "Beam2018"
     "Nevin2018"
     "Liu2017"

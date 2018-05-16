@@ -24,13 +24,13 @@
 \\
 % ** Version
 {\large
-  Draft version 1.0.0
+  Draft version 1.0.1
 }
 \newline
 \\
 % ** Authors
 Ludvig Wärnberg Gerdin\textsuperscript{1}, %\Yinyang},
-Name2 Surname\textsuperscript{2}, %\Yinyang},
+Catherine Juillard\textsuperscript{2}, %\Yinyang},
 Name3 Surname\textsuperscript{2}, 
 Name4 Surname\textsuperscript{2}, 
 Name5 Surname\textsuperscript{2}, 
@@ -65,77 +65,74 @@ Trauma is a major threat to population health globally
 \cite{Brohi2017,GBD2017}. Every year about 4.6 million people die because of
 trauma - a number that exceeds the total number of yearly deaths from HIV/AIDS,
 malaria and tuberculosis combined. The most common cause of trauma is road
-injuries and in 2016 an estimated 1.3 million people died from such trauma alone
-\cite{GBD2017}. Global actors have vowed to try to halve the number of deaths
-from road trauma by 2020, but this sustainable development goal is far from
-being realised \cite{UN2018}. This situation calls for not only more action, but
-also more research on what works and does not work in trauma care.
+traffic injuries (RTIs); in 2016 an estimated 1.3 million people died from RTIs
+alone \cite{GBD2017}. Global actors have vowed to try to halve the number of
+deaths from road trauma by 2020, but this sustainable development goal is far
+from being realized \cite{UN2018}. This situation calls for not only more
+interventions, but also strengthened research on effective trauma care delivery.
 
-Trauma care is highly time sensitive \cite{Fitzgerald2011}. Early identification
-of potentially fatal injuries and conditions is crucial for survival. A key
-component of trauma care is therefore the process of prioritising patients to
-match level of care with clinical acuity \cite{EAST2010,NICE2016}. The
-literature on how to prioritise trauma patients focuses largely on two
-issues. First, in the prehospital setting the main focus has been to idenfity
-patients who should be transferred to a trauma centre \cite{Voskens2018}. In the
-hospital setting a substantial body of research has focused on when to activate
-the trauma team \cite{VanRein2018,Tignanelli2018}.
+Trauma care is highly time sensitive and delays to treatment has been associated
+with increased mortality across settings
+\cite{Yeboah2014,OReilly2013,Roy2017}. Early identification of potentially fatal
+injuries and conditions is crucial for survival. A key component of trauma care
+is therefore the process of prioritizing patients to match level of care with
+clinical acuity \cite{EAST2010,NICE2016}. The literature on how to prioritise
+trauma patients focuses largely on two issues. First, in the prehospital setting
+the main focus has been to idenfity patients who merit transfer to a trauma
+centre \cite{Voskens2018}. Second, in the hospital setting a substantial body of
+research has focused on the appropriate criteria for trauma team activation
+\cite{VanRein2018,Tignanelli2018}.
 
 Although both these issues are important, clinicians all over the world are on a
 daily basis faced with the more complex problem of how to decide in what order
-to assess and treat trauma patients that arrive to the emergency department (ED)
-without any pre-notification. In health systems with formalised criteria for
-prioritising ED patients, all patients are assigned a priority coupled with a
-target time to treat. These priorities are commonly coded using numbers or
-colors, for example red, orange, yellow and green, with red being assigned to
-the most urgent patients and green to the least urgent \cite{SATG2012}.
+to assess and treat trauma patients that arrive to the emergency department
+(ED). In health systems with formalised criteria for prioritizing ED patients,
+all patients are assigned a priority coupled with a target time to treat. These
+priorities are may be coded using colors, for example red, orange,
+yellow and green, with red being assigned to the most urgent patients and green
+to the least urgent \cite{SATG2012}, or numbers \cite{ESI2012}.
 
-In contrast to the trauma centre transfer or trauma team activation issues the
-``how'' in how to prioritise among trauma patients in the ED has received little
+In health systems without formalized criteria, for example in many low resource
+settings, clinician gestalt is used informally to prioritize among trauma
+patients arriving to the ED \cite{Baker2013}. As there is commonly no formal
+prehospital care systems in such settings, trauma patients often arrive to the
+ED without warning and without any form of previous prioritisation to guide the
+appropriate level of care in hospital \cite{Choi2017}. Also, mass casualties may
+occur frequently, especially in RTIs. Identifying ways to quickly prioritize the
+patients in need of more immediate care would therefore be very valuable in a
+many low resource settings.
+
+In contrast to trauma centre transfer or trauma team activation, the approach to
+prioritization among trauma patients arriving to the ED has received little
 attention from the research community. Framed as a classification problem this
-``how'' can be approached using a statistical learner. Logistic or proportional
+challenge can be addressed using a statistical learner. Logistic or proportional
 hazards models are common classification learners whereas more modern
 alternatives include random forests or convolutional neural networks. These
 learners all exist along the machine learning spectrum governed by their
 relative ``human-to-machine decision-making-effort'', with regression learners
-in the more-human-than-machine (MHTM) end and networks in the other
-\cite{Beam2018}.
+in the more-human-than-machine (MHTM) end and networks at the other, more
+machine than human (MMTH), end of the spectrum \cite{Beam2018}.
 
-The application of more-machine-than-human (MMTH) learners to solve
-classification problems in medicine is not new \cite{Nevin2018}, but the uptake
-and use of such learners in trauma research has been slow \cite{Liu2017}. Some
-studies have approached the trauma centre transfer and trauma team activation
-issues using MMTH learners, and the results are conflicting with regards to the
-superiority of such learners over MHTM learners or standard criteria
+The application of MMTH learners to solve classification problems in medicine is
+not new \cite{Nevin2018}, but the uptake and use of such learners in trauma
+research has been slow \cite{Liu2017}. Some studies have approached the trauma
+centre transfer and trauma team activation issues using MMTH learners, and the
+results are conflicting with regards to the superiority of such learners over
+MHTM learners or standard criteria
 \cite{Talbert2007,Pearl2008,Scerbo2014,Follin2016}. One very recent study used a
 random forest learner to assign priority to patients in a general ED population,
 and found a slight performance improvement using this MMTH learner compared to
-the standard criteria \cite{Levin2018}. 
+the standard criteria \cite{Levin2018}.
 
 Thus, there seems to be a void of reseach on how to leverage machine learning to
 prioritise among trauma patients in the ED. Therefore, we set out to conduct a
 benchmark study, in which we attempted to improve on what we considered the two
 most important limitations of previous related research, namely the use of
-retrospective data and the focus on one specific MHTM or MMTH learner. Hence, we
-aimed to compare the performance of an ensemble machine learning methodology
-called SuperLearner to that of clinicians based on patients' clinical
-gestal. Our hypothesis was that the performance of the SuperLearner would be
-non-inferior to that of clinicians.
-
-% Points to add:
-% - Delays in care cause mortality
-% Yeboah D, Mock C, Karikari P, Agyei-Baffour P, Donkor P, Ebel B. Minimizing
-% preventable trauma deaths in a limited-resource setting: A test-case of a
-% multidisciplinary panel review approach at the Komfo Anokye Teaching Hospital in
-% Ghana. World J Surg. 2014;38(7):1707–12.
-% O’Reilly D, Mahendran K, West A, Shirley P, Walsh M, Tai N. Opportunities for
-% improvement in the management of patients who die from haemorrhage after
-% trauma. Br J Surg. 2013;100:749–55.
-% Roy N, Veetil DK, Khajanchi MU, Kumar V, Solomon H, Kamble J, et al. Learning
-% from 2523 trauma deaths in India- opportunities to prevent in-hospital
-% deaths. BMC Health Serv Res. 2017;17(142):1–8.
-% - Better prioritisation may reduce those deaths
-% - Scope of the problem
+retrospective data and the focus on one specific MHTM or MMTH learner. We aimed
+to compare the performance of an ensemble machine learning methodology called
+SuperLearner to that of clinician gestalt based on patients’ presentation. Our
+hypothesis was that the performance of the SuperLearner would be non-inferior to
+that of clinician gestalt.
 
 % ** Materials and Methods
 \section*{Materials and Methods}
@@ -183,9 +180,12 @@ Data was collected by one dedicated project officer at each site. The project
 officers all had a masters degree in life sciences. They worked five eight hour
 shifts per week so that mornings, evenings and nights were covered according to
 a rotating schedule. Project officers spent approximately six out of the eight
-hours collecting data in the ED and the remaining two following up
-patients. They first collected data on paper forms and then transferred this
-data to a digital database.
+hours collecting data in the ED and the remaining two following up patients. The
+rationale for this setup was to ensure collection of high-quality data from a
+representative sample of trauma patients arriving to the EDs at participating
+centres, while keeping to the projects budget constraints. Project officers
+first collected data on paper forms and then transferred this data to a digital
+database.
 
 % *** Participants
 \subsection*{Participants}
@@ -216,7 +216,7 @@ recorded as missing.
 \subsubsection*{Patient characteristics and SuperLearner variables}
 The dependent variable, or label, used to train the SuperLearner was all-cause
 30 day mortality, defined as death from any cause within 30 days of arrival to a
-participating centre. This data was extracted from patient records if the
+participating centre. These data were extracted from patient records if the
 patient was still in hospital 30 days after arrival, or collected by calling the
 patient or a patient representative if the patient was not in hospital.
 
@@ -270,15 +270,18 @@ more or less all health systems. They are also included in the most well know
 clinical prediction models designed to predict trauma mortality \cite{Rehn2011}.
 
 \subsubsection*{Clinicians' priorities}
-Clinicians were instructed by the project officers to assign a priority to each
-patient. The priority levels were color coded. Red was assigned to the most
-serious patients that should be treated first. Green was assigned to the least
-serious patients that should be treated last. Orange and yellow were
-intermediate levels, where orange patients were less serious than red but more
-serious than yellow and green whereas yellow patients were less serious than red
-and orange patients but more serious than green patients. The clinicians were
-allowed to use all information available at the time when they assigned these
-variables, which was as soon as they had first seen the patient.
+For the purpose of this study, clinicians were instructed by the project
+officers to assign a priority to each patient. The priority levels were color
+coded. Red was assigned to the most serious patients that should be treated
+first. Green was assigned to the least serious patients that should be treated
+last. Orange and yellow were intermediate levels, where orange patients were
+less serious than red but more serious than yellow and green whereas yellow
+patients were less serious than red and orange patients but more serious than
+green patients. The clinicians were allowed to use all information available at
+the time when they assigned these variables, which was as soon as they had first
+seen the patient. The priorities were not used to guide further patient care and
+no interventions were implemented as part of the study for patients assigned to
+the more urgent priority levels.
 
 % *** Bias
 \subsection*{Bias}
@@ -453,14 +456,33 @@ Remains to be written.
   \newblock {Sustainable development goal 3.  Ensure healthy lives and promote
     well-being for all at all ages}
   \newblock [Cited 4 May 2018]. Available from: \url{https://sustainabledevelopment.un.org/sdg3}
-% *** Fitzgerald2011
-\bibitem{Fitzgerald2011}
-  Fitzgerald M, Cameron P, Mackenzie C, Farrow N, Scicluna P, Gocentas R, et al.
-  \newblock {Trauma Resuscitation Errors and Computer-Assisted Decision Support}.
-  \newblock Arch Surg. 2011;146(2):218–25.
-% *** EAST2010
-\bibitem{EAST2010}
-  Eastern Association for the Surgery of Trauma (EAST).
+% *** Yeboah2014
+\bibitem{Yeboah2014}
+  Yeboah D, Mock C, Karikari P, Agyei-Baffour P, Donkor P, Ebel B.
+  \newblock {Minimizing preventable trauma deaths in a limited-resource setting:
+    A test-case of a multidisciplinary panel review approach at the Komfo Anokye
+    Teaching Hospital in Ghana.}
+  \newblock World J Surg. 2014;38(7):1707–12.
+% *** OReilly2013  
+\bibitem{OReilly2013}
+  O’Reilly D, Mahendran K, West A, Shirley P, Walsh M, Tai N.
+  \newblock {Opportunities for improvement in the management of patients who die
+    from haemorrhage after trauma.}
+  \newblock Br J Surg. 2013;100:749–55.                                             
+% *** Roy2017  
+\bibitem{Roy2017}
+  Roy N, Veetil DK, Khajanchi MU, Kumar V, Solomon H, Kamble J, et al.
+  \newblock {Learning from 2523 trauma deaths in India - opportunities to
+    prevent in-hospital deaths.}
+  \newblock BMC Health Serv Res. 2017;17(142):1–8.
+% *** Fitzgerald2011                                                                  
+% \bibitem{Fitzgerald2011}                                                              
+%   Fitzgerald M, Cameron P, Mackenzie C, Farrow N, Scicluna P, Gocentas R, et al.      
+%   \newblock {Trauma Resuscitation Errors and Computer-Assisted Decision Support}.     
+%   \newblock Arch Surg. 2011;146(2):218–25.                                            
+% *** EAST2010                                                                        
+\bibitem{EAST2010}                                                                    
+  Eastern Association for the Surgery of Trauma (EAST).                               
   \newblock{Practice Management Guidelines for the Appropriate Triage of the Victim of
     Trauma.}
   \newblock EAST. 2010.
@@ -504,13 +526,28 @@ Remains to be written.
 \bibitem{VanRein2018}
   van Rein EAJ, van der Sluijs R, Houwert RM, Gunning AC, Lichtveld RA, Leenen LPH, et al.
   \newblock {Effectiveness of prehospital trauma triage systems in selecting
-    severely injured patients: Is comparative analysis possible?}.
+    severely injured patients: Is comparative analysis possible?}
   \newblock Am J Emerg Med. 2018.
 % *** SATG2012
 \bibitem{SATG2012}
   South African Triage Group.
-  \newblock{The South African Triage Scale Training Manual 2012}.
+  \newblock{The South African Triage Scale Training Manual 2012.}
   \newblock{Western Cape Government. 2012.}
+% *** ESI2012
+\bibitem{ESI2012}
+  Agency for Healthcare Research and Quality.
+  \newblock{Emergency Severity Index (ESI). A Triage Tool for Emergency Department Care.}
+  \newblock{U.S. Department of Health \& Human Services. 2012; Version 4.}
+% *** Baker2013
+\bibitem{Baker2013}
+  Baker T, Lugazia E, Eriksen J, Mwafongo V, Irestedt L, Konrad D.
+  \newblock{Emergency and critical care services in Tanzania.}
+  \newblock{BMC Health Serv Res. 2013;13(140).}
+% *** Choi2017
+\bibitem{Choi2017}
+  Choi SJ, Oh MY, Kim NR, Jung YJ, Ro YS, Shin S Do.
+  \newblock{Comparison of trauma care systems in Asian countries: A systematic literature review.}
+  \newblock{Emerg Med Australas. 2017;29(June):697–711. }
 % *** Beam2018
 \bibitem{Beam2018}
   Beam AL, Kohane IS.
