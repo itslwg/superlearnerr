@@ -81,13 +81,13 @@
    - [ ] Fix date issue
 ** TODO Add a create table of missing data function                  :todo17:
 ** INPROGRESS Add do.median.imputation function 		     :todo18:
-** INPROGRESS Add documentation to functions [0/2]		     :todo19:
-   - [ ] get.data.dictionary
-   - [ ] keep.relevant.variables
-** INPROGRESS Reformat test statements				     :todo20:
+** DONE Add documentation to functions [2/2]			     :todo19:
+   - [X] get.data.dictionary
+   - [X] keep.relevant.variables
+** DONE Reformat test statements				     :todo20:
    CLOCK: [2018-05-16 Wed 07:51]--[2018-05-16 Wed 07:56] =>  0:05
-** INPROGRESS Add calculate time from injury to arrival function     :todo21:
-   CLOCK: [2018-05-16 Wed 08:00]
+** DONE Add calculate time from injury to arrival function	     :todo21:
+   CLOCK: [2018-05-16 Wed 08:00]--[2018-05-16 Wed 09:20] =>  1:20
 ** TODO Modify create table of sample characteristics function       :todo22:
    Change Abbreviations: to Abbreviations and explanations:
 #+END_SRC
