@@ -88,6 +88,8 @@
    CLOCK: [2018-05-16 Wed 07:51]--[2018-05-16 Wed 07:56] =>  0:05
 ** INPROGRESS Add calculate time from injury to arrival function     :todo21:
    CLOCK: [2018-05-16 Wed 08:00]
+** TODO Modify create table of sample characteristics function       :todo22:
+   Change Abbreviations: to Abbreviations and explanations:
 #+END_SRC
 * Issues
   None yet 
