@@ -1,9 +1,9 @@
 #+TODO: TODO INPROGRESS | DONE
 * Things to do
 #+BEGIN_SRC org
-** DONE Add todo
-** DONE Add README
-** INPROGRESS Draft paper [14%]
+** DONE Add todo						      :todo1:
+** DONE Add README						      :todo2:
+** INPROGRESS Draft paper [14%]					      :todo3:
    CLOCK: [2018-05-06 Sun 08:27]--[2018-05-07 Mon 11:03] => 26:36
    CLOCK: [2018-05-03 Thu 15:28]--[2018-05-04 Fri 06:52] => 15:24
    CLOCK: [2018-05-03 Thu 12:24]--[2018-05-03 Thu 15:13] =>  2:49
@@ -34,9 +34,64 @@
    - [ ] Conclusion
    - [ ] Acknowledgments
    - [ ] Bibliography
-** TODO Finalise paper
-** DONE Update this file to have TODO|DONE show on github
+** TODO Finalise paper						      :todo4:
+** DONE Update this file to have TODO|DONE show on github	      :todo5:
    <2018-05-03 Thu>
+** DONE Add sample data						      :todo6:
+   CLOCK: [2018-05-08 Tue 14:40]--[2018-05-09 Wed 08:03] => 17:23
+** DONE Write sample table function				      :todo7:
+   CLOCK: [2018-05-13 Sun 18:33]--[2018-05-14 Mon 09:07] => 14:34
+** DONE Add missing indicator funtion				      :todo8:
+   CLOCK: [2018-05-10 Thu 09:41]--[2018-05-11 Fri 11:31] => 25:50
+   CLOCK: [2018-05-10 Thu 08:19]--[2018-05-10 Thu 09:22] =>  1:03
+** DONE Modify drop.observations function			      :todo9:
+   CLOCK: [2018-05-10 Thu 09:22]--[2018-05-10 Thu 09:38] =>  0:16
+   Should exclude patients enrolled before 2016-07-28 and after
+   2018-04-07
+** TODO Change make.study()                                          :todo10:
+** DONE Reformate code structure [1/1]                               :todo11:
+   CLOCK: [2018-05-10 Thu 19:52]--[2018-05-10 Thu 21:16] =>  1:24
+   - [X] Create files [100%]
+     - [X] make.study
+     - [X] load.required.packages
+     - [X] drop.observations
+     - [X] keep.relevant.variables
+     - [X] collapse.moi
+     - [X] to.factor.variables
+     - [X] set.to.outcome
+     - [X] cc.and.omitted
+     - [X] prep.data.for.superlearner
+     - [X] predictions.with.superlearner
+     - [X] model.review.AUROCC
+     - [X] model.review.reclassification
+     - [X] diff
+     - [X] significance.testing
+     - [X] generate.pvalue
+     - [X] generate.bootstrap.samples
+     - [X] train.predict.bssamples
+     - [X] generate.confidence.intervals
+** DONE Clean repository [1/1]                                       :todo12:
+   - [X] Remove empty git
+** DONE Rename TITCO_superlearner.r to make.study.r		     :todo13:
+** DONE Add playground.r                                             :todo14:
+   File for testing
+** DONE Exclude only those with missing in outcome		     :todo15:
+   CLOCK: [2018-05-11 Fri 11:31]--[2018-05-12 Sat 08:16] => 20:45
+** TODO Modify prep.data.for.superlearner [0/1]                      :todo16:
+   - [ ] Fix date issue
+** TODO Add a create table of missing data function                  :todo17:
+** DONE Add do.median.imputation function			     :todo18:
+** DONE Add documentation to functions [2/2]			     :todo19:
+   - [X] get.data.dictionary
+   - [X] keep.relevant.variables
+** DONE Reformat test statements				     :todo20:
+   CLOCK: [2018-05-16 Wed 07:51]--[2018-05-16 Wed 07:56] =>  0:05
+** DONE Add calculate time from injury to arrival function	     :todo21:
+   CLOCK: [2018-05-16 Wed 08:00]--[2018-05-16 Wed 09:20] =>  1:20
+** TODO Modify create table of sample characteristics function       :todo22:
+   Change Abbreviations: to Abbreviations and explanations:
+** TODO Update descriptions of functions                             :todo23:
 #+END_SRC
 * Issues
   None yet 
+
