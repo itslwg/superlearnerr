@@ -20,11 +20,13 @@ get.data.dictionary <- function(
     names(data_dictionary) <- new_names # Apply names
     ## Make a list of the data dictionary
     data_dictionary_list <- lapply(setNames(nm = data_dictionary$vn), function(x) as.list(data_dictionary[data_dictionary$vn == x, ]))
-    if (test == TRUE) {
+    ## Remove date variables if test is TRUE
+    if (test) {
         to_remove <- c("doar", "toi", "doi", "toar")
         for (var in to_remove) data_dictionary_list[[var]] <- NULL
-        return(data_dictionary_list)
+
     }
     if (test == FALSE) return(data_dictionary_list)
+    return(data_dictionary_list)
 }
 
