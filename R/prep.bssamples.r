@@ -9,6 +9,6 @@ prep.bssamples <- function(
 {
     ##Prepare every bootstrap sample
     prepped_samples <- lapply(samples,
-                              function(df) prep.data.for.superlearner(df, test = TRUE))
+                              function(df) to.dummy.variables(prep.data.for.superlearner(df, test = TRUE)))
     return (prepped_samples)
 }

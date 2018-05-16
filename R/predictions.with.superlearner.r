@@ -6,22 +6,22 @@
 #' @export
 predictions.with.superlearner <- function(
                                           prepped_data,
-                                          models = c('SL.mean', 'SL.glmnet')
+                                          models = c('SL.glmnet')
                                           )
 {
     ## Train algorithm with training set
-    train_algo <- SuperLearner(Y = prepped_data$outcome$y_train,
-                               X = prepped_data$sets_wo_tc$x_train,
+    train_algo <- SuperLearner(Y = prepped_data$y_train,
+                               X = prepped_data$x_train,
                                family = binomial(),
                                SL.library = models)
     ## Predict with algorithm on review set
     predictions <- predict(train_algo,
-                           prepped_data$sets_wo_tc$x_review,
+                           prepped_data$x_review,
                            onlySL = T)
     ## Subset continous predictions for categorisation
     pred <- predictions$pred
     ## Get quantiles of predictions
-    quantiles <- quantile(predictions$pred, probs = c(0.25, 0.50, 0.75))
+    quantiles <- quantile(pred, probs = c(0.25, 0.50, 0.75))
     ## Use those to categorise predictions
     labels <- c('green', 'yellow', 'orange', 'red') # define labels
     pred_cat <- cut(pred,
@@ -29,11 +29,10 @@ predictions.with.superlearner <- function(
                     labels = labels,
                     include.lowest = TRUE)
     ## Return data with predictions and study data
-    pred_data <- list(clinicians_predictions = prepped_data$sets_w_tc$x_review$tc,
-                      pred_con = pred,
+    pred_data <- list(pred_con = pred,
                       pred_cat = pred_cat,
-                      outcome_review = prepped_data$outcome$y_review)
+                      tc = prepped_data$tc,
+                      outcome = prepped_data$y_review)
 
-    return (list(preds = pred_data,
-                 data = prepped_data))
+    return (pred_data)
 }
