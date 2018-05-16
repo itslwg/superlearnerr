@@ -1,4 +1,3 @@
-## *** Generate bootstrap samples
 #' Function to generate bootstrap samples
 #'
 #' This function generates bootstrap samples from the study_data.
