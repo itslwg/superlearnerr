@@ -24,15 +24,13 @@ make.study <- function(
     ## this dataset
     study_data <- drop.observations(study_data, test = TRUE)
     ## Get data dictionary
-    data_dictionary <- get.data.dictionary(test = TRUE)
+    data_dictionary <- get.data.dictionary()
     ## Keep only variables relevant to this study
-    study_data <- keep.relevant.variables(study_data,
-                                          variables_to_keep = names(data_dictionary),
-                                          test = TRUE)
+    study_data <- keep.relevant.variables(study_data, data_dictionary)
     ## Define 999 as missing
     study_data[study_data == 999] <- NA
     ## Prepare study data using the data dictionary
-    study_data <- prepare.study.data(study_data, data_dictionary)
+    study_data <- prepare.study.data(study_data, data_dictionary, test = TRUE)
     ## Set patients to dead if dead at discharge or at 24 hours
     ## and alive if coded alive and admitted to other hospital
     study_data <- set.to.outcome(study_data)
@@ -40,6 +38,9 @@ make.study <- function(
     study_data$age <- as.numeric(study_data$age)
     ## Collapse mechanism of injury
     study_data <- collapse.moi(study_data)
+    ## Add time between injury and arrival and drop date and time variables from
+    ## study data
+    study_data <- add.time.between.injury.and.arrival(study_data, data_dictionary)
     ## Apply exclusion criteria, i.e. drop observations with missing outcome
     ## data and save exclusions to results list
     results <- list() # List to hold results
