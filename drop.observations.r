@@ -27,6 +27,6 @@ drop.observations <- function(
         study_data <- study_data[study_data$doar >= before_date, ]
         ## Drop observations included later than one month prior to creating this dataset
         study_data <- study_data[study_data$doar <= after_date, ]
-    }
-    return(study_data)
+    } 
+    return (study_data)
 }
