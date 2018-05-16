@@ -254,14 +254,10 @@ ranges from one to four, where four indicates that the patient opens his or her
 eyes spontaneously (best response) whereas one indicates that the patient does
 not open eyes regardless of stimuli (worst response). The verbal and motor
 responses are graded similarly, but ranges between one to five and one to six
-respectively. The eye and verbal components also include a non-testable
-level. The eye component is coded non-testable if for example there is so much
-facial swelling that the patient cannot open his or her eyes. The verbal
-component is coded non-testable if for example the patient is intubated, and
-because of this cannot talk. In assigning GCS the project officers used the
-official Glasgow Coma Scale Assessment Aid \cite{GCSAID}. AVPU simply indicates
-whether the patient is alert, responds to voice stimuli, painful stimuli, or
-does not respond at all.
+respectively. All components also include a non-testable level. In assigning GCS
+the project officers used the official Glasgow Coma Scale Assessment Aid
+\cite{GCSAID}. AVPU simply indicates whether the patient is alert, responds to
+voice stimuli, painful stimuli, or does not respond at all.
 
 The rationale for including these specific features were that they can be
 reasonably exptected to be available when a trauma patient arrives to the
@@ -307,6 +303,7 @@ section below. We then calculated descriptive statistics of all variables, using
 medians and interquartile ranges (IQR) for continuous variables and counts and
 percentages for qualitative variables.
 
+\subsubsection*{Development of the SuperLearner}
 We then developed our SuperLearner in the training set using the SuperLearner R
 package \cite{SuperLearner}. SuperLearner is an ensemble machine learning
 algorithm, meaning that it uses a library of techniques or specific learners, in
@@ -321,6 +318,7 @@ data of nine of these parts and evaluated in the tenth. This procedure is then
 repeated ten times, i.e. each part is used once as the evaluation data, and is
 intended to limit overfitting and reduce optimism.
 
+\subsubsection*{Assigning Priority Levels using the SuperLearner Prediction}
 The SuperLearner was then used to assign levels of priority to the patients in
 the training set. This was done by bucketing the SuperLearner prediction into
 four buckets by its values at the 25\textsuperscript{th},
@@ -328,24 +326,25 @@ four buckets by its values at the 25\textsuperscript{th},
 corresponded to the green, yellow, orange, and red levels of priority assigned
 by the clinicians'. The performance of both the continuous and bucketed
 SuperLearner predictions in the training set was then evaluated using the area
-under the receiver operating characteristics curve (AUROCC).
+under the receiver operating characteristics curve (AUROCC). We then used the
+SuperLearner to predict the outcomes of the patients in the test set and used
+the cutoff values from the training set to assign a level of priority to each
+patient in this set.
 
-We then used the SuperLearner to predict the outcomes of the patients in the
-test set and used the cutoff values from the training set to assign a level of
-priority to each patient in this set. The perfomance of the continous and
-bucketed SuperLearner predictions, as well as the clinicians, was then evaluated
-by estimating their AUROCC. The levels of priority assigned by the SuperLearner
-and clinicians respectively were then compared using the net reclassification
-improvement, in events (patient with the outcome, i.e. died within 30-days from
-arrival) and non-events (patient without the outcome) respectively. The net
-reclassification improvement in events was defined as the difference between the
-proportion of events assigned a higher priority by the SuperLearner than the
-clinicians and the proportion of events assigned a lower priority by the
-SuperLearner than the clinicians. Conversely, the net reclassification in
-non-events was defined as the difference between th proportion of non-events
-assigned to a lower priority by the SuperLearner than the clinicians and the
-proportion of non-events assigned a higher priority by the SuperLearner than the
-clinicians.
+\subsubsection*{Comparing the SuperLearner and Clinicians}
+The perfomance of the continous and bucketed SuperLearner predictions, as well
+as the clinicians, was then evaluated by estimating their AUROCC. The levels of
+priority assigned by the SuperLearner and clinicians respectively were then
+compared by estimating the net reclassification, in events (patient with the
+outcome, i.e. who died within 30-days from arrival) and non-events (patient
+without the outcome) respectively. The net reclassification in events was
+defined as the difference between the proportion of events assigned a higher
+priority by the SuperLearner than the clinicians and the proportion of events
+assigned a lower priority by the SuperLearner than the clinicians. Conversely,
+the net reclassification in non-events was defined as the difference between the
+proportion of non-events assigned to a lower priority by the SuperLearner than
+the clinicians and the proportion of non-events assigned a higher priority by
+the SuperLearner than the clinicians.
 
 We used an emperical bootstrap with 1000 draws of the same size as the original
 set to estimate 95\% confidence interval (CI) around point estimates and
@@ -354,8 +353,15 @@ if the 95\% CI of the net reclassification in events did not exceed a
 pre-specified level of -0.05, indicating that clinicians correctly classified 5
 in 100 events more than the SuperLearner.
 
-% To add
-% - Handling of missing data
+\subsubsection*{Handling of missing data}
+Observations with missing data on all cause 30-day mortality or priority level
+assigned by clinicians were excluded. Missing data in features was treated as
+informative. For each feature with missing data we created a missingness
+indicator, a variable that took the value of 1 if the feature value was missing
+and 0 otherwise. Missing feature values were then replaced with the median of
+observed data for quantitative features and the most common level for
+qualitative features. We included the missingness indicators as features in the
+SuperLearner.
 
 % *** Study Size
 \subsection*{Study Size}
@@ -395,6 +401,8 @@ clinical condition would keep changing. How do we account for this?
 Are all the data variables considered for the super learners training? Is the
 super learners training limited by the data variables we use and enter for the
 study?
+
+Handling of missing data. Exluding observations with missing outcome.
 
 % This problem is closely related, but not identical, to the problem of predicting
 % outcomes in trauma patients.
