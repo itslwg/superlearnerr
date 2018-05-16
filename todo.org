@@ -82,10 +82,10 @@
 ** TODO Add a create table of missing data function                  :todo17:
 ** INPROGRESS Add do.median.imputation function 		     :todo18:
 ** INPROGRESS Add documentation to functions [0/2]		     :todo19:
-   CLOCK: [2018-05-16 Wed 07:36]
    - [ ] get.data.dictionary
    - [ ] keep.relevant.variables
-** TODO Reformat test statements				     :todo20:
+** INPROGRESS Reformat test statements				     :todo20:
+   CLOCK: [2018-05-16 Wed 07:51]
 #+END_SRC
 * Issues
   None yet 
