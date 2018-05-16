@@ -34,7 +34,8 @@ make.study <- function(
     ## Set patients to dead if dead at discharge or at 24 hours
     ## and alive if coded alive and admitted to other hospital
     study_data <- set.to.outcome(study_data)
-    ## Make age numeric
+    ## Replace age >89 with 90 and make age numeric
+    study_data$age[study_data$age == ">89"] <- "90"
     study_data$age <- as.numeric(study_data$age)
     ## Collapse mechanism of injury
     study_data <- collapse.moi(study_data)
@@ -49,7 +50,7 @@ make.study <- function(
     ## values per variable
     study_data <- add.missing.indicator.variables(study_data)
     ## Do median imputation
-    ## study_data <- do.median.imputation(study_data)
+    study_data <- do.median.imputation(study_data)
     ## Create table of sample characteristics
     results$table_of_sample_characteristics <- create.table.of.sample.characteristics(study_data, data_dictionary)
     ## Transform GCS, MOI, and AVPU into dummy variables,
