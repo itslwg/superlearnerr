@@ -35,12 +35,12 @@
    - [ ] Conclusion
    - [ ] Acknowledgments
    - [ ] Bibliography
-   - [-] Revise introduction and methods according to comments [1/8]
+   - [-] Revise introduction and methods according to comments [2/8]
      - [X] Catherine
      - [-] Kapil
        - [X] Sent email asking for clarifications
        - [ ] Incorporate changes
-     - [ ] Deepa
+     - [X] Deepa
      - [ ] Anurag
      - [ ] Monty
      - [ ] Vineet
