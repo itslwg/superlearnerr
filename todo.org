@@ -86,7 +86,8 @@
    - [ ] keep.relevant.variables
 ** INPROGRESS Reformat test statements				     :todo20:
    CLOCK: [2018-05-16 Wed 07:51]--[2018-05-16 Wed 07:56] =>  0:05
-** TODO Add calculate time from injury to arrival function	     :todo21:
+** INPROGRESS Add calculate time from injury to arrival function     :todo21:
+   CLOCK: [2018-05-16 Wed 08:00]
 #+END_SRC
 * Issues
   None yet 
