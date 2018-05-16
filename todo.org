@@ -3,7 +3,8 @@
 #+BEGIN_SRC org
 ** DONE Add todo						      :todo1:
 ** DONE Add README						      :todo2:
-** INPROGRESS Draft paper [14%]					      :todo3:
+** INPROGRESS Draft paper [13%] 				      :todo3:
+   CLOCK: [2018-05-16 Wed 10:38]
    CLOCK: [2018-05-06 Sun 08:27]--[2018-05-07 Mon 11:03] => 26:36
    CLOCK: [2018-05-03 Thu 15:28]--[2018-05-04 Fri 06:52] => 15:24
    CLOCK: [2018-05-03 Thu 12:24]--[2018-05-03 Thu 15:13] =>  2:49
@@ -34,6 +35,15 @@
    - [ ] Conclusion
    - [ ] Acknowledgments
    - [ ] Bibliography
+   - [ ] Revise introduction and methods according to comments [0/8]
+     - [ ] Catherine
+     - [ ] Kapil
+     - [ ] Deepa
+     - [ ] Anurag
+     - [ ] Monty
+     - [ ] Vineet
+     - [ ] Alan
+     - [ ] Sara
 ** TODO Finalise paper						      :todo4:
 ** DONE Update this file to have TODO|DONE show on github	      :todo5:
    <2018-05-03 Thu>
