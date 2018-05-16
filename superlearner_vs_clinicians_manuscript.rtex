@@ -33,7 +33,7 @@ Ludvig Wärnberg Gerdin\textsuperscript{1}, %\Yinyang},
 Catherine Juillard\textsuperscript{2}, %\Yinyang},
 Kapil Dev Soni\textsuperscript{2}, 
 Deepa Kizhakke Veetil\textsuperscript{2}, 
-Name5 Surname\textsuperscript{2}, 
+Anurag Mishra\textsuperscript{2}, 
 Name6 Surname\textsuperscript{2}, 
 Martin Gerdin Wärnberg\textsuperscript{1*\textcurrency}
 \\
@@ -73,14 +73,15 @@ interventions, but also strengthened research on effective trauma care delivery.
 
 Trauma care is highly time sensitive and delays to treatment has been associated
 with increased mortality across settings
-\cite{Yeboah2014,OReilly2013,Roy2017}. Early identification of potentially fatal
-injuries and conditions is crucial for survival. A key component of trauma care
-is therefore the process of prioritizing patients to match level of care with
-clinical acuity \cite{EAST2010,NICE2016}. The literature on how to prioritise
-trauma patients focuses largely on two issues. First, in the prehospital setting
-the main focus has been to idenfity patients who merit transfer to a trauma
-centre \cite{Voskens2018}. Second, in the hospital setting a substantial body of
-research has focused on the appropriate criteria for trauma team activation
+\cite{Yeboah2014,OReilly2013,Roy2017}. Early identification and management of
+potentially fatal injuries and conditions is crucial for survival. A key
+component of trauma care is therefore the process of prioritizing patients to
+match level of care with clinical acuity \cite{EAST2010,NICE2016}. The existing
+literature on how to prioritise trauma patients focuses largely on two
+issues. First, in the prehospital setting the main focus has been to idenfity
+patients who merit transfer to a trauma centre \cite{Voskens2018}. Second, in
+the hospital setting a substantial body of research has focused on the
+appropriate criteria for trauma team activation
 \cite{VanRein2018,Tignanelli2018}.
 
 Although both these issues are important, clinicians all over the world are on a
@@ -124,10 +125,10 @@ random forest learner to assign priority to patients in a general ED population,
 and found a slight performance improvement using this MMTH learner compared to
 the standard criteria \cite{Levin2018}.
 
-Thus, there seems to be a void of reseach on how to leverage machine learning to
-prioritise among trauma patients in the ED. Therefore, we set out to conduct a
-benchmark study, in which we attempted to improve on what we considered the two
-most important limitations of previous related research, namely the use of
+Thus, there seems to be a paucity of reseach on how to leverage machine learning
+to prioritise among trauma patients in the ED. Therefore, we set out to conduct
+a benchmark study, in which we attempted to improve on what we considered the
+two most important limitations of previous related research, namely the use of
 retrospective data and the focus on one specific MHTM or MMTH learner. We aimed
 to compare the performance of an ensemble machine learning methodology called
 SuperLearner to that of clinician gestalt based on patients’ presentation. Our
@@ -159,33 +160,32 @@ day-time. During evenings and nights patients in need of a CT are referred
 elsewhere. MAMC and SSKM are both university and tertiary referral
 hospitals. This means that all specialities and imaging facilities relevant to
 trauma care, except emergency medicine, is available in-house around the
-clock. MAMC has approximately XX inpatient beds and SSKM has around XX inpatient
-beds. MAMC has a general ED whereas SSKM has two EDs, one where patients with
-suspected or confirmed neurosurgical conditions are seen and one where patients
-with other acute conditions are seen. The rationale for this setup is that SSKM
-is the only referral centre for neurosurgical care in the Kolkata metropolitan
-area, which has a population of close to 15 million people. Because both MAMC
-and SSKM are tertiary referral hospitals a majority of patients arriving at
-their EDs are transferred from other health facilities. Prehospital care is
-rudimentary in all three cities, with no organised emergency medical
-services. Ambulances are predominatly used for inter-hospital transfers and most
-patients who arrive directly from the scene of the incident are brought by the
-police or in private vehicles. Patients arriving to the ED are at all centres
-first seen be a casualty medical officer on a largely first come first served
-basis. There is no formalised system for prioritising ED patients at any of the
-centres.
+clock. MAMC has approximately 2200 inpatient beds and SSKM has around XX
+inpatient beds. MAMC has a general ED whereas SSKM has two EDs, one where
+patients with suspected or confirmed neurosurgical conditions are seen and one
+where patients with other acute conditions are seen. The rationale for this
+setup is that SSKM is the only referral centre for neurosurgical care in the
+Kolkata metropolitan area, which has a population of close to 15 million
+people. Because both MAMC and SSKM are tertiary referral hospitals a majority of
+patients arriving at their EDs are transferred from other health
+facilities. Prehospital care is rudimentary in all three cities, with no
+organised emergency medical services. Ambulances are predominatly used for
+inter-hospital transfers and most patients who arrive directly from the scene of
+the incident are brought by the police or in private vehicles. Patients arriving
+to the ED are at all centres first seen be a casualty medical officer on a
+largely first come first served basis. There is no formalised system for
+prioritising ED patients at any of the centres.
 
 \subsection*{Data Collection}
 Data was collected by one dedicated project officer at each site. The project
 officers all had a masters degree in life sciences. They worked five eight hour
 shifts per week so that mornings, evenings and nights were covered according to
-a rotating schedule. Project officers spent approximately six out of the eight
+a rotating schedule. In each shift, project officers spent approximately six
 hours collecting data in the ED and the remaining two following up patients. The
+collected dat awas then transferred this data to a digital database. The
 rationale for this setup was to ensure collection of high-quality data from a
 representative sample of trauma patients arriving to the EDs at participating
-centres, while keeping to the projects budget constraints. Project officers
-first collected data on paper forms and then transferred this data to a digital
-database.
+centres, while keeping to the projects budget constraints.
 
 % *** Participants
 \subsection*{Participants}
@@ -200,11 +200,11 @@ complaint, with some exclusions (Supplementary material). These causes were
 excluded because they are not considered trauma at the participating centres.
 
 \subsubsection*{Source and methods of selection of participants and follow up}
-The project officers enrolled the ten first consecutive patients who presented
+The project officers enrolled the first ten consecutive patients who presented
 to the ED during each shift. The number of patients to enrol was set to ten to
 make follow up feasible. A follow-up was completed by the project officer 30
 days after participant arrived at participating hospital. The follow-up was
-completed in person or per phone, depending on if the patient was still
+completed in person or on phone, depending on whether the patient was still
 hospitalised or if the patient had been discharged. Phone numbers of one or more
 contact persons, e.g. relatives, were collected on enrollment and contacted if
 the participant did not reply on follow up. Only if neither the participant nor
