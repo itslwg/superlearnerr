@@ -31,8 +31,8 @@
 % ** Authors
 Ludvig Wärnberg Gerdin\textsuperscript{1}, %\Yinyang},
 Catherine Juillard\textsuperscript{2}, %\Yinyang},
-Name3 Surname\textsuperscript{2}, 
-Name4 Surname\textsuperscript{2}, 
+Kapil Dev Soni\textsuperscript{2}, 
+Deepa Kizhakke Veetil\textsuperscript{2}, 
 Name5 Surname\textsuperscript{2}, 
 Name6 Surname\textsuperscript{2}, 
 Martin Gerdin Wärnberg\textsuperscript{1*\textcurrency}
@@ -386,6 +386,15 @@ Remains to be written.
 % Anazodo AN, Murthi SB, Frank MK, Hu PF, Hartsky L, Imle PC, et al. Assessing
 % trauma care provider judgement in the prediction of need for life-saving
 % interventions. Injury. 2015;46(5):791–7.
+
+\subsection*{Limitations}
+How do we account for the dynamic changes that the patient undergoes? The data
+variables used to train the superlearner are point estimates. But the patient
+clinical condition would keep changing. How do we account for this?
+
+Are all the data variables considered for the super learners training? Is the
+super learners training limited by the data variables we use and enter for the
+study?
 
 % This problem is closely related, but not identical, to the problem of predicting
 % outcomes in trauma patients.
