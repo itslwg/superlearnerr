@@ -11,7 +11,7 @@ add.missing.indicator.variables <- function(
                                             study_data,
                                             outcome_name = "s30d",
                                             features = NULL,
-                                            excluded_columns = c("tc", "doar")
+                                            excluded_columns = c("tc")
                                             )
 {
     ## Test that all columns specified in outcome_name, features and excluded
