@@ -6,13 +6,13 @@
 #' @export
 make.study <- function(
                        data_path =  c("./extdata/sample.csv"),
-                       bs_samples = 3
+                       bs_samples = 5
                        )
 {
     ## Set seed for reproducability
     set.seed(123)
     ## Source all functions (remove when turned into package)
-    files <- list.files(".", pattern = ".r$", full.names = TRUE)
+    files <- list.files("./R", pattern = ".r$", full.names = TRUE)
     files <- files[!(files %in% "./make.study.r")]
     for (f in files) source(f)
     ## Load all required packages (remove when turned into package)
@@ -53,28 +53,26 @@ make.study <- function(
     study_data <- do.median.imputation(study_data)
     ## Create table of sample characteristics
     results$table_of_sample_characteristics <- create.table.of.sample.characteristics(study_data, data_dictionary)
-    ## Transform GCS, MOI, and AVPU into dummy variables,
-    ## but keep original variables for table1
-    study_data <-  as.data.frame(model.matrix( ~.,
-                                              data = study_data)[, -1])
     ## Prepare data for SuperLearner predictions
     prepped_data <- prep.data.for.superlearner(study_data, test = TRUE)
+    ## Transform factors into dummy variables
+    prepped_data <- to.dummy.variables(prepped_data)
     ## Train and review SuperLearner on study sample
     study_sample <- predictions.with.superlearner(prepped_data)
     ## Bootstrap samples
     samples <- generate.bootstrap.samples(study_data,
-                                          3)
+                                          bs_samples)
     ## Prepare samples
     prepped_samples <- prep.bssamples(samples)
     ## Train and review SuperLearner on boostrap samples
-    samples <- train.predict.bssamples(samples = prepped_samples)
+    samples <- train.predict.bssamples(prepped_samples)
     ## Create list of analysis to conduct
     funcList <- list(list(func = 'model.review.AUROCC',
                           model_or_pe = c('pred_cat',
-                                          'clinicians_predictions')),
+                                          'tc')),
                      list(func = 'model.review.reclassification',
                           model_or_pe = c('NRI+',
-                                          'NRI-')))
+                                          'Pr(Up|Case)')))
     ## Generate confidence intervals around point estimates from funcList
     CIs <- lapply(funcList,
                   function(i) generate.confidence.intervals(study_sample,
@@ -85,7 +83,8 @@ make.study <- function(
     names(CIs) <- c('AUROCC',
                     'reclassification')
     ## Compile manuscript
-    compile.manuscript("superlearner_vs_clinicians_manuscript_1.0.1.rtex")
+    compile.manuscript("superlearner_vs_clinicians_manuscript.rtex")
     return (CIs)
 }
+
 
