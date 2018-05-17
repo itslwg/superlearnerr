@@ -12,12 +12,13 @@ model.review.reclassification <- function(
                                           )
 {
     ## Compute reclassification of SuperLearner model and clinicians
-    reclassification <- nricens::nribin(event = study_sample$data$outcome$y_review,
-                                        p.std = study_sample$data$sets_w_tc$x_review$tc,
-                                        p.new = as.numeric(study_sample$preds$pred_cat),
-                                        cut = c(2,3,4),
+    reclassification <- nricens::nribin(event = study_sample$outcome,
+                                        p.std = study_sample$tc,
+                                        p.new = as.numeric(study_sample$pred_cat),
+                                        cut = c(1,2,3),
                                         niter = 0,
                                         msg = for_tables)
+
     ## Create list of point_estimates
     list_of_estimates <- lapply(which_point_estimates,
                                 function(p_est)
