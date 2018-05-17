@@ -95,7 +95,8 @@
    CLOCK: [2018-05-17 Thu 10:32]--[2018-05-17 Thu 10:35] =>  0:03
 ** DONE Modify README						     :todo25:
    CLOCK: [2018-05-17 Thu 10:38]--[2018-05-17 Thu 10:51] =>  0:13
-** TODO Add source part from make.study to playground.r		     :todo26:
+** DONE Add stuff from make.study to playground.r		     :todo26:
+   CLOCK: [2018-05-17 Thu 10:53]--[2018-05-17 Thu 11:04] =>  0:11
 #+END_SRC
 * Issues
   None yet 
