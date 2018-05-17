@@ -11,10 +11,11 @@ prep.data.for.superlearner <- function(
                                        test = FALSE
                                        )
 {
-    dates <- function(
-                      study_data,
-                      time_variable
-                      )
+    split_and_set <- function(
+                              study_data,
+                              time_variable,
+                              outcome
+                              )
     {
         df <- study_data[order(study_data[, time_variable]),]
         ## Find midpoint of dates
@@ -24,25 +25,31 @@ prep.data.for.superlearner <- function(
         train <- df[dates < mid, ]
         ## Create set for review of model performance
         review <- df[dates >= mid, ]
-
-        return(list(x_train = train,
-                    x_review = review))
+        ## Use dates function to split dataset by seqn or doar depending on the
+        ## main function argument test
+        sets <- list(x_train = train,
+                     x_review = review)
+        ## Extract tc from review set
+        tc <- as.numeric(sets$x_review$tc)
+        ## Extract outcome from training and review set
+        y_training_and_review <- lapply(sets,
+                                        function(x)
+                                            as.numeric(x[, outcome]))
+        names(y_training_and_review) <- c("y_train", "y_review")
+        ## Remove tc, outcome and time_variable from sets
+        x_sets <- lapply(sets,
+                         function (the_set) the_set[, !(names(the_set) %in% c(outcome,
+                                                                              "tc",
+                                                                              time_variable))])
+        return (list(sets = x_sets,
+                     tc = as.numeric(tc),
+                     y_train = y_training_and_review$y_train,
+                     y_review = y_training_and_review$y_review))
     }
-    if (test == TRUE) sets <- dates(study_data, time_variable = "seqn")
-    if (test == FALSE) sets <- dates(study_data, time_variable = "doar")
-    ## Extract tc from review set
-    tc <- as.numeric(sets$x_review$tc)
-    y_training_and_review <- lapply(sets,
-                                    function(x)
-                                        as.numeric(x[, outcome]));names(y_training_and_review) <- c("y_train", "y_review")
-    ## Remove tc and outcome from sets
-    x_sets <- lapply(sets,
-                     function (the_set) the_set[, !(names(the_set) %in% c(outcome,
-                                                                          "tc",
-                                                                          "seqn"))])
-    ## Extract outcome variables for training and review set
-    return (list(sets = x_sets,
-                 tc = as.numeric(tc),
-                 y_train = y_training_and_review$y_train,
-                 y_review = y_training_and_review$y_review))
+    if (!test) return(split_and_set(study_data,
+                                   outcome = outcome,
+                                   time_variable = "doar"))
+    if (test) return(split_and_set(study_data,
+                                   outcome = outcome,
+                                   time_variable = "seqn"))
 }
