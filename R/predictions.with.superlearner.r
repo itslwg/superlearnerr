@@ -1,8 +1,8 @@
 #' Generate predictions with SuperLearner
 #'
-#' This function trains SuperLearner on the training set and makes predictions on the review set. Then, predictions are divided by quantiles into four colour-coded groups. The groups are green, yellow, orange, and red. They respectively include ranges from the 0% quantile to 25% quantile, 25% to 50%, 50% to 75%, and 75% to 100% of the continous predictions.
-#' @param prepped_data. The prepared data for SuperLearner predictions as dataframe No default
-#' @param models Models to include in SuperLearner. Default: SL.mean and SL.glmnet.
+#' This function trains SuperLearner on the training set and makes predictions on the review set. Then, predictions are divided by quantiles into four colour-coded groups. The groups are green, yellow, orange, and red. They respectively include ranges from the 0% quantile to 25% quantile, 25% to 50%, 50% to 75%, and 75% to 100% of the continous predictions. (To be changed)
+#' @param prepped_data. Data as prepared by prep.data.for.superlearner as list. No default.
+#' @param models Models to use in ensemble algorithm. Default: SL.mean and SL.glmnet.
 #' @export
 predictions.with.superlearner <- function(
                                           prepped_data,
@@ -28,7 +28,7 @@ predictions.with.superlearner <- function(
                     breaks = c(0, quantiles, 1),
                     labels = labels,
                     include.lowest = TRUE)
-    ## Return data with predictions and study data
+    ## Return data with predictions
     pred_data <- list(pred_con = pred,
                       pred_cat = pred_cat,
                       tc = prepped_data$tc,
