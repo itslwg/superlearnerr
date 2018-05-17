@@ -91,6 +91,9 @@
 ** TODO Modify create table of sample characteristics function       :todo22:
    Change Abbreviations: to Abbreviations and explanations:
 ** TODO Update descriptions of functions                             :todo23:
+** INPROGRESS Move playground to top directory			     :todo24:
+   CLOCK: [2018-05-17 Thu 10:32]
+** TODO Modify README						     :todo25:
 #+END_SRC
 * Issues
   None yet 
