@@ -105,6 +105,7 @@
    been divided into training and test
 ** INPROGRESS Test adding results to manuscript			     :todo29:
    CLOCK: [2018-05-18 Fri 07:47]
+** TODO Add informed consent no as exclusion criteria                :todo30:
 #+END_SRC
 * Issues
   None yet 
