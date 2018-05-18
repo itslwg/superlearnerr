@@ -107,6 +107,8 @@
    CLOCK: [2018-05-18 Fri 07:47]--[2018-05-18 Fri 10:59] =>  3:12
 ** TODO Add informed consent no as exclusion criteria                :todo30:
 ** TODO Add learners to superlearner library                         :todo31:
+** INPROGRESS Add function to extract data from table		     :todo32:
+   CLOCK: [2018-05-18 Fri 12:57]
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
