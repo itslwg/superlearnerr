@@ -81,4 +81,3 @@ names(CIs) <- c('AUROCC',
                 'reclassification')
 ## Compile manuscript
 compile.manuscript(results, "superlearner_vs_clinicians_manuscript")
-
