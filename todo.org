@@ -88,7 +88,8 @@
    CLOCK: [2018-05-16 Wed 07:51]--[2018-05-16 Wed 07:56] =>  0:05
 ** DONE Add calculate time from injury to arrival function	     :todo21:
    CLOCK: [2018-05-16 Wed 08:00]--[2018-05-16 Wed 09:20] =>  1:20
-** TODO Modify create table of sample characteristics function       :todo22:
+** DONE Modify create table of sample characteristics function	     :todo22:
+   CLOCK: [2018-05-18 Fri 06:20]--[2018-05-18 Fri 06:23] =>  0:03
    Change Abbreviations: to Abbreviations and explanations:
 ** TODO Update descriptions of functions                             :todo23:
 ** DONE Move playground to top directory			     :todo24:
@@ -99,6 +100,8 @@
    CLOCK: [2018-05-17 Thu 10:53]--[2018-05-17 Thu 11:04] =>  0:11
 ** DONE Modify compile.manuscript function			     :todo27:
    CLOCK: [2018-05-17 Thu 11:11]
+** TODO Move create table function to after the sample has	     :todo28:
+   been divided into training and test
 #+END_SRC
 * Issues
   None yet 
