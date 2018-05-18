@@ -13,6 +13,7 @@
 \usepackage{microtype}
 \usepackage[table]{xcolor}
 \usepackage{array}
+\usepackage{caption}
 % ** Setting
 \DisableLigatures[f]{encoding = *, family = * }
 % * Document
