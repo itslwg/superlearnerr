@@ -106,7 +106,8 @@
 ** INPROGRESS Test adding results to manuscript			     :todo29:
    CLOCK: [2018-05-18 Fri 17:02]--[2018-05-18 Fri 17:09] =>  0:07
    CLOCK: [2018-05-18 Fri 07:47]--[2018-05-18 Fri 10:59] =>  3:12
-** TODO Add informed consent no as exclusion criteria                :todo30:
+** INPROGRESS Add informed consent no as exclusion criteria	     :todo30:
+   CLOCK: [2018-05-18 Fri 17:11]
 ** TODO Add learners to superlearner library                         :todo31:
 ** DONE Add function to extract data from table			     :todo32:
    CLOCK: [2018-05-18 Fri 12:57]--[2018-05-18 Fri 16:58] =>  4:01
