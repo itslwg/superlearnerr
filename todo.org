@@ -104,15 +104,23 @@
    CLOCK: [2018-05-18 Fri 06:25]--[2018-05-18 Fri 07:44] =>  1:19
    been divided into training and test
 ** INPROGRESS Test adding results to manuscript			     :todo29:
+   CLOCK: [2018-05-18 Fri 17:02]--[2018-05-18 Fri 17:09] =>  0:07
    CLOCK: [2018-05-18 Fri 07:47]--[2018-05-18 Fri 10:59] =>  3:12
-** TODO Add informed consent no as exclusion criteria                :todo30:
+** DONE Add informed consent no as exclusion criteria		     :todo30:
+   CLOCK: [2018-05-18 Fri 17:11]--[2018-05-18 Fri 17:21] =>  0:10
 ** TODO Add learners to superlearner library                         :todo31:
+** DONE Add function to extract data from table			     :todo32:
+   CLOCK: [2018-05-18 Fri 12:57]--[2018-05-18 Fri 16:58] =>  4:01
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
 ** DONE Table of sample characteristics do not display properly	     :issue1:
    CLOCK: [2018-05-18 Fri 11:01]--[2018-05-18 Fri 12:54] =>  1:53
+<<<<<<< HEAD
 ** DONE Fix reclassifciation NaN in control groups                   :issue2:
+** TODO Fix reclassifciation NaN in control groups                   :issue2:
+** DONE do.median.imputation fails in prep.data.for.superlearner     :issue3:
+   CLOCK: [2018-05-18 Fri 17:22]--[2018-05-18 Fri 17:28] =>  0:06
 #+END_SRC
 
    

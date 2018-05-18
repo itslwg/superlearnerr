@@ -50,7 +50,9 @@ study_data <- add.missing.indicator.variables(study_data)
 prepped_data <- prep.data.for.superlearner(study_data, test = TRUE)
 
 ## Create table of sample characteristics
-results$table_of_sample_characteristics <- create.table.of.sample.characteristics(prepped_data, data_dictionary)
+tables <- create.table.of.sample.characteristics(prepped_data, data_dictionary)
+results$table_of_sample_characteristics <- tables$formatted
+results$raw_table_of_sample_characteristics <- tables$raw
 ## Transform factors into dummy variables
 prepped_data <- to.dummy.variables(prepped_data)
 ## Train and review SuperLearner on study sample
