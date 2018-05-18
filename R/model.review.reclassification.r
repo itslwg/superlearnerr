@@ -18,7 +18,6 @@ model.review.reclassification <- function(
                                         cut = c(1,2,3),
                                         niter = 0,
                                         msg = for_tables)
-
     ## Create list of point_estimates
     list_of_estimates <- lapply(which_point_estimates,
                                 function(p_est)
