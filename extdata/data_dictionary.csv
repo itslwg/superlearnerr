@@ -11,7 +11,7 @@ mot,Mode of transport,,qual,"0,1,2,3","""0 = Ambulance"", ""1 = Police"", ""2 = 
 tran,Transfer status,,qual,"0,1","""0 = No"", ""1 = Yes""",,,Yes,No
 sbp,Systolic blood pressure in mmHg,SBP,quan,,,0-300,,Yes,No
 dbp,Diastolic blood pressure in mmHg,DBP,quan,,,0-300,,Yes,No
-spo2,Peripheral capillary oxygen saturation,SpO\\textsuperscript{2},quan,,,0-100,,Yes,No
+spo2,Peripheral capillary oxygen saturation,SpOSUPS 2 SUPE,quan,,,0-100,,Yes,No
 hr,Heart rate,HR,quan,,,0-300,,Yes,No
 rr,Respiratory rate in breaths per minute,RR,quan,,,0-99,,Yes,No
 egcs,Eye component of the Glasgow Coma Scale,EGCS,qual,"1,2,3,4,99","""1 = 1"", ""2 = 2"", ""3 = 3"", ""4 = 4"", ""99 = Non testable""",,,Yes,No

@@ -87,9 +87,11 @@ create.table.of.sample.characteristics <- function(
                                     include.rownames = FALSE,
                                     include.colnames = TRUE,
                                     caption.placement = "top",
-                                    sanitize.text.function = function(x) x,
                                     print.results = FALSE)
     formatted_table <- add.star.caption(formatted_table, abbrv) # add caption*
+    ## Dirty fix to make sure superscripts format correctly
+    formatted_table <- gsub("SUPS ", "\\textsuperscript{", formatted_table, fixed = TRUE)
+    formatted_table <- gsub(" SUPE", "}", formatted_table, fixed = TRUE)
     ## Save formatted table to disk if save is TRUE
     if (save) write(formatted_table, "table_of_sample_characteristics.tex")
     return(formatted_table)

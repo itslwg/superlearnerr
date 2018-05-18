@@ -22,6 +22,7 @@
     "lineno"
     "microtype"
     "xcolor"
-    "array"))
+    "array"
+    "caption"))
  :latex)
 
