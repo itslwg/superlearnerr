@@ -45,8 +45,6 @@ make.study <- function(
     ## Create missing indicator variables and save table of number of missing
     ## values per variable
     study_data <- add.missing.indicator.variables(study_data)
-    ## Do median imputation
-    study_data <- do.median.imputation(study_data)
     ## Prepare data for SuperLearner predictions
     prepped_data <- prep.data.for.superlearner(study_data, test = TRUE)
     ## Create table of sample characteristics
@@ -80,7 +78,6 @@ make.study <- function(
                     'reclassification')
     ## Compile manuscript
     compile.manuscript(results, "superlearner_vs_clinicians_manuscript")
-    return (CIs)
 }
 
 

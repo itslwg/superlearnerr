@@ -41,6 +41,9 @@ prep.data.for.superlearner <- function(
                          function (the_set) the_set[, !(names(the_set) %in% c(outcome,
                                                                               "tc",
                                                                               time_variable))])
+        ## Do median imputation on training and review set separately
+        x_sets <- lapply(x_sets, do.median.imputation)
+
         return (list(sets = x_sets,
                      tc = as.numeric(tc),
                      y_train = y_training_and_review$y_train,
