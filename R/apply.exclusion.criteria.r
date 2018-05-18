@@ -10,6 +10,13 @@ apply.exclusion.criteria <- function(
 {
     ## Save number of patients enrolled during study period
     results$n_enrolled <<- nrow(study_data)
+    ## Exclude observations with informed consent no
+    study_data <- study_data[study_data$ic == "Yes", ]
+    ## Drop ic column from data
+    study_data$ic <- NULL
+    ## Save number of observations remaining after those who did not provide
+    ## informed consent were excluded
+    results$n_after_excluding_no_consent <<- nrow(study_data)
     ## Exclude observations with missing clinicians' priority data
     study_data <- study_data[!is.na(study_data$tc), ]
     ## Save number of patients remaining after excluding those with missing

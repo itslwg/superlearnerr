@@ -67,7 +67,7 @@ create.table.of.sample.characteristics <- function(
         table["n (%)", "Level"] <- ""
     }
     ## Replace variable names with labels
-    nrns <- rownames(table) # Get current rownames
+    nrns <- orns <- rownames(table) # Get current rownames
     abbr <- list() # Genderate vector to hold abbreviations
     for (x in vars) {
         vdd <- data_dictionary[[x]] # Get variable specific data dictionary
@@ -79,10 +79,15 @@ create.table.of.sample.characteristics <- function(
     table <- cbind(nrns, table) # Add rownames as column
     colnames(table)[1] <- "Characteristic" # Name that column
     rownames(table) <- NULL # R rownames
+    ## Save raw table object
+    tables <- list(raw = table)
+    rownames(tables$raw) <- orns # Add old rownames back, for easy access
+    ## Make abbreviations and explanations text
     abbrv <- paste0("Abbreviations and explanations: ", paste0(sort(unlist(abbr)), collapse = "; ")) # Make abbreviation string
     ## Format the table using xtable
     formatted_table <- print.xtable(xtable(table,
-                                           caption = "Sample characteristics"),
+                                           caption = "Sample characteristics",
+                                           label = "tab:sample-characteristics"),
                                     type = "latex",
                                     include.rownames = FALSE,
                                     include.colnames = TRUE,
@@ -103,7 +108,9 @@ create.table.of.sample.characteristics <- function(
                                   "\\end{adjustbox}"),
                            formatted_table,
                            fixed = TRUE)
+    ## Put formatted table in tables
+    tables$formatted <- formatted_table
     ## Save formatted table to disk if save is TRUE
     if (save) write(formatted_table, "table_of_sample_characteristics.tex")
-    return(formatted_table)
+    return(tables)
 }
