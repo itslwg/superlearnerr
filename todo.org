@@ -99,8 +99,9 @@
 ** DONE Add stuff from make.study to playground.r		     :todo26:
    CLOCK: [2018-05-17 Thu 10:53]--[2018-05-17 Thu 11:04] =>  0:11
 ** DONE Modify compile.manuscript function			     :todo27:
-   CLOCK: [2018-05-17 Thu 11:11]
-** TODO Move create table function to after the sample has	     :todo28:
+   CLOCK: [2018-05-17 Thu 11:11]--[2018-05-17 Thu 11:11] =>  0:00
+** DONE Move create table function to after the sample has	     :todo28:
+   CLOCK: [2018-05-18 Fri 06:25]--[2018-05-18 Fri 07:44] =>  1:19
    been divided into training and test
 #+END_SRC
 * Issues

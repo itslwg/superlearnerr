@@ -20,12 +20,21 @@ create.table.of.sample.characteristics <- function(
                                                    save = FALSE
                                                    )
 {
+    ## Identify type of data and reformat if necessary
+    prepped <- FALSE
+    if ("prepped" %in% class(study_data)) {
+        table_data <- with(study_data, rbind(data.frame(sets$x_train, y = y_train, set = "Training"), data.frame(sets$x_review, y = y_review, set = "Test")))
+        table_data$y <- factor(table_data$y, labels = study_data$y_levels)
+        names(table_data)[grep("^y$", names(table_data))] <- study_data$y_name
+        prepped <- TRUE
+    } else table_data <- study_data
     ## Define vars
     if (is.null(vars)) vars <- names(data_dictionary)[sapply(data_dictionary, function(x) x$incl == "Yes")]
+    if (is.null(strata) & prepped) strata <- "set"
     ## Exclude exclude_vars from table vars
     if (!is.null(exclude_vars)) vars <- vars[!(vars %in% exclude_vars)]
     ## Define table data
-    table_data <- study_data[, vars]
+    table_data <- table_data[, c(vars, strata)]
     ## Make a list that will hold the individual tables
     table_list <- list()
     ## Create the stratified table if there should be one
@@ -43,11 +52,9 @@ create.table.of.sample.characteristics <- function(
     table <- do.call(cbind, formatted_tables)
     ## Remove duplicate level columns
     level_indices <- grep("level", colnames(table)) # Find the indices of columns named level
-    if (length(level_indices) > 1) table <- table[-level_indices[2]] # Remove the second level column
+    if (length(level_indices) > 1) table <- table[, -level_indices[2]] # Remove the second level column
     ## Rename level column
     colnames(table)[1] <- "Level"
-    ## Rename columns if there is a stratifying variable
-    if (!is.null(strata)) colnames(table)[1:2] <- paste0(dd[[strata]]$l, " = ", colnames(table)[1:2])
     ## Modify the first table row with n to also include percentages
     if (!is.null(strata)) {
         ni <- grep("^n$", rownames(table)) # Get index of row with n
