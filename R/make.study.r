@@ -83,7 +83,7 @@ make.study <- function(
     names(CIs) <- c('AUROCC',
                     'reclassification')
     ## Compile manuscript
-    compile.manuscript("superlearner_vs_clinicians_manuscript.rtex")
+    compile.manuscript("superlearner_vs_clinicians_manuscript")
     return (CIs)
 }
 
