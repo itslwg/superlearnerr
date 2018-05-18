@@ -103,7 +103,14 @@
 ** DONE Move create table function to after the sample has	     :todo28:
    CLOCK: [2018-05-18 Fri 06:25]--[2018-05-18 Fri 07:44] =>  1:19
    been divided into training and test
+** INPROGRESS Test adding results to manuscript			     :todo29:
+   CLOCK: [2018-05-18 Fri 07:47]--[2018-05-18 Fri 10:59] =>  3:12
+** TODO Add informed consent no as exclusion criteria                :todo30:
+** TODO Add learners to superlearner library                         :todo31:
 #+END_SRC
 * Issues
-  None yet 
-
+#+BEGIN_SRC org
+** DONE Table of sample characteristics do not display properly	     :issue1:
+   CLOCK: [2018-05-18 Fri 11:01]--[2018-05-18 Fri 12:54] =>  1:53
+#+END_SRC
+   
