@@ -1,0 +1,156 @@
+% * Latex header
+% ** Document class
+\documentclass[10pt,letterpaper]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+% ** Packages
+\usepackage[top=0.85in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{changepage}
+\usepackage[utf8x]{inputenc}
+\usepackage{textcomp,marvosym}
+\usepackage{cite}
+\usepackage{nameref,hyperref}
+\usepackage[right]{lineno}
+\usepackage{microtype}
+\usepackage[table]{xcolor}
+\usepackage{array}
+% ** Setting
+\DisableLigatures[f]{encoding = *, family = * }
+% * Document
+% ** Title
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+{\Large
+  \noindent\textbf{SuperLearner versus Clinicians to Prioritise Trauma Patients (working title)}
+} \newline
+\\
+% ** Version
+{\large
+  Test version 0.0.0.9000
+}
+% ** Results
+\section*{Results}
+During the study period, we approached a total of 1500 patients
+for enrollment. XX did not provide informed consent. Out of the YY fulfilling
+the inclusion criteria, 48 had missing data on priority level
+assigned by clinicians, leaving 1452
+patients. An additional 583 were excluded because of missing outcome
+data. Thus, the final study sample included
+869 patients.
+
+% latex table generated in R 3.3.3 by xtable 1.8-2 package
+% Fri May 18 07:40:35 2018
+\begin{table}[ht]
+\centering
+\caption{Sample characteristics} 
+\begin{tabular}{lllll}
+  \hline
+Characteristic & Level & Training & Test & Overall \\ 
+  \hline
+n (%) &  & 568 (65.36) & 301 (34.64) & 869 (100.00) \\ 
+  Age in years (median [IQR]) &  & 30.00 [24.00, 45.00] & 30.00 [23.00, 40.00] & 30.00 [24.00, 42.00] \\ 
+  Sex (%) & Female & 118 (20.77) & 65 (21.59) & 183 (21.06) \\ 
+   & Male & 450 (79.23) & 236 (78.41) & 686 (78.94) \\ 
+  Mechanism of injury (%) & Assault & 77 (13.56) & 50 (16.61) & 127 (14.61) \\ 
+   & Burn & 2 (0.35) & 1 (0.33) & 3 (0.35) \\ 
+   & Event of undetermined intent & 1 (0.18) & 0 (0.00) & 1 (0.12) \\ 
+   & Fall & 152 (26.76) & 81 (26.91) & 233 (26.81) \\ 
+   & Intentional self harm & 2 (0.35) & 1 (0.33) & 3 (0.35) \\ 
+   & Other external cause of accidental injury & 69 (12.15) & 73 (24.25) & 142 (16.34) \\ 
+   & Transport accident & 265 (46.65) & 95 (31.56) & 360 (41.43) \\ 
+  Type of injury (%) & Blunt & 556 (97.89) & 301 (100.00) & 857 (98.62) \\ 
+   & Blunt and penetrating & 2 (0.35) & 0 (0.00) & 2 (0.23) \\ 
+   & Penetrating & 10 (1.76) & 0 (0.00) & 10 (1.15) \\ 
+  Mode of transport (%) & Ambulance & 242 (42.61) & 41 (13.62) & 283 (32.57) \\ 
+   & Arrived walking & 14 (2.46) & 19 (6.31) & 33 (3.80) \\ 
+   & Police & 24 (4.23) & 8 (2.66) & 32 (3.68) \\ 
+   & Private vehicle & 288 (50.70) & 233 (77.41) & 521 (59.95) \\ 
+  Transfer status (%) & No & 317 (55.81) & 254 (84.39) & 571 (65.71) \\ 
+   & Yes & 251 (44.19) & 47 (15.61) & 298 (34.29) \\ 
+  SBP (median [IQR]) &  & 120.00 [111.00, 130.00] & 122.00 [114.00, 134.00] & 121.00 [112.00, 132.00] \\ 
+  DBP (median [IQR]) &  & 80.00 [70.00, 87.00] & 82.00 [73.00, 90.00] & 80.00 [72.00, 88.00] \\ 
+  SpO\textsuperscript{2} (median [IQR]) &  & 98.00 [97.00, 98.00] & 98.00 [98.00, 98.00] & 98.00 [97.00, 98.00] \\ 
+  HR (median [IQR]) &  & 88.00 [78.00, 97.00] & 87.00 [78.00, 100.00] & 88.00 [78.00, 98.00] \\ 
+  RR (median [IQR]) &  & 20.00 [18.00, 22.00] & 24.00 [20.00, 26.00] & 22.00 [18.00, 24.00] \\ 
+  EGCS (%) & 1 & 35 (6.16) & 11 (3.65) & 46 (5.29) \\ 
+   & 2 & 8 (1.41) & 1 (0.33) & 9 (1.04) \\ 
+   & 3 & 18 (3.17) & 1 (0.33) & 19 (2.19) \\ 
+   & 4 & 506 (89.08) & 287 (95.35) & 793 (91.25) \\ 
+   & Non testable & 1 (0.18) & 1 (0.33) & 2 (0.23) \\ 
+  VGCS (%) & 1 & 37 (6.51) & 10 (3.32) & 47 (5.41) \\ 
+   & 2 & 11 (1.94) & 4 (1.33) & 15 (1.73) \\ 
+   & 3 & 7 (1.23) & 0 (0.00) & 7 (0.81) \\ 
+   & 4 & 23 (4.05) & 0 (0.00) & 23 (2.65) \\ 
+   & 5 & 490 (86.27) & 286 (95.02) & 776 (89.30) \\ 
+   & Non testable & 0 (0.00) & 1 (0.33) & 1 (0.12) \\ 
+  MGCS (%) & 1 & 17 (2.99) & 4 (1.33) & 21 (2.42) \\ 
+   & 2 & 7 (1.23) & 2 (0.66) & 9 (1.04) \\ 
+   & 3 & 9 (1.58) & 4 (1.33) & 13 (1.50) \\ 
+   & 4 & 6 (1.06) & 1 (0.33) & 7 (0.81) \\ 
+   & 5 & 23 (4.05) & 3 (1.00) & 26 (2.99) \\ 
+   & 6 & 504 (88.73) & 287 (95.35) & 791 (91.02) \\ 
+   & Non testable & 2 (0.35) & 0 (0.00) & 2 (0.23) \\ 
+  AVPU (%) & Alert & 502 (88.38) & 287 (95.35) & 789 (90.79) \\ 
+   & Pain responsive & 28 (4.93) & 9 (2.99) & 37 (4.26) \\ 
+   & Unresponsive & 19 (3.35) & 4 (1.33) & 23 (2.65) \\ 
+   & Voice responsive & 19 (3.35) & 1 (0.33) & 20 (2.30) \\ 
+  Delay (median [IQR]) &  & 165.00 [50.00, 903.50] & 68.00 [35.00, 285.00] & 120.00 [44.00, 700.00] \\ 
+  All cause 30-day mortality (%) & No & 515 (90.67) & 290 (96.35) & 805 (92.64) \\ 
+   & Yes & 53 (9.33) & 11 (3.65) & 64 (7.36) \\ 
+   \hline
+\end{tabular}
+\caption*{Abbreviations and explanations: AVPU, Alert, voice, pain, unresponsive scale; DBP, Diastolic blood pressure in mmHg; Delay, Time between injury and arrival to participating centre in minutes; EGCS, Eye component of the Glasgow Coma Scale; HR, Heart rate; MGCS, Motor component of the Glasgow Coma Scale; RR, Respiratory rate in breaths per minute; SBP, Systolic blood pressure in mmHg; SpO\\textsuperscript{2}, Peripheral capillary oxygen saturation; VGCS, Verbal component of the Glasgow Coma Scale} 
+\end{table}
+
+
+% ** End document
+\end{document}
