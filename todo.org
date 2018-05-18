@@ -103,7 +103,8 @@
 ** DONE Move create table function to after the sample has	     :todo28:
    CLOCK: [2018-05-18 Fri 06:25]--[2018-05-18 Fri 07:44] =>  1:19
    been divided into training and test
-** TODO Test adding results to manuscript			     :todo29:
+** INPROGRESS Test adding results to manuscript			     :todo29:
+   CLOCK: [2018-05-18 Fri 07:47]
 #+END_SRC
 * Issues
   None yet 
