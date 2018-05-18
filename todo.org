@@ -109,6 +109,7 @@
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
-** TODO Table of sample characteristics do not display properly	     :issue1:
+** INPROGRESS Table of sample characteristics do not display properly :issue1:
+   CLOCK: [2018-05-18 Fri 11:01]
 #+END_SRC
    
