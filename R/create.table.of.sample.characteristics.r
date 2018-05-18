@@ -86,7 +86,8 @@ create.table.of.sample.characteristics <- function(
     abbrv <- paste0("Abbreviations and explanations: ", paste0(sort(unlist(abbr)), collapse = "; ")) # Make abbreviation string
     ## Format the table using xtable
     formatted_table <- print.xtable(xtable(table,
-                                           caption = "Sample characteristics"),
+                                           caption = "Sample characteristics",
+                                           label = "tab:sample-characteristics"),
                                     type = "latex",
                                     include.rownames = FALSE,
                                     include.colnames = TRUE,

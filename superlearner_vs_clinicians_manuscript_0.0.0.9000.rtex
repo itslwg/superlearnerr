@@ -38,16 +38,17 @@ assigned by clinicians, leaving \rinline{n_after_excluding_missing_priority}
 patients. An additional \rinline{n_after_excluding_missing_priority -
   n_after_excluding_missing_outcome} were excluded because of missing outcome
 data. Thus, the final study sample included
-\rinline{n_after_excluding_missing_outcome} patients.
+\rinline{n_after_excluding_missing_outcome} patients. 
 
-The median age among included patiets was \rinline{report('age')} years. A
-majority, \rinline{report('sex', 'Male')} patients, were males. The most common
-mechanism of injury was transport accidents, accounting for
-\rinline{report('moi', 'Transport accident')} patients. A total of
-\rinline{report('mot', 'Private vehicle')} patients were transported to
-participating centres in some sort of private vehicle, such as a car, taxi, or
-rickshaw. A majority of patients had normal vital signs on arrival to
-participating centres.
+The median age among included patiets was \rinline{report('age')} years (Table
+\ref{tab:sample-characteristics}). A majority, \rinline{report('sex', 'Male')}
+patients, were males. The most common mechanism of injury was transport
+accidents, accounting for \rinline{report('moi', 'Transport accident')}
+patients. A total of \rinline{report('mot', 'Private vehicle')} patients were
+transported to participating centres in some sort of private vehicle, such as a
+car, taxi, or rickshaw. A majority of patients had normal vital signs on arrival
+to participating centres. Out of all patients, \rinline{report('s30d', 'Yes')}
+died within 30 days of arrival.
 
 %% begin.rcode table1, echo=FALSE, results="asis"
 % cat(table_of_sample_characteristics)
