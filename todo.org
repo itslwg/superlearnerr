@@ -104,6 +104,7 @@
    CLOCK: [2018-05-18 Fri 06:25]--[2018-05-18 Fri 07:44] =>  1:19
    been divided into training and test
 ** INPROGRESS Test adding results to manuscript			     :todo29:
+   CLOCK: [2018-05-18 Fri 17:02]
    CLOCK: [2018-05-18 Fri 07:47]--[2018-05-18 Fri 10:59] =>  3:12
 ** TODO Add informed consent no as exclusion criteria                :todo30:
 ** TODO Add learners to superlearner library                         :todo31:
