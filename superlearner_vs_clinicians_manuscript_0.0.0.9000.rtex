@@ -1,0 +1,33 @@
+% * Latex header
+% ** Document class
+\documentclass[10pt,letterpaper]{article}
+% ** Packages
+\usepackage[top=0.85in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{changepage}
+\usepackage[utf8x]{inputenc}
+\usepackage{textcomp,marvosym}
+\usepackage{cite}
+\usepackage{nameref,hyperref}
+\usepackage[right]{lineno}
+\usepackage{microtype}
+\usepackage[table]{xcolor}
+\usepackage{array}
+% ** Setting
+\DisableLigatures[f]{encoding = *, family = * }
+% * Document
+% ** Title
+\begin{document}
+{\Large
+  \noindent\textbf{SuperLearner versus Clinicians to Prioritise Trauma Patients (working title)}
+} \newline
+\\
+% ** Version
+{\large
+  Test version 0.0.0.9000
+}
+% ** Results
+\section*{Results}
+
+% ** End document
+\end{document}
