@@ -108,5 +108,7 @@
 ** TODO Add informed consent no as exclusion criteria                :todo30:
 #+END_SRC
 * Issues
-  None yet 
-
+#+BEGIN_SRC org
+** TODO Table of sample characteristics do not display properly	     :issue1:
+#+END_SRC
+   

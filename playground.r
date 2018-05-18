@@ -80,4 +80,4 @@ CIs <- lapply(funcList,
 names(CIs) <- c('AUROCC',
                 'reclassification')
 ## Compile manuscript
-compile.manuscript("superlearner_vs_clinicians_manuscript")
+compile.manuscript(results, "superlearner_vs_clinicians_manuscript")

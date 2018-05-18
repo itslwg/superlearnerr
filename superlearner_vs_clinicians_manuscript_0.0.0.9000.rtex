@@ -28,6 +28,19 @@
 }
 % ** Results
 \section*{Results}
+During the study period, we approached a total of \rinline{n_enrolled} patients
+for enrollment. XX did not provide informed consent. Out of the YY fulfilling
+the inclusion criteria, \rinline{n_enrolled -
+  n_after_excluding_missing_priority} had missing data on priority level
+assigned by clinicians, leaving \rinline{n_after_excluding_missing_priority}
+patients. An additional \rinline{n_after_excluding_missing_priority -
+  n_after_excluding_missing_outcome} were excluded because of missing outcome
+data. Thus, the final study sample included
+\rinline{n_after_excluding_missing_outcome} patients.
+
+%% begin.rcode table1, echo=FALSE, results="asis"
+% cat(table_of_sample_characteristics)
+%% end.rcode
 
 % ** End document
 \end{document}
