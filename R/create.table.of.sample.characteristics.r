@@ -72,7 +72,7 @@ create.table.of.sample.characteristics <- function(
     table <- cbind(nrns, table) # Add rownames as column
     colnames(table)[1] <- "Characteristic" # Name that column
     rownames(table) <- NULL # R rownames
-    abbrv <- paste0("Abbreviations: ", paste0(sort(unlist(abbr)), collapse = "; ")) # Make abbreviation string
+    abbrv <- paste0("Abbreviations and explanations: ", paste0(sort(unlist(abbr)), collapse = "; ")) # Make abbreviation string
     ## Format the table using xtable
     formatted_table <- print.xtable(xtable(table,
                                            caption = "Sample characteristics"),
