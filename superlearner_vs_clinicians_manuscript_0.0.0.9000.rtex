@@ -31,14 +31,15 @@
 % ** Results
 \section*{Results}
 During the study period, we approached a total of \rinline{n_enrolled} patients
-for enrollment. XX did not provide informed consent. Out of the YY fulfilling
-the inclusion criteria, \rinline{n_enrolled -
+for enrollment. \rinline{n_enrolled - n_after_excluding_no_consent} patients did
+not provide informed consent. Out of the \rinline{n_after_excluding_no_consent}
+patients who provided informed consent, \rinline{n_enrolled -
   n_after_excluding_missing_priority} had missing data on priority level
 assigned by clinicians, leaving \rinline{n_after_excluding_missing_priority}
 patients. An additional \rinline{n_after_excluding_missing_priority -
   n_after_excluding_missing_outcome} were excluded because of missing outcome
 data. Thus, the final study sample included
-\rinline{n_after_excluding_missing_outcome} patients. 
+\rinline{n_after_excluding_missing_outcome} patients.
 
 The median age among included patiets was \rinline{report('age')} years (Table
 \ref{tab:sample-characteristics}). A majority, \rinline{report('sex', 'Male')}
