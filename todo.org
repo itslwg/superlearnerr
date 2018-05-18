@@ -88,7 +88,8 @@
    CLOCK: [2018-05-16 Wed 07:51]--[2018-05-16 Wed 07:56] =>  0:05
 ** DONE Add calculate time from injury to arrival function	     :todo21:
    CLOCK: [2018-05-16 Wed 08:00]--[2018-05-16 Wed 09:20] =>  1:20
-** TODO Modify create table of sample characteristics function       :todo22:
+** INPROGRESS Modify create table of sample characteristics function :todo22:
+   CLOCK: [2018-05-18 Fri 06:20]
    Change Abbreviations: to Abbreviations and explanations:
 ** TODO Update descriptions of functions                             :todo23:
 ** DONE Move playground to top directory			     :todo24:
