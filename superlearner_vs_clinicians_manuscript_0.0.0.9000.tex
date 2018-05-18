@@ -64,6 +64,7 @@
 \usepackage[table]{xcolor}
 \usepackage{array}
 \usepackage{caption}
+\usepackage{adjustbox}
 % ** Setting
 \DisableLigatures[f]{encoding = *, family = * }
 % * Document
@@ -89,11 +90,13 @@ data. Thus, the final study sample included
 869 patients.
 
 % latex table generated in R 3.3.3 by xtable 1.8-2 package
-% Fri May 18 11:58:10 2018
+% Fri May 18 12:25:49 2018
 \begin{table}[ht]
 \centering
 \caption{Sample characteristics} 
-\begin{tabular}{lllll}
+\begin{adjustbox}{max width=\textwidth} 
+\begin{tabular} 
+{lllll}
   \hline
 Characteristic & Level & Training & Test & Overall \\ 
   \hline
@@ -148,7 +151,8 @@ n (\%) &  & 568 (65.36) & 301 (34.64) & 869 (100.00) \\
   All cause 30-day mortality (\%) & No & 515 (90.67) & 290 (96.35) & 805 (92.64) \\ 
    & Yes & 53 (9.33) & 11 (3.65) & 64 (7.36) \\ 
    \hline
-\end{tabular}
+\end{tabular} 
+\end{adjustbox}
 \caption*{Abbreviations and explanations: AVPU, Alert, voice, pain, unresponsive scale; DBP, Diastolic blood pressure in mmHg; Delay, Time between injury and arrival to participating centre in minutes; EGCS, Eye component of the Glasgow Coma Scale; HR, Heart rate; MGCS, Motor component of the Glasgow Coma Scale; RR, Respiratory rate in breaths per minute; SBP, Systolic blood pressure in mmHg; SpO\textsuperscript{2}, Peripheral capillary oxygen saturation; VGCS, Verbal component of the Glasgow Coma Scale} 
 \end{table}
 

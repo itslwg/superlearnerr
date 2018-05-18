@@ -92,6 +92,17 @@ create.table.of.sample.characteristics <- function(
     ## Dirty fix to make sure superscripts format correctly
     formatted_table <- gsub("SUPS ", "\\textsuperscript{", formatted_table, fixed = TRUE)
     formatted_table <- gsub(" SUPE", "}", formatted_table, fixed = TRUE)
+    ## Add adjustbox to make table fit on page
+    formatted_table <- sub("\\begin{tabular}",
+                           paste0("\\begin{adjustbox}{max width=\\textwidth} \n",
+                                  "\\begin{tabular} \n"),
+                           formatted_table,
+                           fixed = TRUE)
+    formatted_table <- sub("\\end{tabular}",
+                           paste0("\\end{tabular} \n",
+                                  "\\end{adjustbox}"),
+                           formatted_table,
+                           fixed = TRUE)
     ## Save formatted table to disk if save is TRUE
     if (save) write(formatted_table, "table_of_sample_characteristics.tex")
     return(formatted_table)
