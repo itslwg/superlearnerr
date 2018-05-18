@@ -24,3 +24,4 @@ s24h,,,,,,,,,No
 delay,Time between injury and arrival to participating centre in minutes,Delay,quan,,,,,Yes,Yes
 seqn,Consecutive number assigned based on date and time of arrival,,quan,,,,,No,No
 s30d,All cause 30-day mortality,,qual,"0,1,2","""0 = No"", ""1 = Yes"", ""2 = Yes""",,,Yes,No
+set,Data set,,qual,,,,,Yes,Yes

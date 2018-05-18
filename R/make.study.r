@@ -11,10 +11,6 @@ make.study <- function(
 {
     ## Set seed for reproducability
     set.seed(123)
-    ## Source all functions (remove when turned into package)
-    files <- list.files("./R", pattern = ".r$", full.names = TRUE)
-    files <- files[!(files %in% "./make.study.r")]
-    for (f in files) source(f)
     ## Load all required packages (remove when turned into package)
     load.required.packages()
     ## Import study data
@@ -51,10 +47,10 @@ make.study <- function(
     study_data <- add.missing.indicator.variables(study_data)
     ## Do median imputation
     study_data <- do.median.imputation(study_data)
-    ## Create table of sample characteristics
-    results$table_of_sample_characteristics <- create.table.of.sample.characteristics(study_data, data_dictionary)
     ## Prepare data for SuperLearner predictions
     prepped_data <- prep.data.for.superlearner(study_data, test = TRUE)
+    ## Create table of sample characteristics
+    results$table_of_sample_characteristics <- create.table.of.sample.characteristics(prepped_data, data_dictionary)
     ## Transform factors into dummy variables
     prepped_data <- to.dummy.variables(prepped_data)
     ## Train and review SuperLearner on study sample
