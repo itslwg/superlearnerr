@@ -31,10 +31,15 @@ prep.data.for.superlearner <- function(
                      x_review = review)
         ## Extract tc from review set
         tc <- as.numeric(sets$x_review$tc)
-        ## Extract outcome from training and review set
+        ## Change levels of outcome factor from "No" and "Yes", to 0 and 1. Then
+        ## outcome is extracted from the sets
         y_training_and_review <- lapply(sets,
-                                        function(x)
-                                            as.numeric(x[, outcome]))
+                                        function(the_set)
+                                        {
+                                            levels(the_set[[outcome]]) <- c(0,1)
+                                            the_set[[outcome]] <- as.numeric(as.character(the_set[[outcome]]))
+                                            return(the_set[[outcome]])
+                                        })
         names(y_training_and_review) <- c("y_train", "y_review")
         ## Remove tc, outcome and time_variable from sets
         x_sets <- lapply(sets,

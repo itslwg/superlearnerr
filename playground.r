@@ -48,6 +48,7 @@ study_data <- apply.exclusion.criteria(study_data)
 study_data <- add.missing.indicator.variables(study_data)
 ## Prepare data for SuperLearner predictions
 prepped_data <- prep.data.for.superlearner(study_data, test = TRUE)
+
 ## Create table of sample characteristics
 results$table_of_sample_characteristics <- create.table.of.sample.characteristics(prepped_data, data_dictionary)
 ## Transform factors into dummy variables
