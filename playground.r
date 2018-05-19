@@ -54,8 +54,9 @@ results$table_of_sample_characteristics <- tables$formatted
 results$raw_table_of_sample_characteristics <- tables$raw
 ## Transform factors into dummy variables
 prepped_data <- to.dummy.variables(prepped_data)
-## Train and review SuperLearner on study sample
-study_sample <- predictions.with.superlearner(prepped_data)
+## Train and review SuperLearner on study sample. Remember to consider changing
+## the sample setting in gridsearching for optimal cutpoints.
+study_sample <- predictions.with.superlearner(prepped_data, save_breaks = TRUE, save_to_results = TRUE)
 ## Bootstrap samples
 samples <- generate.bootstrap.samples(study_data,
                                       bs_samples)
@@ -69,7 +70,6 @@ funcList <- list(list(measure = "AUROCC",
                                       "tc")),
                  list(measure = "reclassification",
                       model_or_pe = c("NRI+",
-                                      "NRI-",
                                       "Pr(Up|Case)")))
 ## Generate confidence intervals around point estimates from funcList
 CIs <- lapply(funcList,
