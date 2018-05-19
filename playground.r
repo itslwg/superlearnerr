@@ -62,19 +62,20 @@ samples <- generate.bootstrap.samples(study_data,
                                       bs_samples)
 ## Prepare samples
 prepped_samples <- prep.bssamples(samples)
-## Train and review SuperLearner on boostrap samples
+## Train and review SuperLearner on bootstrap samples
 samples <- train.predict.bssamples(prepped_samples)
 ## Create list of analysis to conduct
-funcList <- list(list(func = 'model.review.AUROCC',
-                      model_or_pe = c('pred_cat',
-                                      'tc')),
-                 list(func = 'model.review.reclassification',
-                      model_or_pe = c('NRI+',
-                                      'Pr(Up|Case)')))
+funcList <- list(list(measure = "AUROCC",
+                      model_or_pe = c("pred_cat",
+                                      "tc")),
+                 list(measure = "reclassification",
+                      model_or_pe = c("NRI+",
+                                      "NRI-",
+                                      "Pr(Up|Case)")))
 ## Generate confidence intervals around point estimates from funcList
 CIs <- lapply(funcList,
               function(i) generate.confidence.intervals(study_sample,
-                                                        func = get(i$func),
+                                                        func = get(paste0("model.review.", i$measure)),
                                                         model_or_pointestimate = i$model_or_pe,
                                                         samples = samples))
 ## Set names of cis
