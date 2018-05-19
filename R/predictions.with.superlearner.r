@@ -23,7 +23,7 @@ predictions.with.superlearner <- function(
     ## Get quantiles of predictions
     quantiles <- quantile(pred, probs = c(0.25, 0.50, 0.75))
     ## Use those to categorise predictions
-    labels <- c('green', 'yellow', 'orange', 'red') # define labels
+    labels <- c('Green', 'Yellow', 'Orange', 'Red') # define labels
     pred_cat <- cut(pred,
                     breaks = c(0, quantiles, 1),
                     labels = labels,
