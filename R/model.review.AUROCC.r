@@ -1,7 +1,7 @@
 #' Area Under Receiver Operating Characteristics Curve (AUROCC) function
 #'
 #' This function calculates AUROCC of the specified predictions.
-#' @param study_sample The study sample as a data frame. No default
+#' @param study_sample The study sample list. No default.
 #' @param which_preds Character vector with predictions. Default: c('pred_cat', 'tc')
 #' @export
  model.review.AUROCC <- function(
