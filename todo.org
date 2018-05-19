@@ -120,8 +120,8 @@
    - [ ] Calibration plot superlearner test
    - [ ] ROC superlearner cat and clinicians
    - [ ] Mortality per priority level, superlearner and clinicians
-** INPROGRESS Write grid search function			     :todo36:
-   CLOCK: [2018-05-19 Sat 10:59]
+** DONE Write grid search function				     :todo36:
+   CLOCK: [2018-05-19 Sat 10:59]--[2018-05-19 Sat 17:51] =>  6:52
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
