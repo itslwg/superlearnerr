@@ -1,6 +1,7 @@
 #' Confidence interval function
 #'
 #' This function generates confidence intervals around difference of two given point estimates using empirical bootstrapping.
+#' @param measure The name of the measure to be estimated. No default.
 #' @param study_sample The study sample list. No default.
 #' @param func Function that generates key statistic. For example, model.review.AUROCC that generates AUROCC of a given model, or model.review.reclassification that generates reclassification elements. No default.
 #' @param model_or_pointestimate Character vector describing predictions or point estimates to analyse. For example, pred_cat and clinicians_predictions predictions for model.review.AUROCC or NRI+ and NRI- point estimates for model.review.reclassification. No default.
@@ -8,6 +9,7 @@
 #' @param diffci_or_ci String. Whether to return confidence interval on difference of model_or_pointestimates, or return confidence intervals on model_or_pointestimates separately. Accepted characters are "diff" or "ci".
 #' @export
 generate.confidence.intervals <- function(
+                                          measure,
                                           study_sample,
                                           model_or_pointestimate,
                                           func,
