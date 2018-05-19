@@ -75,7 +75,7 @@ funcList <- list(list(func = 'model.review.AUROCC',
                       diffci_or_ci = "ci"))
 ## Generate confidence intervals around point estimates from funcList
 CIs <- lapply(funcList,
-              function(i) generate.confidence.intervals(study_sample,
+              function(i) generate.confidence.intervals(study_sample = study_sample,
                                                         func = get(i$func),
                                                         model_or_pointestimate = i$model_or_pe,
                                                         samples = samples,

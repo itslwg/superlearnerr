@@ -40,8 +40,9 @@ generate.confidence.intervals <- function(
         quantiles <- quantile(deltastar, c(.025, 0.975))
         ## Generate confidence intervals
         confidence_intervals <- diff - quantiles
-
-        return(confidence_intervals)
+        ## Return confidence intervals with study_sample point_estimates
+        return(list(CI_diff = confidence_intervals,
+                    study_point_estimates = study_point_estimates))
     }
     if (diffci_or_ci == "ci"){
         ## Get point estimates of func
@@ -64,6 +65,8 @@ generate.confidence.intervals <- function(
         confidence_intervals <- apply(quantiles,
                                       1,
                                       function(row) study_point_estimates - row)
+        ## Return confidence intervals with study_sample point_estimates
+        confidence_intervals <- cbind(confidence_intervals, study_point_estimates)
         return(confidence_intervals)
     }
 }
