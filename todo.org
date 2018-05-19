@@ -111,7 +111,8 @@
 ** TODO Add learners to superlearner library                         :todo31:
 ** DONE Add function to extract data from table			     :todo32:
    CLOCK: [2018-05-18 Fri 12:57]--[2018-05-18 Fri 16:58] =>  4:01
-** TODO Refactor generate.confidence.intervals                       :todo33:
+** INPROGRESS Refactor generate.confidence.intervals		     :todo33:
+   CLOCK: [2018-05-19 Sat 08:10]
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
