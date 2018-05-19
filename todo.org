@@ -114,13 +114,14 @@
 ** DONE Refactor generate.confidence.intervals			     :todo33:
    CLOCK: [2018-05-19 Sat 08:10]--[2018-05-19 Sat 08:41] =>  0:31
 ** INPROGRESS Add point estimates and diff with ci to results	     :todo34:
-   CLOCK: [2018-05-19 Sat 10:03]
+   CLOCK: [2018-05-19 Sat 10:03]--[2018-05-19 Sat 10:59] =>  0:56
 ** TODO Generate plots [0/4] 					     :todo35:
    - [ ] Calibration plot superlearner training
    - [ ] Calibration plot superlearner test
    - [ ] ROC superlearner cat and clinicians
    - [ ] Mortality per priority level, superlearner and clinicians
-** TODO Write grid search function                                   :todo36:
+** INPROGRESS Write grid search function			     :todo36:
+   CLOCK: [2018-05-19 Sat 10:59]
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
