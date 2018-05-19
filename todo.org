@@ -120,6 +120,7 @@
    - [ ] Calibration plot superlearner test
    - [ ] ROC superlearner cat and clinicians
    - [ ] Mortality per priority level, superlearner and clinicians
+** TODO Write grid search function                                   :todo36:
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
