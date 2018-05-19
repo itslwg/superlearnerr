@@ -8,7 +8,10 @@
 #' @export
 predictions.with.superlearner <- function(
                                           prepped_data,
-                                          models = c('SL.glmnet'),
+                                          models = c('SL.glmnet',
+                                                     'SL.glm',
+                                                     'SL.randomForest',
+                                                     'SL.xgboost'),
                                           save_breaks = FALSE,
                                           save_to_results = FALSE
                                           )
@@ -37,7 +40,7 @@ predictions.with.superlearner <- function(
         cut(predictions,
             breaks = c(-Inf, breaks, Inf),
             labels = labels,
-            include.lowest = TRUE)   
+            include.lowest = TRUE)
     })
     ## Return data with predictions
     pred_data <- list(pred_con = continuous_predictions$test,
@@ -46,7 +49,7 @@ predictions.with.superlearner <- function(
                       outcome = prepped_data$y_review)
     ## Save to results
     if (save_to_results) {
-        ## Generate list of predictions 
+        ## Generate list of predictions
         predictions <- list(continuous = continuous_predictions$train,
                             categorical = categorical_predictions$train)
         ## Get prediction objects
