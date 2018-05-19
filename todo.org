@@ -121,8 +121,8 @@
 ** DONE Fix reclassifciation NaN in control groups                   :issue2:
 ** DONE do.median.imputation fails in prep.data.for.superlearner     :issue3:
    CLOCK: [2018-05-18 Fri 17:22]--[2018-05-18 Fri 17:28] =>  0:06
-** INPROGRESS Check that tc to numeric works as intended	     :issue4:
-   CLOCK: [2018-05-19 Sat 08:42]
+** DONE Check that tc to numeric works as intended		     :issue4:
+   CLOCK: [2018-05-19 Sat 08:42]--[2018-05-19 Sat 09:19] =>  0:37
 #+END_SRC
 
    

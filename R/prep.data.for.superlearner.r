@@ -30,7 +30,7 @@ prep.data.for.superlearner <- function(
         sets <- list(x_train = train,
                      x_review = review)
         ## Extract tc from review set
-        tc <- as.numeric(sets$x_review$tc)
+        tc <- sets$x_review$tc
         ## Change levels of outcome factor from "No" and "Yes", to 0 and 1. Then
         ## outcome is extracted from the sets
         y_training_and_review <- lapply(sets,
@@ -49,7 +49,7 @@ prep.data.for.superlearner <- function(
         ## Do median imputation on training and review set separately
         x_sets <- lapply(x_sets, do.median.imputation)
         return (list(sets = x_sets,
-                     tc = as.numeric(tc),
+                     tc = tc,
                      y_train = y_training_and_review$y_train,
                      y_review = y_training_and_review$y_review,
                      y_name = outcome,

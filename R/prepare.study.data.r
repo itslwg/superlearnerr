@@ -26,11 +26,11 @@ prepare.study.data <- function(
         if (vdd$t == "qual") {
             values <- vdd$vs # Get values
             if (values != ""){
-                split_labels <- split.labels(values) # Get values without quotation marks and split on commas
+                data <- as.factor(data)
                 value_labels <- split.labels(vdd$vls) # Get value labels
                 value_label_list <- lapply(strsplit(value_labels, "="), trimws, "both") # Make a list of value labels without white space
-                for (i in seq_along(value_label_list)) data[data == value_label_list[[i]][1]] <- value_label_list[[i]][2] # Assign new value labels
-                data <- as.factor(data) # Make data a factor
+                labels <- unlist(lapply(value_label_list, function(x) x[2])) # Get labels
+                levels(data) <- labels # Assign those to data
             }
         }
         return(data)
