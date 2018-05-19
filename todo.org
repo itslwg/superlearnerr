@@ -111,8 +111,8 @@
 ** TODO Add learners to superlearner library                         :todo31:
 ** DONE Add function to extract data from table			     :todo32:
    CLOCK: [2018-05-18 Fri 12:57]--[2018-05-18 Fri 16:58] =>  4:01
-** INPROGRESS Refactor generate.confidence.intervals		     :todo33:
-   CLOCK: [2018-05-19 Sat 08:10]
+** DONE Refactor generate.confidence.intervals			     :todo33:
+   CLOCK: [2018-05-19 Sat 08:10]--[2018-05-19 Sat 08:41] =>  0:31
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
@@ -121,6 +121,8 @@
 ** DONE Fix reclassifciation NaN in control groups                   :issue2:
 ** DONE do.median.imputation fails in prep.data.for.superlearner     :issue3:
    CLOCK: [2018-05-18 Fri 17:22]--[2018-05-18 Fri 17:28] =>  0:06
+** DONE Check that tc to numeric works as intended		     :issue4:
+   CLOCK: [2018-05-19 Sat 08:42]--[2018-05-19 Sat 09:19] =>  0:37
 #+END_SRC
 
    
