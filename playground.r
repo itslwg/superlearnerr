@@ -52,6 +52,8 @@ prepped_sample <- prep.data.for.superlearner(study_data, test = TRUE)
 tables <- create.table.of.sample.characteristics(prepped_sample, data_dictionary)
 results$table_of_sample_characteristics <- tables$formatted
 results$raw_table_of_sample_characteristics <- tables$raw
+results$n_training_sample <- nrow(prepped_sample$x_train)
+results$n_test_sample <- nrow(prepped_sample$x_review)
 ## Transform factors into dummy variables
 prepped_sample <- to.dummy.variables(prepped_sample)
 ## Train and review SuperLearner on study sample. Remember to consider changing
