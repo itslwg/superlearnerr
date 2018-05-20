@@ -5,7 +5,7 @@ files <- list.files("./R", pattern = ".r$", full.names = TRUE)
 for (f in files) source(f)
 ## Set parameters that are default in make.study
 data_path =  c("./extdata/sample.csv")
-bs_samples = 5
+bs_samples = 3
 
 ## Code below this line is more or less a copy of make.study. Make sure to
 ## modify make.study if you modify important stuff here.
@@ -53,15 +53,15 @@ tables <- create.table.of.sample.characteristics(prepped_data, data_dictionary)
 results$table_of_sample_characteristics <- tables$formatted
 results$raw_table_of_sample_characteristics <- tables$raw
 ## Transform factors into dummy variables
-prepped_data <- to.dummy.variables(prepped_data)
+prepped_sample <- to.dummy.variables(prepped_data)
 ## Train and review SuperLearner on study sample. Remember to consider changing
 ## the sample setting in gridsearching for optimal cutpoints.
-study_sample <- predictions.with.superlearner(prepped_data, save_breaks = TRUE, save_to_results = TRUE)
+study_sample <- predictions.with.superlearner(prepped_sample, save_breaks = TRUE, save_to_results = TRUE)
 ## Bootstrap samples
-samples <- generate.bootstrap.samples(study_data,
+bootstrap_samples <- generate.bootstrap.samples(study_data,
                                       bs_samples)
 ## Prepare samples
-prepped_samples <- prep.bssamples(samples)
+prepped_samples <- prep.bssamples(bootstrap_samples)
 ## Train and review SuperLearner on boostrap samples
 samples <- train.predict.bssamples(prepped_samples)
 ## Create list of analysis to conduct
