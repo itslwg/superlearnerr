@@ -125,6 +125,7 @@
    CLOCK: [2018-05-19 Sat 10:59]--[2018-05-19 Sat 17:51] =>  6:52
 ** INPROGRESS Add function to estimate point estimates		     :todo37:
    CLOCK: [2018-05-20 Sun 10:17]
+** TODO Format point estimates and cis                               :todo38:
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
