@@ -12,7 +12,11 @@ load.required.packages <- function()
                   "tableone",
                   "xtable",
                   "lattice",
-                  "RColorBrewer")
+                  "RColorBrewer",
+                  "glmnet",
+                  "randomForest",
+                  "xgboost",
+                  "gam")
     ## Require those packages using a loop
     for (p in packages) require(p, character.only = TRUE)
 }
