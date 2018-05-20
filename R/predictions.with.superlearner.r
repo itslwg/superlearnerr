@@ -1,7 +1,7 @@
 #' Generate predictions with SuperLearner
 #'
 #' This function trains SuperLearner on the training set and makes predictions on the review set. Then, predictions are divided by quantiles into four colour-coded groups. The groups are green, yellow, orange, and red. They respectively include ranges from the 0% quantile to 25% quantile, 25% to 50%, 50% to 75%, and 75% to 100% of the continous predictions. (To be changed)
-#' @param prepped_data. Data as prepared by prep.data.for.superlearner as list. No default.
+#' @param prepped_data Data as prepared by prep.data.for.superlearner as list. No default.
 #' @param models Models to use in ensemble algorithm. Default: SL.mean and SL.glmnet.
 #' @param save_breaks Logical. If TRUE, save optimal breaks to results. Defaults to FALSE.
 #' @param save_all_predictions Logical. If TRUE all predictions are saved in pred_data. Defaults to FALSE.
@@ -50,13 +50,16 @@ predictions.with.superlearner <- function(
             include.lowest = TRUE)
     })
     ## Return data with predictions
-    pred_data <- list(pred_con = continuous_predictions$test,
-                      pred_cat = categorical_predictions$test,
+    pred_data <- list(pred_con_test = continuous_predictions$test,
+                      pred_cat_test = categorical_predictions$test,
                       tc = prepped_data$tc,
-                      outcome = prepped_data$y_review)
+                      outcome_test = prepped_data$y_review)
     ## Save all predictions
-    if (save_all_predictions) pred_data$predictions <- list(continuous_predictions = continuous_predictions,
-                                                            categorical_predictions = categorical_predictions)
+    if (save_all_predictions) {
+        pred_data$pred_con_train <- continuous_predictions$train
+        pred_data$pred_cat_train <- categorical_predictions$train
+        pred_data$outcome_train <- prepped_data$y_train   
+    }
     if (verbose) message("Returning prediction data \n")
     return (pred_data)
 }
