@@ -114,8 +114,8 @@
    CLOCK: [2018-05-18 Fri 12:57]--[2018-05-18 Fri 16:58] =>  4:01
 ** DONE Refactor generate.confidence.intervals			     :todo33:
    CLOCK: [2018-05-19 Sat 08:10]--[2018-05-19 Sat 08:41] =>  0:31
-** INPROGRESS Add point estimates and diff with ci to results	     :todo34:
-   CLOCK: [2018-05-19 Sat 10:03]--[2018-05-19 Sat 10:59] =>  0:56
+** DONE Add point estimates and diff with ci to results		     :todo34:
+   CLOCK: [2018-05-19 Sat 10:03]--[2018-05-20 Sun 13:32] => 27:29
 ** TODO Generate plots [0/4] 					     :todo35:
    - [ ] Calibration plot superlearner training
    - [ ] Calibration plot superlearner test
@@ -127,6 +127,7 @@
    CLOCK: [2018-05-20 Sun 10:17]--[2018-05-20 Sun 11:31] =>  1:14
 ** DONE Format point estimates and cis				     :todo38:
    CLOCK: [2018-05-20 Sun 11:33]--[2018-05-20 Sun 12:26] =>  0:53
+** TODO Add classification tables                                    :todo39:
 #+END_SRC
 * Issues
 #+BEGIN_SRC org

@@ -23,6 +23,7 @@ extract.from.table <- function(
     row <- min_row <- grep(paste0("^", variable), rownames(table_object))
     if (!is.null(level)) {
         levels <- levels(data_object[, variable])
+        level <- gsub("[ \t\r\n]+", " ", level)
         if (!(level %in% levels)) stop ("The level you provided is not valid")
         row <- min_row + grep(level, levels) - 1
     }

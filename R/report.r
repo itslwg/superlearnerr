@@ -3,7 +3,7 @@
 #' Function to format results for reporting in the results section
 #' @param variable The name of the variable to report on. No default.
 #' @param level The name of the level to report on. Defaults to NULL.
-#' @param data_object The data object. Defaults to prepped_data.
+#' @param data_object The data object. Defaults to study_data.
 #' @param table_object The table object. Defaults to results$raw_table_of_sample_characteristics.
 #' @export
 report <- function(
