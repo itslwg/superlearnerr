@@ -41,19 +41,51 @@ patients. An additional \rinline{n_after_excluding_missing_priority -
 data. Thus, the final study sample included
 \rinline{n_after_excluding_missing_outcome} patients.
 
-The median age among included patiets was \rinline{report('age')} years (Table
-\ref{tab:sample-characteristics}). A majority, \rinline{report('sex', 'Male')}
-patients, were males. The most common mechanism of injury was transport
-accidents, accounting for \rinline{report('moi', 'Transport accident')}
-patients. A total of \rinline{report('mot', 'Private vehicle')} patients were
-transported to participating centres in some sort of private vehicle, such as a
-car, taxi, or rickshaw. A majority of patients had normal vital signs on arrival
-to participating centres. Out of all patients, \rinline{report('s30d', 'Yes')}
-died within 30 days of arrival.
+Table \ref{tab:sample-characteristics} shows sample characteristics. The median
+age among included patients was \rinline{report('age')} years. A majority,
+\rinline{report('sex', 'Male')} patients, were males. The most common mechanism
+of injury was transport accidents, accounting for \rinline{report('moi',
+  'Transport accident')} patients. A total of \rinline{report('mot', 'Private
+  vehicle')} patients were transported to participating centres in some sort of
+private vehicle, such as a car, taxi, or rickshaw. A majority of patients had
+normal vital signs on arrival to participating centres. Out of all patients,
+\rinline{report('s30d', 'Yes')} died within 30 days of arrival. The number of
+patients in the training and test samples were \rinline{n_training_sample} and
+\rinline{n_test_sample} respectively.
 
 %% begin.rcode table1, echo=FALSE, results="asis"
 % cat(table_of_sample_characteristics)
 %% end.rcode
+
+The AUROCC of the continuous SuperLearner prediction in the training sample was
+\rinline{superlearner_con_auc_train}. Figure XA shows the agreement between the
+continuous predictions and observed outcomes in the training sample. The
+cutpoints identified by the grid search were \rinline{optimal_breaks[1]},
+\rinline{optimal_breaks[2]}, and \rinline{optimal_breaks[3]}. We used these
+cutpoints to bin the continuous SuperLearner prediction into the four priority
+levels green, yellow, orange, and red. The AUROCC of the binned SuperLearner
+predictions in the training sample was
+\rinline{superlearner_cat_auc_train}. Table X shows the number of patients and
+all cause 30-day mortality in each group.
+
+We then applied the SuperLearner to the test sample. The AUROCC of the continous
+SuperLearner prediction was \rinline{superlearner_con_auc_test}. Figure XB shows
+the agreement between the continuous predictions and observed outcomes in the
+test sample. We used the same cutpoints as in the training sample to bin the
+continuous predictions into the four priority levels. The AUROCC of the binned
+SuperLearner predictions in the test sample was
+\rinline{superlearner_cat_auc_test}.
+
+In the test sample we compared the performance of the binned SuperLearner
+prediction with that of clinicians. The AUROCC of priority levels assigned by
+clinicians was \rinline{tc_auc_test}. The difference in AUROCC between the
+binned SuperLearner prediction and clinicians was
+\rinline{diff_superlearner_cat_tc_auc}. The net reclassifciation in events and
+non-events were \rinline{nre} and \rinline{nrne} respectively. The number of
+patients assigned to each priority level by the SuperLearner and clinicians and
+the all cause 30-day mortality in each group is shown in Figure X.
+
+
 
 % ** End document
 \end{document}
