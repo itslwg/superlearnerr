@@ -44,6 +44,8 @@ generate.confidence.intervals <- function(
         quantiles <- quantile(deltastar, c(.025, 0.975))
         ## Generate confidence intervals
         confidence_intervals <- diff - quantiles
+        ## Format confidence intervals
+        confidence_intervals <- c(lb = min(confidence_intervals), ub = max(confidence_intervals))
         ## Return confidence intervals with study_sample point_estimates
         return_object <- list(diff_point_estimate = diff,
                               CI_diff = confidence_intervals,
@@ -71,8 +73,12 @@ generate.confidence.intervals <- function(
         confidence_intervals <- apply(quantiles,
                                       1,
                                       function(row) performance_point_estimates - row)
+        ## Format confidence intervals
+        fmt_confidence_intervals <- t(apply(confidence_intervals,
+                                            1,
+                                            function(row) c(lb = min(row), ub = max(row))))
         ## Return confidence intervals with study_sample point_estimates
-        confidence_intervals <- cbind(confidence_intervals, performance_point_estimates)
+        confidence_intervals <- as.data.frame(cbind(fmt_confidence_intervals, performance_point_estimates))
         return_object <- confidence_intervals
     }
     return(return_object)
