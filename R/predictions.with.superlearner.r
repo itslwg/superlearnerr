@@ -4,23 +4,28 @@
 #' @param prepped_data. Data as prepared by prep.data.for.superlearner as list. No default.
 #' @param models Models to use in ensemble algorithm. Default: SL.mean and SL.glmnet.
 #' @param save_breaks Logical. If TRUE, save optimal breaks to results. Defaults to FALSE.
-#' @param save_to_results Logical. If TRUE stuff is saved to results in parent environment. Defaults to FALSE.
+#' @param save_all_predictions Logical. If TRUE all predictions are saved in pred_data. Defaults to FALSE.
+#' @param verbose Logical. If TRUE information to help gauge progress is printed. Defaults to TRUE.
 #' @export
 predictions.with.superlearner <- function(
                                           prepped_data,
                                           models = c('SL.glmnet',
                                                      'SL.glm',
                                                      'SL.randomForest',
-                                                     'SL.xgboost'),
+                                                     'SL.xgboost',
+                                                     'SL.gam'),
                                           save_breaks = FALSE,
-                                          save_to_results = FALSE
+                                          save_all_predictions = FALSE,
+                                          verbose = TRUE
                                           )
 {
     ## Train algorithm with training set
+    if (verbose) message("Training SuperLearner")
     train_algo <- with(prepped_data, SuperLearner(Y = y_train,
                                                   X = x_train,
                                                   family = binomial(),
                                                   SL.library = models))
+    if (verbose) message("SuperLearner trained")
     ## Predict with algorithm on training set
     sets <- list(train = prepped_data$x_train, test = prepped_data$x_review)
     continuous_predictions <- lapply(sets, function(sample) {
@@ -31,7 +36,9 @@ predictions.with.superlearner <- function(
     ## Subset continous predictions for categorisation
     train_pred <- continuous_predictions$train
     ## Do a grid search to find optimal cutpoints
+    if (verbose) message("Finding optimal cutpoints")
     breaks <- gridsearch.breaks(predictions = train_pred, outcomes = prepped_data$y_train)
+    if (verbose) message("Optimal cutpoints identified")
     ## Save breaks
     if (save_breaks) results$optimal_breaks <<- breaks
     ## Use those to categorise predictions
@@ -47,29 +54,9 @@ predictions.with.superlearner <- function(
                       pred_cat = categorical_predictions$test,
                       tc = prepped_data$tc,
                       outcome = prepped_data$y_review)
-    ## Save to results
-    if (save_to_results) {
-        ## Generate list of predictions
-        predictions <- list(continuous = continuous_predictions$train,
-                            categorical = categorical_predictions$train)
-        ## Get prediction objects
-        prediction_objects <- lapply(predictions, function(prediction) {
-            ROCR::prediction(as.numeric(prediction), prepped_data$y_train)
-        })
-        ## Calculate aucs
-        aucs <- lapply(prediction_objects, function(prediction_object) {
-            ROCR::performance(prediction_object, "auc")@y.values[[1]]
-        })
-        ## Get roc objects
-        rocs <- lapply(prediction_objects, function(prediction_object) {
-            ROCR::performance(prediction_object, "tpr", "fpr")
-        })
-        ## Save relevant data to results
-        results$continuous_superlearner_auc_point_estimate_train <<- aucs$continuous # Superlearner point estimate in training data
-        results$categorical_superlearner_auc_point_estimate_train <<- aucs$categorical # Superlearner point estimate in training data
-        results$continuous_superlearner_roc_curve_data_train <<- rocs$continuous # Will be used to create a roc curve
-        results$categorical_superlearner_roc_curve_data_train <<- rocs$categorical # Will be used to create a roc curve
-        results$superlearner_calibration_plot_data_train <<- list(predictions = continuous_predictions$train, outcomes = prepped_data$y_train) # Will be used to create a calibration plot
-    }
+    ## Save all predictions
+    if (save_all_predictions) pred_data$predictions <- list(continuous_predictions = continuous_predictions,
+                                                            categorical_predictions = categorical_predictions)
+    if (verbose) message("Returning prediction data \n")
     return (pred_data)
 }

@@ -108,7 +108,8 @@
    CLOCK: [2018-05-18 Fri 07:47]--[2018-05-18 Fri 10:59] =>  3:12
 ** DONE Add informed consent no as exclusion criteria		     :todo30:
    CLOCK: [2018-05-18 Fri 17:11]--[2018-05-18 Fri 17:21] =>  0:10
-** TODO Add learners to superlearner library                         :todo31:
+** DONE Add learners to superlearner library			     :todo31:
+   CLOCK: [2018-05-20 Sun 08:54]--[2018-05-20 Sun 10:15] =>  1:21
 ** DONE Add function to extract data from table			     :todo32:
    CLOCK: [2018-05-18 Fri 12:57]--[2018-05-18 Fri 16:58] =>  4:01
 ** DONE Refactor generate.confidence.intervals			     :todo33:
