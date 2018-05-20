@@ -5,7 +5,7 @@ files <- list.files("./R", pattern = ".r$", full.names = TRUE)
 for (f in files) source(f)
 ## Set parameters that are default in make.study
 data_path =  c("./extdata/sample.csv")
-bs_samples = 3
+bs_samples = 10
 
 ## Code below this line is more or less a copy of make.study. Make sure to
 ## modify make.study if you modify important stuff here.
@@ -104,5 +104,7 @@ pe_and_ci <- lapply(funcList,
                                                               outcome_name = i$outcome))
 ## Extract from pe_and_ci and put in results
 results <- c(results, extract.from.pe.and.ci(pe_and_ci))
+## Create classification tables
+results <- c(results, create.classification.tables(study_sample))
 ## Compile manuscript
 compile.manuscript(results, "superlearner_vs_clinicians_manuscript")
