@@ -16,7 +16,7 @@ create.table.of.sample.characteristics <- function(
                                                    vars = NULL,
                                                    exclude_vars = NULL,
                                                    include_overall = TRUE,
-                                                   digits = 2,
+                                                   digits = 1,
                                                    save = FALSE
                                                    )
 {
@@ -50,6 +50,17 @@ create.table.of.sample.characteristics <- function(
     formatted_tables <- lapply(table_list, print, nonnormal = vars[nonormal], noSpaces = TRUE, catDigits = digits, showAllLevels = TRUE, printToggle = FALSE)
     ## Combine the formatted tables into one
     table <- do.call(cbind, formatted_tables)
+    ## Format table cells
+    table_copy <- table
+    sqb_index <- grep("\\[", table_copy)
+    sqb_data <- table_copy[sqb_index]
+    sqb_fmt <- unlist(lapply(sqb_data, function(x) {
+        numbers <- as.numeric(trimws(unlist(strsplit(x, "\\[|,|\\]"))))
+        new_numbers <- sprintf(paste0("%.", digits, "f"), numbers)
+        cell <- paste0(new_numbers[1], " [", new_numbers[2], ", ", new_numbers[3], "]")
+        return(cell)
+    }))
+    table[sqb_index] <- sqb_fmt
     ## Remove duplicate level columns
     level_indices <- grep("level", colnames(table)) # Find the indices of columns named level
     if (length(level_indices) > 1) table <- table[, -level_indices[2]] # Remove the second level column
