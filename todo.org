@@ -129,6 +129,8 @@
    CLOCK: [2018-05-20 Sun 11:33]--[2018-05-20 Sun 12:26] =>  0:53
 ** DONE Add classification tables				     :todo39:
    CLOCK: [2018-05-20 Sun 13:34]--[2018-05-20 Sun 16:33] =>  2:59
+** INPROGRESS Format table of sample characteristics		     :todo40:
+   CLOCK: [2018-05-20 Sun 16:37]
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
