@@ -70,7 +70,7 @@ base <- list(study_sample = study_sample,
              outcome = "outcome_test")
 ### Define main auc analysis
 auc_main <- c(list(func = 'model.review.AUROCC',
-                 model_or_pe = c("pred_cat_test", "tc"),
+                 model_or_pe = c("tc", "pred_cat_test"),
                  diffci_or_ci = "diff"),
               base)
 ### And main nri analysis
@@ -83,10 +83,15 @@ auc_train <- auc_main
 auc_train$model_or_pe <- c("pred_con_train", "pred_cat_train")
 auc_train$diffci_or_ci <- "none"
 auc_train$outcome <- "outcome_train"
+### And analysis to get point estimate of pred_con in test set
+auc_test <- auc_main
+auc_test$model_or_pe <- "pred_con_test"
+auc_test$diffci_or_ci <- "none"
 ### Put all analysis in one list
 funcList <- list(auc_main = auc_main,
                  nri_main = nri_main,
-                 auc_train = auc_train)
+                 auc_train = auc_train,
+                 auc_test = auc_test)
 ## Generate confidence intervals around point estimates from funcList
 pe_and_ci <- lapply(funcList,
                     function(i) generate.confidence.intervals(study_sample = study_sample,
@@ -95,5 +100,7 @@ pe_and_ci <- lapply(funcList,
                                                               samples = samples,
                                                               diffci_or_ci = i$diffci_or_ci,
                                                               outcome_name = i$outcome))
+## Extract from pe_and_ci and put in results
+results <- c(results, extract.from.pe.and.ci(pe_and_ci))
 ## Compile manuscript
 compile.manuscript(results, "superlearner_vs_clinicians_manuscript")
