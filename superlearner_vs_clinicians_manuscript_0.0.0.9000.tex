@@ -101,7 +101,7 @@ patients in the training and test samples were 562 and
 300 respectively.
 
 % latex table generated in R 3.3.3 by xtable 1.8-2 package
-% Sun May 20 12:24:56 2018
+% Sun May 20 16:08:26 2018
 \begin{table}[ht]
 \centering
 \caption{Sample characteristics} 
@@ -177,8 +177,25 @@ cutpoints identified by the grid search were 0.1,
 cutpoints to bin the continuous SuperLearner prediction into the four priority
 levels green, yellow, orange, and red. The AUROCC of the binned SuperLearner
 predictions in the training sample was
-0.9997. Table X shows the number of patients and
-all cause 30-day mortality in each group.
+0.9997. Table \ref{tab:superlearner-train-table}
+shows the number of patients and all cause 30-day mortality in each group.
+
+% latex table generated in R 3.3.3 by xtable 1.8-2 package
+% Sun May 20 16:09:11 2018
+\begin{table}[ht]
+\centering
+\caption{Priority levels assigned by the binned SuperLearner prediction in the training sample (n = 562)} 
+\label{tab:superlearner-priorities-train}
+\begin{tabular}{llllll}
+  \hline
+All cause 30-day mortality & Green (\%) & Yellow (\%) & Orange (\%) & Red (\%) & Overall (\%) \\ 
+  \hline
+No & 483 (100) & 23 (74) & 6 (35) & 0 (0) & 512 (91) \\ 
+  Yes & 0 (0) & 8 (26) & 11 (65) & 31 (100) & 50 (9) \\ 
+   \hline
+\end{tabular}
+\end{table}
+
 
 We then applied the SuperLearner to the test sample. The AUROCC of the continous
 SuperLearner prediction was 0.9811. Figure XB shows
@@ -186,17 +203,72 @@ the agreement between the continuous predictions and observed outcomes in the
 test sample. We used the same cutpoints as in the training sample to bin the
 continuous predictions into the four priority levels. The AUROCC of the binned
 SuperLearner predictions in the test sample was
-0.9429.
+0.9429. Table \ref{tab:superlearner-test-table}
+shows the number of patients and all cause 30-day mortality in each group.
+
+% latex table generated in R 3.3.3 by xtable 1.8-2 package
+% Sun May 20 16:09:11 2018
+\begin{table}[ht]
+\centering
+\caption{Priority levels assigned by the binned SuperLearner prediction in the test sample (n = 300)} 
+\label{tab:superlearner-priorities-test}
+\begin{tabular}{llllll}
+  \hline
+All cause 30-day mortality & Green (\%) & Yellow (\%) & Orange (\%) & Red (\%) & Overall (\%) \\ 
+  \hline
+No & 279 (100) & 6 (100) & 4 (44) & 0 (0) & 289 (96) \\ 
+  Yes & 1 (0) & 0 (0) & 5 (56) & 5 (100) & 11 (4) \\ 
+   \hline
+\end{tabular}
+\end{table}
+
 
 In the test sample we compared the performance of the binned SuperLearner
 prediction with that of clinicians. The AUROCC of priority levels assigned by
-clinicians was 0.9723. The difference in AUROCC between the
-binned SuperLearner prediction and clinicians was
+clinicians was 0.9723. Table \ref{tab:clinicians-test-table}
+shows the priority levels assigned by clinicians and the all cause 30-day
+mortality in each group. The difference in AUROCC between the binned
+SuperLearner prediction and clinicians was
 0.0294 (95\% CI -0.0313 - 0.0672). The net reclassifciation in events and
-non-events were 0.0033 (95\% CI 0.0034 - 0.0139) and -0.0133 (95\% CI -0.1321 - -0.1003) respectively. The number of
-patients assigned to each priority level by the SuperLearner and clinicians and
-the all cause 30-day mortality in each group is shown in Figure X.
+non-events were 0.0033 (95\% CI 0.0034 - 0.0139) and -0.0133 (95\% CI -0.1321 - -0.1003) respectively. The overall
+reclassification is show in Table \ref{tab:reclass_all}.
 
+% latex table generated in R 3.3.3 by xtable 1.8-2 package
+% Sun May 20 16:09:11 2018
+\begin{table}[ht]
+\centering
+\caption{Priority levels assigned clinicians in the test sample (n = 300)} 
+\label{tab:clinicians-priorities-test}
+\begin{tabular}{llllll}
+  \hline
+All cause 30-day mortality & Green (\%) & Yellow (\%) & Orange (\%) & Red (\%) & Overall (\%) \\ 
+  \hline
+No & 250 (100) & 32 (91) & 4 (67) & 3 (33) & 289 (96) \\ 
+  Yes & 0 (0) & 3 (9) & 2 (33) & 6 (67) & 11 (4) \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+% latex table generated in R 3.3.3 by xtable 1.8-2 package
+% Sun May 20 16:09:11 2018
+\begin{table}[ht]
+\centering
+\caption{Priority levels assigned by SuperLearner and clinicians in complete test sample (n = 300)} 
+\label{tab:reclass_all}
+\begin{tabular}{llllllll}
+  \hline
+  & \multicolumn{4}{c}{SuperLearner} \\
+ Clinicians & Green & Yellow & Orange & Red & Rec. \% & Rec. up \% & Rec. down \% \\
+ \hline
+Green & 249 & 0 & 1 & 0 & 0 & 0 &  \\ 
+  Yellow & 29 & 3 & 2 & 1 & 91 & 9 & 83 \\ 
+  Orange & 0 & 3 & 3 & 0 & 50 & 0 & 50 \\ 
+  Red & 2 & 0 & 3 & 4 & 56 &  & 56 \\ 
+   \hline
+\end{tabular}
+\caption*{Reclassification (Rec.) figures refer to \% of patients reclassified by the SuperLearner compared to clinicians. Rec. up and Rec. down indicates \% of patients reclassified to a higher or lower priority level respectively.} 
+\end{table}
 
 
 % ** End document
