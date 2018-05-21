@@ -19,8 +19,8 @@ model.review.reclassification <- function(
     study_sample$tc <- as.numeric(as.character(study_sample$tc))
     ## Compute reclassification of SuperLearner model and clinicians
     reclassification <- with(study_sample, nricens::nribin(event = outcome_test,
-                                                           p.std = as.numeric(pred_cat_test),
-                                                           p.new = tc,
+                                                           p.std = as.numeric(tc),
+                                                           p.new = as.numeric(pred_cat_test),
                                                            cut = c(1,2,3),
                                                            niter = 0,
                                                            msg = for_tables))

@@ -56,6 +56,8 @@ results$n_training_sample <- nrow(prepped_sample$x_train)
 results$n_test_sample <- nrow(prepped_sample$x_review)
 ## Transform factors into dummy variables
 prepped_sample <- to.dummy.variables(prepped_sample)
+## Save original sample to disk
+saveRDS(prepped_sample, "original_sample.rds")
 ## Train and review SuperLearner on study sample. Remember to consider changing
 ## the sample setting in gridsearching for optimal cutpoints.
 study_sample <- predictions.with.superlearner(prepped_sample, save_breaks = TRUE, save_all_predictions = TRUE)
@@ -64,6 +66,8 @@ bootstrap_samples <- generate.bootstrap.samples(study_data,
                                       bs_samples)
 ## Prepare samples
 prepped_samples <- prep.bssamples(bootstrap_samples)
+## Save prepped samples to disk
+saveRDS(prepped_samples, "bootstrap_samples.rds")
 ## Train and review SuperLearner on boostrap samples
 samples <- train.predict.bssamples(prepped_samples)
 ## Create list of analyses to conduct
