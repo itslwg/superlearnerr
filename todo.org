@@ -121,7 +121,7 @@
    - [X] Calibration plot superlearner training
    - [X] Calibration plot superlearner test
    - [X] ROC superlearner cat and clinicians
-   - [ ] Mortality per priority level, superlearner and clinicians
+   - [X] Mortality per priority level, superlearner and clinicians
 ** DONE Write grid search function				     :todo36:
    CLOCK: [2018-05-19 Sat 10:59]--[2018-05-19 Sat 17:51] =>  6:52
 ** DONE Add function to estimate point estimates		     :todo37:
