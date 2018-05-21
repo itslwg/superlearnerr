@@ -24,6 +24,10 @@
     "xcolor"
     "array"
     "caption"
-    "adjustbox"))
+    "adjustbox")
+   (LaTeX-add-labels
+    "fig:roc_plot"
+    "fig:calibration_plot"
+    "fig:mortality_plot"))
  :latex)
 
