@@ -137,6 +137,8 @@
    CLOCK: [2018-05-21 Mon 10:30]--[2018-05-21 Mon 10:35] =>  0:05
 ** DONE Crop pdf plots						     :todo43:
    CLOCK: [2018-05-21 Mon 10:54]--[2018-05-21 Mon 10:58] =>  0:04
+** INPROGRESS Modify how training and test samples are split	     :todo44:
+   CLOCK: [2018-05-21 Mon 13:23]
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
