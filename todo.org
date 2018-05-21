@@ -120,7 +120,7 @@
    CLOCK: [2018-05-20 Sun 16:58]
    - [ ] Calibration plot superlearner training
    - [ ] Calibration plot superlearner test
-   - [ ] ROC superlearner cat and clinicians
+   - [X] ROC superlearner cat and clinicians
    - [ ] Mortality per priority level, superlearner and clinicians
 ** DONE Write grid search function				     :todo36:
    CLOCK: [2018-05-19 Sat 10:59]--[2018-05-19 Sat 17:51] =>  6:52
