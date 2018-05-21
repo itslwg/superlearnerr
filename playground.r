@@ -106,5 +106,11 @@ pe_and_ci <- lapply(funcList,
 results <- c(results, extract.from.pe.and.ci(pe_and_ci))
 ## Create classification tables
 results <- c(results, create.classification.tables(study_sample))
+## Create roc plots
+create.roc.plots(study_sample)
+## Create calibration plots
+create.calibration.plots(study_sample)
+## Create mortality plot
+create.mortality.plot(study_sample)
 ## Compile manuscript
 compile.manuscript(results, "superlearner_vs_clinicians_manuscript")
