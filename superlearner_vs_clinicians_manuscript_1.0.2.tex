@@ -353,11 +353,12 @@ buckets (dummy variables).
 % *** Statistical methods
 \subsection*{Statistical Methods}
 We used R for all analyses \cite{R}. We first made a non-random temporal split
-of the complete data set into a training and test set. The split was made to
-achieve an adequate sample size in each set as detailed in the study size
-section below. We then calculated descriptive statistics of all variables, using
-medians and interquartile ranges (IQR) for continuous variables and counts and
-percentages for qualitative variables.
+of the complete data set into a training and test set. The split was made so
+that 75\% of the complete cohort was assigned to the training set and the
+remaining 25\% to the test set, ensuring that the relative contribution of each
+centre was maintained in both sets. We then calculated descriptive statistics of
+all variables, using medians and interquartile ranges (IQR) for continuous
+variables and counts and percentages for qualitative variables.
 
 \subsubsection*{Development of the SuperLearner}
 We then developed our SuperLearner in the training set using the SuperLearner R
@@ -365,7 +366,7 @@ package \cite{SuperLearner}. SuperLearner is an ensemble machine learning
 algorithm, meaning that it uses a library of techniques or specific learners, in
 principle any technique or learner that the analyst wants, to come up with an
 ``optimal learner''. Our library included techniques suitable for predicting a
-binary outcome such as all cause 30-day mortality (Table To Be Defined). The
+binary outcome such as all cause 30-day mortality (Will add table). The
 SuperLearner was trained using ten fold cross validation. This procedure is
 implemented by default in the SuperLearner package and entails splitting the
 development data in ten mutually exclusive parts of approximately the same
@@ -376,16 +377,15 @@ intended to limit overfitting and reduce optimism.
 
 \subsubsection*{Assigning Priority Levels using the SuperLearner Prediction}
 The SuperLearner was then used to assign levels of priority to the patients in
-the training set. This was done by bucketing the SuperLearner prediction into
-four buckets by its values at the 25\textsuperscript{th},
-50\textsuperscript{th}, and 75\textsuperscript{th} percentiles. These buckets
-corresponded to the green, yellow, orange, and red levels of priority assigned
-by the clinicians'. The performance of both the continuous and bucketed
-SuperLearner predictions in the training set was then evaluated using the area
-under the receiver operating characteristics curve (AUROCC). We then used the
-SuperLearner to predict the outcomes of the patients in the test set and used
-the cutoff values from the training set to assign a level of priority to each
-patient in this set.
+the training set. This was done by binning the SuperLearner prediction into four
+bins using cutoffs identified using a grid search across all possible
+combinations. These bins corresponded to the green, yellow, orange, and red
+levels of priority assigned by the clinicians'. The performance of both the
+continuous and bucketed SuperLearner predictions in the training set was then
+evaluated using the area under the receiver operating characteristics curve
+(AUROCC). We then used the SuperLearner to predict the outcomes of the patients
+in the test set and used the cutoff values from the training set to assign a
+level of priority to each patient in this set.
 
 \subsubsection*{Comparing the SuperLearner and Clinicians}
 The perfomance of the continous and bucketed SuperLearner predictions, as well
@@ -419,10 +419,6 @@ observed data for quantitative features and the most common level for
 qualitative features. We included the missingness indicators as features in the
 SuperLearner.
 
-% *** Study Size
-\subsection*{Study Size}
-Remains to be written.
-
 % ** Results
 \section*{Results}
 During the study period, we approached a total of 5670 patients
@@ -445,7 +441,7 @@ patients in the training and test samples were 3415 and
 1139 respectively.
 
 % latex table generated in R 3.3.3 by xtable 1.8-2 package
-% Mon May 21 17:40:04 2018
+% Mon May 21 18:53:52 2018
 \begin{table}[ht]
 \centering
 \caption{Sample characteristics} 
@@ -514,20 +510,20 @@ n (\%) &  & 3415 (75.0) & 1139 (25.0) & 4554 (100.0) \\
 
 
 The AUROCC of the continuous SuperLearner prediction in the training sample was
-0.9887 (Figure \ref{fig:roc_plot}A). Figure
+0.9908 (Figure \ref{fig:roc_plot}A). Figure
 \ref{fig:calibration_plot}A shows the agreement between the continuous
 predictions and observed outcomes in the training sample. The cutpoints
-identified by the grid search were 0.05,
-0.09, and 0.62. We used these
+identified by the grid search were 0.06,
+0.11, and 0.56. We used these
 cutpoints to bin the continuous SuperLearner prediction into the four priority
 levels green, yellow, orange, and red. The AUROCC of the binned SuperLearner
 predictions in the training sample was
-0.9866. Table
+0.9898. Table
 \ref{tab:superlearner_priorities_train} shows the number of patients and all
 cause 30-day mortality in each group.
 
 % latex table generated in R 3.3.3 by xtable 1.8-2 package
-% Mon May 21 18:03:58 2018
+% Mon May 21 19:33:16 2018
 \begin{table}[ht]
 \centering
 \caption{Priority levels assigned by the binned SuperLearner prediction in the training sample (n = 3415)} 
@@ -536,25 +532,25 @@ cause 30-day mortality in each group.
   \hline
 All cause 30-day mortality & Green (\%) & Yellow (\%) & Orange (\%) & Red (\%) & Overall (\%) \\ 
   \hline
-No & 2691 (100) & 243 (96) & 153 (59) & 9 (4) & 3096 (91) \\ 
-  Yes & 0 (0) & 11 (4) & 108 (41) & 200 (96) & 319 (9) \\ 
+No & 2837 (100) & 130 (90) & 119 (57) & 10 (4) & 3096 (91) \\ 
+  Yes & 0 (0) & 14 (10) & 90 (43) & 215 (96) & 319 (9) \\ 
    \hline
 \end{tabular}
 \end{table}
 
 
 We then applied the SuperLearner to the test sample. The AUROCC of the continous
-SuperLearner prediction was 0.9871 Figure
+SuperLearner prediction was 0.9872 Figure
 \ref{fig:roc_plot}B. Figure \ref{fig:calibration_plot}B shows the agreement
 between the continuous predictions and observed outcomes in the test sample. We
 used the same cutpoints as in the training sample to bin the continuous
 predictions into the four priority levels. The AUROCC of the binned SuperLearner
-predictions in the test sample was 0.9707. Table
+predictions in the test sample was 0.9641. Table
 \ref{tab:superlearner_priorities_test} shows the number of patients and all cause
 30-day mortality in each group.
 
 % latex table generated in R 3.3.3 by xtable 1.8-2 package
-% Mon May 21 18:03:58 2018
+% Mon May 21 19:33:16 2018
 \begin{table}[ht]
 \centering
 \caption{Priority levels assigned by the binned SuperLearner prediction in the test sample (n = 1139)} 
@@ -563,8 +559,8 @@ predictions in the test sample was 0.9707. Table
   \hline
 All cause 30-day mortality & Green (\%) & Yellow (\%) & Orange (\%) & Red (\%) & Overall (\%) \\ 
   \hline
-No & 926 (100) & 89 (97) & 33 (43) & 1 (2) & 1049 (92) \\ 
-  Yes & 3 (0) & 3 (3) & 43 (57) & 41 (98) & 90 (8) \\ 
+No & 977 (99) & 49 (98) & 21 (34) & 2 (4) & 1049 (92) \\ 
+  Yes & 5 (1) & 1 (2) & 40 (66) & 44 (96) & 90 (8) \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -576,14 +572,14 @@ clinicians was 0.8707. Table \ref{tab:clinicians_priorities_test}
 shows the priority levels assigned by clinicians and the all cause 30-day
 mortality in each group. The difference in AUROCC between the binned
 SuperLearner prediction and clinicians was
--0.1000 (95\% CI -0.1546 - -0.0980). The net reclassifciation in events and
-non-events were 0.0237 (95\% CI 0.0217 - 0.0421) and 0.3380 (95\% CI 0.2214 - 0.2759) respectively. The overall
+-0.0933 (95\% CI -0.1285 - -0.0885). The net reclassifciation in events and
+non-events were 0.0219 (95\% CI 0.0217 - 0.0489) and 0.3881 (95\% CI 0.3313 - 0.3643) respectively. The overall
 reclassification is show in Table \ref{tab:reclass_all}. Figure
 \ref{fig:mortality_plot} shows the all cause 30-day mortality across priority
 levels assigned by the SuperLearner and clinicians.
 
 % latex table generated in R 3.3.3 by xtable 1.8-2 package
-% Mon May 21 18:03:58 2018
+% Mon May 21 19:33:16 2018
 \begin{table}[ht]
 \centering
 \caption{Priority levels assigned by clinicians in the test sample (n = 1139)} 
@@ -600,7 +596,7 @@ No & 531 (100) & 459 (93) & 46 (58) & 13 (38) & 1049 (92) \\
 
 
 % latex table generated in R 3.3.3 by xtable 1.8-2 package
-% Mon May 21 18:03:58 2018
+% Mon May 21 19:33:16 2018
 \begin{table}[ht]
 \centering
 \caption{Priority levels assigned by SuperLearner and clinicians in complete test sample (n = 1139)} 
@@ -610,9 +606,9 @@ No & 531 (100) & 459 (93) & 46 (58) & 13 (38) & 1049 (92) \\
   & \multicolumn{4}{c}{SuperLearner} \\
  Clinicians & Green & Yellow & Orange & Red & Rec. \% & Rec. up \% & Rec. down \% \\
  \hline
-Green & 521 & 5 & 6 & 0 & 2 & 2 &  \\ 
-  Yellow & 368 & 77 & 40 & 9 & 84 & 10 & 74 \\ 
-  Orange & 29 & 9 & 28 & 13 & 65 & 16 & 48 \\ 
+Green & 524 & 4 & 4 & 0 & 2 & 2 &  \\ 
+  Yellow & 415 & 39 & 28 & 12 & 92 & 8 & 84 \\ 
+  Orange & 32 & 6 & 27 & 14 & 66 & 18 & 48 \\ 
   Red & 11 & 1 & 2 & 20 & 41 &  & 41 \\ 
    \hline
 \end{tabular}
@@ -650,75 +646,77 @@ Green & 521 & 5 & 6 & 0 & 2 & 2 &  \\
 
 % ** Discussion
 \section*{Discussion}
-Our results indicate that using an ensemble machine learning algorithm developed
-with the SuperLearner to prioritise among adult trauma patients in the ED is
-non-inferior to that of clinician gestalt. In fact, our results suggest that the
-ensemble algorithm was superior to clinician gestalt, both in terms of
-classification and discrimination. We have not been able to identify any
-previous study that has applied machine learning to prioritise among trauma
-patients in the ED. Hence, as far as we know this is the first study of its kind
-in this area and we hope that our results can work as benchmarks to which future
-work can be compared.
+Our results indicate that using an ensemble machine learner developed with the
+SuperLearner to prioritise among adult trauma patients in the ED is non-inferior
+to that of clinician gestalt. In fact, our results suggest that the ensemble
+learner is superior to clinician gestalt, both in terms of classification and
+discrimination. We have not been able to identify any previous study that has
+applied machine learning to prioritise among trauma patients in the ED. Hence,
+as far as we know this is the first study of its kind in this area and we hope
+that our results can work as benchmarks to which future work can be compared.
 
-Three principal findings. First, superlearner non-inferior. Suggests
-superiority, with confidence intervals of differences that do not include a null
-difference.
+Our study was limited by the relatively small sample size. For example, we did
+not have enough data to run centre wise analysis, which should be a focus of
+future studies. Instead we concentrated on data quality and had dedicated
+project officers record all data. This resulted in very low levels of missing
+feature data. In contrast, we did have a considerable amount of missing outcome
+data, about 20\% of patients were lost to follow up. We handled this missingness
+using list wise deletion, aware of the potential bias introduced by this
+approach. One alternative would have been to use multiple imputation to replace
+missing values, however we had no way of determining the mechanism underlying
+the missing outcomes why results based on multiple imputed data might be biased
+as well. Further, we did not consider it computionally feasible to combine
+multiple imputation and bootstraping for uncertainty estimation. We do however
+consider it a strength of our study that the outcome included out of hospital
+deaths, when comparably recent research does not \cite{Levin2018, Kunitake2018}.
 
-Key results
+We used point measurements to train the ensemble learner, meaning that we failed
+to account for potential changes in patients' clinical condition between the
+time when feature and outcome data were collected. The clinicians were however
+also limited to the data available when they decided on a priority level,
+although this could have included laboratory or imaging findings from a
+transferring health facility. Future research may improve the predictions by
+both the ensemble machine learner and clinicians by including data from multiple
+time points.
 
-SuperLearner discriminates better.
+As opposed to the clinicians the ensemble learner was limited by the features
+that we defined. In our setting with no or very limited electronic record
+keeping it would have been challenging to incorporate for example imaging
+data. In settings with more extensive electronic recors this should be more
+feasible. Further, the ensemble learner was limited by the techniques included
+in its library. We included a mix of MHTM and MMTH learners, for example
+logistic regression and random forest. Now, the performance of our ensemble
+learner was already very good, but extending the list of features and techniques
+available to the learner would likely improve it further.  Also, we used the
+default hyperparameter settings for each technique. Future research may improve
+the learner's performance by modifying the included learners' hyperparameters.
 
-Reclassifies events to higher priority levels.
+As stated above there is little research to which our study can be directly
+compared. We found that the ensemble learner in general reclassified events to a
+higher priority level and non-events to a lower priority level, compared to
+clinicians. This is analogous to reduced under and overtriage
+respectively. These concepts are used extensively in the trauma
+literature. Undertriage refers to for example patients with major trauma not
+being transferred to a trauma centre and undertriage to patients with minor
+trauma being transferred to a trauma centre. Three studies have used MMTH
+learners to limit under and overtriage of trauma patients.  Talbert et
+al. applied a tree based learner but found no improvement over standard criteria
+\cite{Talbert2007}. More recent research by Follin et al. demonstrated superior
+performance of the tree based learner compared to a model based on logistic
+regression \cite{Follin2016}. Pearl et al. used neural networks but could not
+demonstrate a difference \cite{Pearl2008}. Only Follin report performance
+measures that can be compared to our results. Their learner achieved an AUROCC
+of 0.82, which is substantially lower than that of our ensemble learner.
 
-Steeper slope, with higher mortality in orange and red priority levels.
-
-We also found that both clinicians and 
-
-Levin et al. used a random forest learner to assign priority levels to patients
-in a general ED population \cite{Levin2018}. They used a composite outcome of
-in-hospital mortality and intensive care unit admission and reported an AUROCC
-ranging between 0.90 to 0.92 for this outcome. 
-
-Talbert et al. applied a tree based learner to the trauma team activation
-problem but found no improvement over standard criteria \cite{Talbert2007},
-whereas more recent research by Follin et al. demonstrated superior performance
-of the tree based learner compared to a model based on logistic regression
-\cite{Follin2016}. Pearl et al. used neural networks but could not demonstrate a
-difference \cite{Pearl2008}.
-
-In the prehospital setting patients are prioritised for transfer to a trauma
-centre \cite{Voskens2018}. In the in-hospital setting patiens are prioritised to
-match level of care with clinical acuity, to aid decisions on the order in which
-to assess and treat patients, and whether to activate a trauma team or not
-\cite{Granstrom2018}.
-
-In modern trauma systems in-hospital triage is based on a combination of
-measures of physiolocial and anatomical trauma severity as well as information
-about the underlying injury mechanism \cite{ASCOT2014}. The focus of the
-literature on in-hospital trauma triage has so far been how to use triage for
-trauma team activation.
-
-, namely the sorting of trauma patients that arrives to the emergency
-department. These patients are often prioritised using emergency department
-triage tools, which assigns each patient a priority coupled with a target time
-to treat.
-
-The key challenge associated with such criteria is to minimize under and over
-triage, which are analogue to false negative and false positive rates
-respectively. A widespread criticism of current triage criteria is that both
-false negative and false positive rates are too high
-\cite{VanRein2018,Benjamin2018,Kristiansen2010}.  Alternatives to the criteria
-based approach to trauma triage include the use of clinical prediction models,
-algorithms that allows estimation of an individual patient's risk of a specific
-outcome, for example mortality \cite{Collins2015}.
-
-Multiple clinical prediction models aimed for trauma triage have been published
-\cite{Rehn2011}, but few are used in practice. One reason may be that they fail
-to improve on the performance of the standard criteria based approach. These
-prediction models have conventionally been developed using logistic or
-propotional hazards regression, and in contrast to other fields of medicine
-modern machine learning techniques have been less used \cite{Liu2017}. 
-
+In contrast, the literature is replete with studies using MHTM learners to
+reduce under and overtriage, or predict trauma mortality \cite{Rehn2011,
+  DeMunter2017,VanRein2018}. The performance of these learners vary
+substantially, but many studies report AUROCCs that approaches that of our
+ensemble learner. For example, Miller et al. and Kunitake et al. achieved
+AUROCCs of almost 0.97 and 0.94 with their models based on logistic regression
+\cite{Miller2017}. Neither of these studies however approached the problem of
+prioritising among trauma patients in the ED, or suggested how the models could
+be used to assign patients to different priority levels.
 
 Several steps remain before a system to prioritse among adult trauma patients in
 the ED based on our algorithm can and should be implemented. These steps involve
@@ -731,8 +729,9 @@ important. We think that this sequence should be based on a combination of
 individual variable importance and how feasible the variables are to record. We
 assume that once this sequence is defined the patients with the most severe
 trauma could be identified very quickly using only a small subset of the
-variables.
-
+variables. Further, our ensemble learner did assign more events to the green
+priority level than the clinicians. This should be explored in depth in future
+studies.
 
 % Discussion points
 % - Improve triage by clinicians
@@ -753,23 +752,11 @@ variables.
 % trauma care provider judgement in the prediction of need for life-saving
 % interventions. Injury. 2015;46(5):791–7.
 
-\subsection*{Limitations}
-How do we account for the dynamic changes that the patient undergoes? The data
-variables used to train the superlearner are point estimates. But the patient
-clinical condition would keep changing. How do we account for this?
-
-Are all the data variables considered for the super learners training? Is the
-super learners training limited by the data variables we use and enter for the
-study?
-
-Handling of missing data. Exluding observations with missing outcome.
-
-This problem is closely related, but not identical, to the problem of predicting
-outcomes in trauma patients.
-
 % ** Conclusion
 \section*{Conclusion}
-Remains to be written.
+An ensemble machine learner developed with the SuperLearner to prioritise among
+adult trauma patients in the ED is non-inferior to that of clinician gestalt.
+
 % ** Acknowledgments
 \section*{Acknowledgments}
 Remains to be written.
