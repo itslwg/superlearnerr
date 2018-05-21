@@ -10,10 +10,12 @@ to.dummy.variables <- function(
     ## Error handling
     if (!is.list(prepped_data)) stop("Prepared data is not a list")
     ## Extract training and review sets and transform factor variables to dummy variables
-    transformed_sets <- lapply(prepped_data$sets,
-                               function(the_set)
-                                   as.data.frame(model.matrix( ~.,
-                                                              data = the_set)[, -1]))
+    transformed_sets <- lapply(prepped_data$sets, function(set) {
+        new_set <- as.data.frame(model.matrix( ~., data = set)[, -1])
+        colnames(new_set) <- gsub(" ", "_", colnames(new_set))
+        return(new_set)
+        
+    })
     ## Name the sets
     names(transformed_sets) <- c("x_train", "x_review")
     prepped_data[["sets"]] <- NULL

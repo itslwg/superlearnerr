@@ -1,0 +1,139 @@
+% * Latex header
+% ** Document class
+\documentclass[10pt,letterpaper]{article}
+% ** Packages
+\usepackage[top=0.85in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{changepage}
+\usepackage[utf8x]{inputenc}
+\usepackage{textcomp,marvosym}
+\usepackage{cite}
+\usepackage{nameref,hyperref}
+\usepackage[right]{lineno}
+\usepackage{microtype}
+\usepackage[table]{xcolor}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{adjustbox}
+% ** Setting
+\DisableLigatures[f]{encoding = *, family = * }
+% * Document
+% ** Title
+\begin{document}
+{\Large
+  \noindent\textbf{SuperLearner versus Clinicians to Prioritise Trauma Patients (working title)}
+} \newline
+\\
+% ** Version
+{\large
+  Test version 0.0.0.9000
+}
+% ** Results
+\section*{Results}
+During the study period, we approached a total of \rinline{n_enrolled} patients
+for enrollment. \rinline{n_enrolled - n_after_excluding_no_consent} patients did
+not provide informed consent. Out of the \rinline{n_after_excluding_no_consent}
+patients who provided informed consent, \rinline{n_enrolled -
+  n_after_excluding_missing_priority} had missing data on priority level
+assigned by clinicians, leaving \rinline{n_after_excluding_missing_priority}
+patients. An additional \rinline{n_after_excluding_missing_priority -
+  n_after_excluding_missing_outcome} were excluded because of missing outcome
+data. Thus, the final study sample included
+\rinline{n_after_excluding_missing_outcome} patients.
+
+Table \ref{tab:sample-characteristics} shows sample characteristics. The median
+age among included patients was \rinline{report('age')} years. A majority,
+\rinline{report('sex', 'Male')} patients, were males. The most common mechanism
+of injury was transport accidents, accounting for \rinline{report('moi',
+  'Transport accident')} patients. A total of \rinline{report('mot', 'Private
+  vehicle')} patients were transported to participating centres in some sort of
+private vehicle, such as a car, taxi, or rickshaw. A majority of patients had
+normal vital signs on arrival to participating centres. Out of all patients,
+\rinline{report('s30d', 'Yes')} died within 30 days of arrival. The number of
+patients in the training and test samples were \rinline{n_training_sample} and
+\rinline{n_test_sample} respectively.
+
+%% begin.rcode table1, echo=FALSE, results="asis"
+% cat(table_of_sample_characteristics)
+%% end.rcode
+
+The AUROCC of the continuous SuperLearner prediction in the training sample was
+\rinline{superlearner_con_auc_train} (Figure \ref{fig:roc_plot}A). Figure
+\ref{fig:calibration_plot}A shows the agreement between the continuous
+predictions and observed outcomes in the training sample. The cutpoints
+identified by the grid search were \rinline{optimal_breaks[1]},
+\rinline{optimal_breaks[2]}, and \rinline{optimal_breaks[3]}. We used these
+cutpoints to bin the continuous SuperLearner prediction into the four priority
+levels green, yellow, orange, and red. The AUROCC of the binned SuperLearner
+predictions in the training sample was
+\rinline{superlearner_cat_auc_train}. Table \ref{tab:superlearner-train-table}
+shows the number of patients and all cause 30-day mortality in each group.
+
+%% begin.rcode superlearner_train, echo=FALSE, results="asis"
+% cat(superlearner_train_table)
+%% end.rcode
+
+We then applied the SuperLearner to the test sample. The AUROCC of the continous
+SuperLearner prediction was \rinline{superlearner_con_auc_test} Figure
+\ref{fig:roc_plot}B. Figure \ref{fig:calibration_plot}B shows the agreement
+between the continuous predictions and observed outcomes in the test sample. We
+used the same cutpoints as in the training sample to bin the continuous
+predictions into the four priority levels. The AUROCC of the binned SuperLearner
+predictions in the test sample was \rinline{superlearner_cat_auc_test}. Table
+\ref{tab:superlearner-test-table} shows the number of patients and all cause
+30-day mortality in each group. 
+
+%% begin.rcode superlearner_test, echo=FALSE, results="asis"
+% cat(superlearner_test_table)
+%% end.rcode
+
+In the test sample we compared the performance of the binned SuperLearner
+prediction with that of clinicians. The AUROCC of priority levels assigned by
+clinicians was \rinline{tc_auc_test}. Table \ref{tab:clinicians-test-table}
+shows the priority levels assigned by clinicians and the all cause 30-day
+mortality in each group. The difference in AUROCC between the binned
+SuperLearner prediction and clinicians was
+\rinline{diff_superlearner_cat_tc_auc}. The net reclassifciation in events and
+non-events were \rinline{nre} and \rinline{nrne} respectively. The overall
+reclassification is show in Table \ref{tab:reclass_all}. Figure
+\ref{fig:mortality_plot} shows the all cause 30-day mortality across priority
+levels assigned by the SuperLearner and clinicians.
+
+%% begin.rcode clinicians_test, echo=FALSE, results="asis"
+% cat(clinicians_test_table)
+%% end.rcode
+
+%% begin.rcode reclass_all, echo=FALSE, results="asis"
+% cat(reclass_all)
+%% end.rcode
+
+% ** Figures
+% *** ROC plots
+\begin{figure}
+  \caption{Receiver operating characteristics curves in training (A) and test
+    (B) samples}
+  \label{fig:roc_plot}
+  \includegraphics[width=\textwidth]{roc_plot.pdf}
+\end{figure}
+
+% *** Calibration plot
+\begin{figure}
+  \caption{Agreement between the continuous SuperLearner prediction and observed
+    all cause 30-day mortality in the training (A) and test (B) samples.}
+  \label{fig:calibration_plot}
+  \includegraphics[width=\textwidth]{calibration_plot.pdf}
+  \caption*{The straight dotted line indicates perfect agreement. The solid
+    orange line is a smoothed association between mean mortality and mean
+    predicted mortality across deciles of predicted mortality. The triangles are
+    mortality point estimates across the same deciles.}
+\end{figure}
+
+% *** Mortality plot
+\begin{figure}
+  \caption{All cause 30-day mortality across priority levels in the test sample}
+  \label{fig:mortality_plot}
+  \includegraphics[width=\textwidth]{mortality_plot.pdf}
+\end{figure}
+
+% ** End document
+\end{document}
