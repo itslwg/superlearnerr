@@ -135,6 +135,8 @@
 ** TODO Modify plot dimenstions                                      :todo41:
 ** DONE Save results to disk and read from there		     :todo42:
    CLOCK: [2018-05-21 Mon 10:30]--[2018-05-21 Mon 10:35] =>  0:05
+** DONE Crop pdf plots						     :todo43:
+   CLOCK: [2018-05-21 Mon 10:54]--[2018-05-21 Mon 10:58] =>  0:04
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
