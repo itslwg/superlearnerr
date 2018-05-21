@@ -116,11 +116,12 @@
    CLOCK: [2018-05-19 Sat 08:10]--[2018-05-19 Sat 08:41] =>  0:31
 ** DONE Add point estimates and diff with ci to results		     :todo34:
    CLOCK: [2018-05-19 Sat 10:03]--[2018-05-20 Sun 13:32] => 27:29
-** TODO Generate plots [0/4] 					     :todo35:
-   - [ ] Calibration plot superlearner training
-   - [ ] Calibration plot superlearner test
-   - [ ] ROC superlearner cat and clinicians
-   - [ ] Mortality per priority level, superlearner and clinicians
+** DONE Generate plots [4/4]					     :todo35:
+   CLOCK: [2018-05-20 Sun 16:58]--[2018-05-21 Mon 09:33] => 16:35
+   - [X] Calibration plot superlearner training
+   - [X] Calibration plot superlearner test
+   - [X] ROC superlearner cat and clinicians
+   - [X] Mortality per priority level, superlearner and clinicians
 ** DONE Write grid search function				     :todo36:
    CLOCK: [2018-05-19 Sat 10:59]--[2018-05-19 Sat 17:51] =>  6:52
 ** DONE Add function to estimate point estimates		     :todo37:
@@ -131,6 +132,7 @@
    CLOCK: [2018-05-20 Sun 13:34]--[2018-05-20 Sun 16:33] =>  2:59
 ** DONE Format table of sample characteristics			     :todo40:
    CLOCK: [2018-05-20 Sun 16:37]--[2018-05-20 Sun 16:56] =>  0:19
+** TODO Modify plot dimenstions                                      :todo41:
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
