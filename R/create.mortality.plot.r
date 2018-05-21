@@ -37,5 +37,7 @@ create.mortality.plot <- function(
     ## Create plot
     mortality_plot <- mortality.plot(plot_data)
     ## Save plot
-    ggsave("mortality_plot.pdf", mortality_plot)
+    plot_name <- "mortality_plot.pdf"
+    ggsave(plot_name, mortality_plot, units = "mm")
+    if (grepl("pdf", plot_name)) system(paste("pdfcrop", plot_name, plot_name))
 }

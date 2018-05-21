@@ -58,5 +58,7 @@ create.roc.plots <- function(
     }
     roc_plot <- roc.plot(plot_data)
     ## Save plots
-    ggsave("roc_plot.pdf", roc_plot, device = "pdf", units = "mm")
+    plot_name <- "roc_plot.pdf"
+    ggsave(plot_name, roc_plot, units = "mm")
+    if (grepl("pdf", plot_name)) system(paste("pdfcrop", plot_name, plot_name))
 }
