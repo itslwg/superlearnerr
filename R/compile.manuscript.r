@@ -14,16 +14,16 @@ compile.manuscript <- function(
                                )
 {
     ## Error handling
-    file <- paste0(results_path, "results.rds")
-    if (!file.exists(file)) stop ("No results list rds exist in that path")
+    results_file <- paste0(results_path, "results.rds")
+    if (!file.exists(results_file)) stop ("No results list rds exist in that path")
     ## Get results list
-    results_list <- readRDS(file)
+    results_list <- readRDS(results_file)
     ## Attached results list
     attach(results_list)
     ## Get list of files matching the manuscript file name prefix
-    files <- list.files(pattern = manuscript_file_name_prefix)
-    file <- grep(manuscript_file_format, files, value = TRUE)
-    if (length(file) > 1) stop("There are more than 1 file matching both prefix and format. Maybe there are several manuscript versions in this directory?")
+    files <- list.files(pattern = paste0("^", manuscript_file_name_prefix))
+    manuscript_file <- grep(paste0(manuscript_file_format, "$"), files, value = TRUE)
+    if (length(manuscript_file) > 1) stop("There are more than 1 file matching both prefix and format. Maybe there are several manuscript versions in this directory?")
     ## Compile manuscript using knit2pdf
-    knit2pdf(file, compiler = compiler)
+    knit2pdf(manuscript_file, compiler = compiler)
 }
