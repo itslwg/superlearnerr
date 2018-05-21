@@ -352,11 +352,11 @@ the clinicians and the proportion of non-events assigned a higher priority by
 the SuperLearner than the clinicians.
 
 We used an emperical bootstrap with 1000 draws of the same size as the original
-set to estimate 95\% confidence interval (CI) around point estimates and
-differences. We concluded that the SuperLearner was non-inferior to clinicians
-if the 95\% CI of the net reclassification in events did not exceed a
-pre-specified level of -0.05, indicating that clinicians correctly classified 5
-in 100 events more than the SuperLearner.
+set to estimate 95\% confidence interval (CI) around differences. We concluded
+that the SuperLearner was non-inferior to clinicians if the 95\% CI of the net
+reclassification in events did not exceed a pre-specified level of -0.05,
+indicating that clinicians correctly classified 5 in 100 events more than the
+SuperLearner.
 
 \subsubsection*{Handling of missing data}
 Observations with missing data on all cause 30-day mortality or priority level
@@ -483,14 +483,28 @@ levels assigned by the SuperLearner and clinicians.
 % ** Discussion
 \section*{Discussion}
 Our results indicate that using an ensemble machine learning algorithm developed
-with the SuperLearner to prioritise among adult trauma patients in the ED may be
-non-inferior to that of clinician gestalt. We have not been able to identify any
+with the SuperLearner to prioritise among adult trauma patients in the ED is
+non-inferior to that of clinician gestalt. In fact, our results suggest that the
+ensemble algorithm was superior to clinician gestalt, both in terms of
+classification and discrimination. We have not been able to identify any
 previous study that has applied machine learning to prioritise among trauma
 patients in the ED. Hence, as far as we know this is the first study of its kind
 in this area and we hope that our results can work as benchmarks to which future
 work can be compared.
 
-We found that 
+Three principal findings. First, superlearner non-inferior. Suggests
+superiority, with confidence intervals of differences that do not include a null
+difference.
+
+Key results
+
+SuperLearner discriminates better.
+
+Reclassifies events to higher priority levels.
+
+Steeper slope, with higher mortality in orange and red priority levels.
+
+We also found that both clinicians and 
 
 Levin et al. used a random forest learner to assign priority levels to patients
 in a general ED population \cite{Levin2018}. They used a composite outcome of

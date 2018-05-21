@@ -194,7 +194,7 @@ that of clinician gestalt.
 \section*{Materials and Methods}
 % *** Study Design
 \subsection*{Study Design}
-We used data from an ongoing prospective cohort at three publichospitals in
+We used data from an ongoing prospective cohort at three public hospitals in
 urban India. Our analysis is an adjunct to a registered observational study to
 compare the performance of clinical prediction models with clinicians
 (ClinicalTrials.gov identifier NCT02838459).
@@ -403,11 +403,11 @@ the clinicians and the proportion of non-events assigned a higher priority by
 the SuperLearner than the clinicians.
 
 We used an emperical bootstrap with 1000 draws of the same size as the original
-set to estimate 95\% confidence interval (CI) around point estimates and
-differences. We concluded that the SuperLearner was non-inferior to clinicians
-if the 95\% CI of the net reclassification in events did not exceed a
-pre-specified level of -0.05, indicating that clinicians correctly classified 5
-in 100 events more than the SuperLearner.
+set to estimate 95\% confidence interval (CI) around differences. We concluded
+that the SuperLearner was non-inferior to clinicians if the 95\% CI of the net
+reclassification in events did not exceed a pre-specified level of -0.05,
+indicating that clinicians correctly classified 5 in 100 events more than the
+SuperLearner.
 
 \subsubsection*{Handling of missing data}
 Observations with missing data on all cause 30-day mortality or priority level
@@ -445,7 +445,7 @@ patients in the training and test samples were 3415 and
 1139 respectively.
 
 % latex table generated in R 3.3.3 by xtable 1.8-2 package
-% Mon May 21 14:19:06 2018
+% Mon May 21 17:40:04 2018
 \begin{table}[ht]
 \centering
 \caption{Sample characteristics} 
@@ -514,20 +514,20 @@ n (\%) &  & 3415 (75.0) & 1139 (25.0) & 4554 (100.0) \\
 
 
 The AUROCC of the continuous SuperLearner prediction in the training sample was
-0.9883 (Figure \ref{fig:roc_plot}A). Figure
+0.9887 (Figure \ref{fig:roc_plot}A). Figure
 \ref{fig:calibration_plot}A shows the agreement between the continuous
 predictions and observed outcomes in the training sample. The cutpoints
 identified by the grid search were 0.05,
-0.08, and 0.54. We used these
+0.09, and 0.62. We used these
 cutpoints to bin the continuous SuperLearner prediction into the four priority
 levels green, yellow, orange, and red. The AUROCC of the binned SuperLearner
 predictions in the training sample was
-0.9860. Table
+0.9866. Table
 \ref{tab:superlearner_priorities_train} shows the number of patients and all
 cause 30-day mortality in each group.
 
 % latex table generated in R 3.3.3 by xtable 1.8-2 package
-% Mon May 21 15:02:05 2018
+% Mon May 21 18:03:58 2018
 \begin{table}[ht]
 \centering
 \caption{Priority levels assigned by the binned SuperLearner prediction in the training sample (n = 3415)} 
@@ -536,25 +536,25 @@ cause 30-day mortality in each group.
   \hline
 All cause 30-day mortality & Green (\%) & Yellow (\%) & Orange (\%) & Red (\%) & Overall (\%) \\ 
   \hline
-No & 2694 (100) & 219 (97) & 165 (63) & 18 (8) & 3096 (91) \\ 
-  Yes & 0 (0) & 7 (3) & 98 (37) & 214 (92) & 319 (9) \\ 
+No & 2691 (100) & 243 (96) & 153 (59) & 9 (4) & 3096 (91) \\ 
+  Yes & 0 (0) & 11 (4) & 108 (41) & 200 (96) & 319 (9) \\ 
    \hline
 \end{tabular}
 \end{table}
 
 
 We then applied the SuperLearner to the test sample. The AUROCC of the continous
-SuperLearner prediction was 0.9876 Figure
+SuperLearner prediction was 0.9871 Figure
 \ref{fig:roc_plot}B. Figure \ref{fig:calibration_plot}B shows the agreement
 between the continuous predictions and observed outcomes in the test sample. We
 used the same cutpoints as in the training sample to bin the continuous
 predictions into the four priority levels. The AUROCC of the binned SuperLearner
-predictions in the test sample was 0.9700. Table
+predictions in the test sample was 0.9707. Table
 \ref{tab:superlearner_priorities_test} shows the number of patients and all cause
 30-day mortality in each group.
 
 % latex table generated in R 3.3.3 by xtable 1.8-2 package
-% Mon May 21 15:02:05 2018
+% Mon May 21 18:03:58 2018
 \begin{table}[ht]
 \centering
 \caption{Priority levels assigned by the binned SuperLearner prediction in the test sample (n = 1139)} 
@@ -563,8 +563,8 @@ predictions in the test sample was 0.9700. Table
   \hline
 All cause 30-day mortality & Green (\%) & Yellow (\%) & Orange (\%) & Red (\%) & Overall (\%) \\ 
   \hline
-No & 925 (100) & 84 (98) & 37 (49) & 3 (6) & 1049 (92) \\ 
-  Yes & 3 (0) & 2 (2) & 39 (51) & 46 (94) & 90 (8) \\ 
+No & 926 (100) & 89 (97) & 33 (43) & 1 (2) & 1049 (92) \\ 
+  Yes & 3 (0) & 3 (3) & 43 (57) & 41 (98) & 90 (8) \\ 
    \hline
 \end{tabular}
 \end{table}
@@ -576,14 +576,14 @@ clinicians was 0.8707. Table \ref{tab:clinicians_priorities_test}
 shows the priority levels assigned by clinicians and the all cause 30-day
 mortality in each group. The difference in AUROCC between the binned
 SuperLearner prediction and clinicians was
--0.0993 (95\% CI -0.1332 - -0.0771). The net reclassifciation in events and
-non-events were -0.0246 (95\% CI -0.0501 - -0.0257) and -0.3319 (95\% CI -0.2874 - -0.2261) respectively. The overall
+-0.1000 (95\% CI -0.1546 - -0.0980). The net reclassifciation in events and
+non-events were 0.0237 (95\% CI 0.0217 - 0.0421) and 0.3380 (95\% CI 0.2214 - 0.2759) respectively. The overall
 reclassification is show in Table \ref{tab:reclass_all}. Figure
 \ref{fig:mortality_plot} shows the all cause 30-day mortality across priority
 levels assigned by the SuperLearner and clinicians.
 
 % latex table generated in R 3.3.3 by xtable 1.8-2 package
-% Mon May 21 15:02:05 2018
+% Mon May 21 18:03:58 2018
 \begin{table}[ht]
 \centering
 \caption{Priority levels assigned by clinicians in the test sample (n = 1139)} 
@@ -600,7 +600,7 @@ No & 531 (100) & 459 (93) & 46 (58) & 13 (38) & 1049 (92) \\
 
 
 % latex table generated in R 3.3.3 by xtable 1.8-2 package
-% Mon May 21 15:02:05 2018
+% Mon May 21 18:03:58 2018
 \begin{table}[ht]
 \centering
 \caption{Priority levels assigned by SuperLearner and clinicians in complete test sample (n = 1139)} 
@@ -610,10 +610,10 @@ No & 531 (100) & 459 (93) & 46 (58) & 13 (38) & 1049 (92) \\
   & \multicolumn{4}{c}{SuperLearner} \\
  Clinicians & Green & Yellow & Orange & Red & Rec. \% & Rec. up \% & Rec. down \% \\
  \hline
-Green & 522 & 4 & 5 & 1 & 2 & 2 &  \\ 
-  Yellow & 366 & 75 & 39 & 14 & 85 & 11 & 74 \\ 
-  Orange & 30 & 5 & 30 & 14 & 62 & 18 & 44 \\ 
-  Red & 10 & 2 & 2 & 20 & 41 &  & 41 \\ 
+Green & 521 & 5 & 6 & 0 & 2 & 2 &  \\ 
+  Yellow & 368 & 77 & 40 & 9 & 84 & 10 & 74 \\ 
+  Orange & 29 & 9 & 28 & 13 & 65 & 16 & 48 \\ 
+  Red & 11 & 1 & 2 & 20 & 41 &  & 41 \\ 
    \hline
 \end{tabular}
 \caption*{Reclassification (Rec.) figures refer to \% of patients reclassified by the SuperLearner compared to clinicians. Rec. up and Rec. down indicates \% of patients reclassified to a higher or lower priority level respectively.} 
@@ -651,10 +651,28 @@ Green & 522 & 4 & 5 & 1 & 2 & 2 &  \\
 % ** Discussion
 \section*{Discussion}
 Our results indicate that using an ensemble machine learning algorithm developed
-with the SuperLearner to prioritise among adult trauma patients in the ED may be
-non-inferior to that of clinician gestalt. As far as we know this is the first
-study of its kind in this area and we hope that our results can work as
-benchmarks to which future work can be compared. 
+with the SuperLearner to prioritise among adult trauma patients in the ED is
+non-inferior to that of clinician gestalt. In fact, our results suggest that the
+ensemble algorithm was superior to clinician gestalt, both in terms of
+classification and discrimination. We have not been able to identify any
+previous study that has applied machine learning to prioritise among trauma
+patients in the ED. Hence, as far as we know this is the first study of its kind
+in this area and we hope that our results can work as benchmarks to which future
+work can be compared.
+
+Three principal findings. First, superlearner non-inferior. Suggests
+superiority, with confidence intervals of differences that do not include a null
+difference.
+
+Key results
+
+SuperLearner discriminates better.
+
+Reclassifies events to higher priority levels.
+
+Steeper slope, with higher mortality in orange and red priority levels.
+
+We also found that both clinicians and 
 
 Levin et al. used a random forest learner to assign priority levels to patients
 in a general ED population \cite{Levin2018}. They used a composite outcome of
