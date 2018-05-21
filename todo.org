@@ -116,8 +116,8 @@
    CLOCK: [2018-05-19 Sat 08:10]--[2018-05-19 Sat 08:41] =>  0:31
 ** DONE Add point estimates and diff with ci to results		     :todo34:
    CLOCK: [2018-05-19 Sat 10:03]--[2018-05-20 Sun 13:32] => 27:29
-** INPROGRESS Generate plots [0/4]				     :todo35:
-   CLOCK: [2018-05-20 Sun 16:58]
+** DONE Generate plots [4/4]					     :todo35:
+   CLOCK: [2018-05-20 Sun 16:58]--[2018-05-21 Mon 09:33] => 16:35
    - [X] Calibration plot superlearner training
    - [X] Calibration plot superlearner test
    - [X] ROC superlearner cat and clinicians
