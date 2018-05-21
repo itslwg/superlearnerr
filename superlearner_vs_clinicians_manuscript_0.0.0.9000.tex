@@ -170,9 +170,10 @@ n (\%) &  & 562 (65.2) & 300 (34.8) & 862 (100.0) \\
 
 
 The AUROCC of the continuous SuperLearner prediction in the training sample was
-0.9994. Figure XA shows the agreement between the
-continuous predictions and observed outcomes in the training sample. The
-cutpoints identified by the grid search were 0.1,
+0.9994 (Figure \ref{fig:roc_plot}A). Figure
+\ref{fig:calibration_plot}A shows the agreement between the continuous
+predictions and observed outcomes in the training sample. The cutpoints
+identified by the grid search were 0.1,
 0.28, and 0.73. We used these
 cutpoints to bin the continuous SuperLearner prediction into the four priority
 levels green, yellow, orange, and red. The AUROCC of the binned SuperLearner
@@ -198,13 +199,14 @@ No & 483 (100) & 23 (74) & 6 (35) & 0 (0) & 512 (91) \\
 
 
 We then applied the SuperLearner to the test sample. The AUROCC of the continous
-SuperLearner prediction was 0.9811. Figure XB shows
-the agreement between the continuous predictions and observed outcomes in the
-test sample. We used the same cutpoints as in the training sample to bin the
-continuous predictions into the four priority levels. The AUROCC of the binned
-SuperLearner predictions in the test sample was
-0.9429. Table \ref{tab:superlearner-test-table}
-shows the number of patients and all cause 30-day mortality in each group.
+SuperLearner prediction was 0.9811 Figure
+\ref{fig:roc_plot}B. Figure \ref{fig:calibration_plot}B shows the agreement
+between the continuous predictions and observed outcomes in the test sample. We
+used the same cutpoints as in the training sample to bin the continuous
+predictions into the four priority levels. The AUROCC of the binned SuperLearner
+predictions in the test sample was 0.9429. Table
+\ref{tab:superlearner-test-table} shows the number of patients and all cause
+30-day mortality in each group. 
 
 % latex table generated in R 3.3.3 by xtable 1.8-2 package
 % Sun May 20 16:09:11 2018
@@ -231,7 +233,9 @@ mortality in each group. The difference in AUROCC between the binned
 SuperLearner prediction and clinicians was
 0.0294 (95\% CI -0.0313 - 0.0672). The net reclassifciation in events and
 non-events were 0.0033 (95\% CI 0.0034 - 0.0139) and -0.0133 (95\% CI -0.1321 - -0.1003) respectively. The overall
-reclassification is show in Table \ref{tab:reclass_all}.
+reclassification is show in Table \ref{tab:reclass_all}. Figure
+\ref{fig:mortality_plot} shows the all cause 30-day mortality across priority
+levels assigned by the SuperLearner and clinicians.
 
 % latex table generated in R 3.3.3 by xtable 1.8-2 package
 % Sun May 20 16:09:11 2018
@@ -270,6 +274,34 @@ Green & 249 & 0 & 1 & 0 & 0 & 0 &  \\
 \caption*{Reclassification (Rec.) figures refer to \% of patients reclassified by the SuperLearner compared to clinicians. Rec. up and Rec. down indicates \% of patients reclassified to a higher or lower priority level respectively.} 
 \end{table}
 
+
+% ** Figures
+% *** ROC plots
+\begin{figure}
+  \caption{Receiver operating characteristics curves in training (A) and test
+    (B) samples}
+  \label{fig:roc_plot}
+  \includegraphics[width=\textwidth]{roc_plot.pdf}
+\end{figure}
+
+% *** Calibration plot
+\begin{figure}
+  \caption{Agreement between the continuous SuperLearner prediction and observed
+    all cause 30-day mortality in the training (A) and test (B) samples.}
+  \label{fig:calibration_plot}
+  \includegraphics[width=\textwidth]{calibration_plot.pdf}
+  \caption*{The straight dotted line indicates perfect agreement. The solid
+    orange line is a smoothed association between mean mortality and mean
+    predicted mortality across deciles of predicted mortality. The triangles are
+    mortality point estimates across the same deciles.}
+\end{figure}
+
+% *** Mortality plot
+\begin{figure}
+  \caption{All cause 30-day mortality across priority levels in the test sample}
+  \label{fig:mortality_plot}
+  \includegraphics[width=\textwidth]{mortality_plot.pdf}
+\end{figure}
 
 % ** End document
 \end{document}
