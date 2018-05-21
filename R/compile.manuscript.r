@@ -1,18 +1,23 @@
 #' Compile manuscript function
 #'
 #' This function compiles the Superlearner vs clinicians manuscript
-#' @param results_list The list holding all relevant results. No default.
 #' @param manuscript_file_name_prefix The file name prefix of the manuscript as a character vector of length 1. No default.
+#' @param results_path The path to the results list rds object. Defaults to "./". 
 #' @param manuscript_file_format The format of the manuscript file. Defaults to "rtex".
 #' @param compiler The compiler to use when compiling the rtex manuscript into a pdf. Defaults to pdflatex.
 #' @export
 compile.manuscript <- function(
-                               results_list,
                                manuscript_file_name_prefix,
+                               results_path = "./",
                                manuscript_file_format = "rtex",
                                compiler = "pdflatex"
                                )
 {
+    ## Error handling
+    file <- paste0(results_path, "results.rds")
+    if (!file.exists(file)) stop ("No results list rds exist in that path")
+    ## Get results list
+    results_list <- readRDS(file)
     ## Attached results list
     attach(results_list)
     ## Get list of files matching the manuscript file name prefix
