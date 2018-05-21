@@ -133,6 +133,7 @@
 ** DONE Format table of sample characteristics			     :todo40:
    CLOCK: [2018-05-20 Sun 16:37]--[2018-05-20 Sun 16:56] =>  0:19
 ** TODO Modify plot dimenstions                                      :todo41:
+** TODO Save results to disk and read from there                     :todo42:
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
