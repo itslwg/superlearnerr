@@ -115,4 +115,4 @@ create.mortality.plot(study_sample)
 ## Save results to disk
 saveRDS(results, "results.rds")
 ## Compile manuscript
-#compile.manuscript("superlearner_vs_clinicians_manuscript")
+compile.manuscript("superlearner_vs_clinicians_manuscript")
