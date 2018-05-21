@@ -17,14 +17,13 @@ prep.data.for.superlearner <- function(
                               outcome
                               )
     {
-        df <- study_data[order(study_data[, time_variable]),]
-        ## Find 3/4 point of dates
-        dates <- df[, time_variable]
-        top_split<- dates[1] + floor(tail(dates, n = 1) - dates[1])*0.75
-        ## Create set for training the model
-        train <- df[dates < top_split, ]
-        ## Create set for review of model performance
-        review <- df[dates >= top_split, ]
+        df <- study_data[order(study_data[,time_variable]),]
+        ## Get 3/4 of patients
+        top_split <- floor(nrow(df)*0.75)
+        ## Create set for training
+        train <- df[1:top_split,]
+        ## Create set for review
+        review <- df[!(row.names(df) %in% row.names(train)),]
         ## Use dates function to split dataset by seqn or doar depending on the
         ## main function argument test
         sets <- list(x_train = train,
