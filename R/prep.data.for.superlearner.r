@@ -18,13 +18,13 @@ prep.data.for.superlearner <- function(
                               )
     {
         df <- study_data[order(study_data[, time_variable]),]
-        ## Find midpoint of dates
+        ## Find 3/4 point of dates
         dates <- df[, time_variable]
-        mid <- dates[1] + floor(tail(dates, n = 1) - dates[1])/2
+        top_split<- dates[1] + floor(tail(dates, n = 1) - dates[1])*0.75
         ## Create set for training the model
-        train <- df[dates < mid, ]
+        train <- df[dates < top_split, ]
         ## Create set for review of model performance
-        review <- df[dates >= mid, ]
+        review <- df[dates >= top_split, ]
         ## Use dates function to split dataset by seqn or doar depending on the
         ## main function argument test
         sets <- list(x_train = train,
