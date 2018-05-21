@@ -50,7 +50,9 @@ create.calibration.plots <- function(
     ## Create plot
     calibration_plot <- calibration.plot(plot_data)
     ## Save plot
-    ggsave("calibration_plot.pdf", calibration_plot)
+    plot_name <- "calibration_plot.pdf"
+    ggsave(plot_name, calibration_plot, units = "mm")
+    if (grepl("pdf", plot_name)) system(paste("pdfcrop", plot_name, plot_name))
 }
 
     
