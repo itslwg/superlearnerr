@@ -11,13 +11,13 @@ prep.data.for.superlearner <- function(
                                        test = FALSE
                                        )
 {
-    split_and_set <- function(
-                              study_data,
+    split.dataset <- function(
+                              dataset,
                               time_variable,
                               outcome
                               )
     {
-        df <- study_data[order(study_data[,time_variable]),]
+        df <- dataset[order(dataset[,time_variable]),]
         ## Get 3/4 of patients
         top_split <- floor(nrow(df)*0.75)
         ## Create set for training
@@ -28,6 +28,14 @@ prep.data.for.superlearner <- function(
         ## main function argument test
         sets <- list(x_train = train,
                      x_review = review)
+        return(sets)
+    }
+    set.sets <- function(
+                        sets,
+                        time_variable,
+                        outcome
+                        )
+    {
         ## Extract tc from review set
         tc <- sets$x_review$tc
         ## Change levels of outcome factor from "No" and "Yes", to 0 and 1. Then
@@ -54,12 +62,21 @@ prep.data.for.superlearner <- function(
                      y_name = outcome,
                      y_levels = levels(study_data[, outcome])))
     }
-    ## Split and set
+    ## Split 
     time_variable <- "doar" # Define time variable
     if (test) time_variable <- "seqn" # Change if test is TRUE
-    return_list <- split_and_set(study_data,
-                                 outcome = outcome,
-                                 time_variable = time_variable)
+    datasets <- lapply(levels(as.factor(study_data$centre)), function(level) study_data[study_data$centre == level, ])
+    sets_list <- lapply(datasets, function(dataset) {
+        dataset$centre <- NULL
+        split.dataset(dataset,
+                      outcome = outcome,
+                      time_variable = time_variable)
+    })
+    sets <- list()
+    sets$x_train <- do.call(rbind, lapply(sets_list, function(set) set$x_train))
+    sets$x_review <- do.call(rbind, lapply(sets_list, function(set) set$x_review))
+    ## Set
+    return_list <- set.sets(sets, time_variable, outcome)
     class(return_list) <- c(class(return_list), "prepped") # Add prepped to return list class
     return(return_list)
 }
