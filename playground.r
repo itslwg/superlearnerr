@@ -5,7 +5,7 @@ files <- list.files("./R", pattern = ".r$", full.names = TRUE)
 for (f in files) source(f)
 ## Set parameters that are default in make.study
 data_path =  c("./extdata/sample.csv")
-bs_samples = 5
+bs_samples = 10
 
 ## Code below this line is more or less a copy of make.study. Make sure to
 ## modify make.study if you modify important stuff here.
@@ -46,38 +46,71 @@ study_data <- apply.exclusion.criteria(study_data)
 ## Create missing indicator variables and save table of number of missing
 ## values per variable
 study_data <- add.missing.indicator.variables(study_data)
-## Do median imputation
-study_data <- do.median.imputation(study_data)
-## Create table of sample characteristics
-results$table_of_sample_characteristics <- create.table.of.sample.characteristics(study_data, data_dictionary)
 ## Prepare data for SuperLearner predictions
-prepped_data <- prep.data.for.superlearner(study_data, test = TRUE)
+prepped_sample <- prep.data.for.superlearner(study_data, test = TRUE)
+## Create table of sample characteristics
+tables <- create.table.of.sample.characteristics(prepped_sample, data_dictionary)
+results$table_of_sample_characteristics <- tables$formatted
+results$raw_table_of_sample_characteristics <- tables$raw
+results$n_training_sample <- nrow(prepped_sample$x_train)
+results$n_test_sample <- nrow(prepped_sample$x_review)
 ## Transform factors into dummy variables
-prepped_data <- to.dummy.variables(prepped_data)
-## Train and review SuperLearner on study sample
-study_sample <- predictions.with.superlearner(prepped_data)
+prepped_sample <- to.dummy.variables(prepped_sample)
+## Train and review SuperLearner on study sample. Remember to consider changing
+## the sample setting in gridsearching for optimal cutpoints.
+study_sample <- predictions.with.superlearner(prepped_sample, save_breaks = TRUE, save_all_predictions = TRUE)
 ## Bootstrap samples
-samples <- generate.bootstrap.samples(study_data,
+bootstrap_samples <- generate.bootstrap.samples(study_data,
                                       bs_samples)
 ## Prepare samples
-prepped_samples <- prep.bssamples(samples)
+prepped_samples <- prep.bssamples(bootstrap_samples)
 ## Train and review SuperLearner on boostrap samples
 samples <- train.predict.bssamples(prepped_samples)
-## Create list of analysis to conduct
-funcList <- list(list(func = 'model.review.AUROCC',
-                      model_or_pe = c('pred_cat',
-                                      'tc')),
-                 list(func = 'model.review.reclassification',
-                      model_or_pe = c('NRI+',
-                                      'Pr(Up|Case)')))
+## Create list of analyses to conduct
+### Base analysis settings
+base <- list(study_sample = study_sample,
+             outcome = "outcome_test")
+### Define main auc analysis
+auc_main <- c(list(func = 'model.review.AUROCC',
+                 model_or_pe = c("tc", "pred_cat_test"),
+                 diffci_or_ci = "diff"),
+              base)
+### And main nri analysis
+nri_main <- c(list(func = 'model.review.reclassification',
+                 model_or_pe = c("NRI+", "NRI-"),
+                 diffci_or_ci = "ci"),
+              base)
+### Define analysis to get point estimates from training set
+auc_train <- auc_main
+auc_train$model_or_pe <- c("pred_con_train", "pred_cat_train")
+auc_train$diffci_or_ci <- "none"
+auc_train$outcome <- "outcome_train"
+### And analysis to get point estimate of pred_con in test set
+auc_test <- auc_main
+auc_test$model_or_pe <- "pred_con_test"
+auc_test$diffci_or_ci <- "none"
+### Put all analysis in one list
+funcList <- list(auc_main = auc_main,
+                 nri_main = nri_main,
+                 auc_train = auc_train,
+                 auc_test = auc_test)
 ## Generate confidence intervals around point estimates from funcList
-CIs <- lapply(funcList,
-              function(i) generate.confidence.intervals(study_sample,
-                                                        func = get(i$func),
-                                                        model_or_pointestimate = i$model_or_pe,
-                                                        samples = samples))
-## Set names of cis
-names(CIs) <- c('AUROCC',
-                'reclassification')
+pe_and_ci <- lapply(funcList,
+                    function(i) generate.confidence.intervals(study_sample = study_sample,
+                                                              func = get(i$func),
+                                                              model_or_pointestimate = i$model_or_pe,
+                                                              samples = samples,
+                                                              diffci_or_ci = i$diffci_or_ci,
+                                                              outcome_name = i$outcome))
+## Extract from pe_and_ci and put in results
+results <- c(results, extract.from.pe.and.ci(pe_and_ci))
+## Create classification tables
+results <- c(results, create.classification.tables(study_sample))
+## Create roc plots
+create.roc.plots(study_sample)
+## Create calibration plots
+create.calibration.plots(study_sample)
+## Create mortality plot
+create.mortality.plot(study_sample)
 ## Compile manuscript
-compile.manuscript("superlearner_vs_clinicians_manuscript.rtex")
+compile.manuscript(results, "superlearner_vs_clinicians_manuscript")

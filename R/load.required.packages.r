@@ -10,7 +10,13 @@ load.required.packages <- function()
                   "boot",
                   "knitr",
                   "tableone",
-                  "xtable")
+                  "xtable",
+                  "lattice",
+                  "RColorBrewer",
+                  "glmnet",
+                  "randomForest",
+                  "xgboost",
+                  "gam")
     ## Require those packages using a loop
     for (p in packages) require(p, character.only = TRUE)
 }
