@@ -68,15 +68,15 @@ create.classification.tables <- function(
     settings_classification_tables <- list(superlearner_train_table = list(outcome = study_sample$outcome_train,
                                                                           priorities = study_sample$pred_cat_train,
                                                                           caption = paste0("Priority levels assigned by the binned SuperLearner prediction in the training sample (n = ", length(study_sample$outcome_train), ")"),
-                                                                          label = "tab:superlearner-priorities-train"),
+                                                                          label = "tab:superlearner_priorities_train"),
                                           superlearner_test_table = list(outcome = study_sample$outcome_test,
                                                                          priorities = study_sample$pred_cat_test,
                                                                          caption = paste0("Priority levels assigned by the binned SuperLearner prediction in the test sample (n = ", length(study_sample$outcome_test), ")"),
-                                                                         label = "tab:superlearner-priorities-test"),
+                                                                         label = "tab:superlearner_priorities_test"),
                                           clinicians_test_table = list(outcome = study_sample$outcome_test,
                                                                        priorities = study_sample$tc,
                                                                        caption = paste0("Priority levels assigned by clinicians in the test sample (n = ", length(study_sample$outcome_test), ")"),
-                                                                       label = "tab:clinicians-priorities-test"))
+                                                                       label = "tab:clinicians_priorities_test"))
     ## Settings for reclassification tables
     settings_reclassification_tables <- list(reclass_all = list(superlearner_priorities = study_sample$pred_cat_test,
                                                                 clinicians_priorities = study_sample$tc,

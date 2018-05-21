@@ -66,8 +66,9 @@ identified by the grid search were \rinline{optimal_breaks[1]},
 cutpoints to bin the continuous SuperLearner prediction into the four priority
 levels green, yellow, orange, and red. The AUROCC of the binned SuperLearner
 predictions in the training sample was
-\rinline{superlearner_cat_auc_train}. Table \ref{tab:superlearner-train-table}
-shows the number of patients and all cause 30-day mortality in each group.
+\rinline{superlearner_cat_auc_train}. Table
+\ref{tab:superlearner_priorities_train} shows the number of patients and all
+cause 30-day mortality in each group.
 
 %% begin.rcode superlearner_train, echo=FALSE, results="asis"
 % cat(superlearner_train_table)
@@ -80,8 +81,8 @@ between the continuous predictions and observed outcomes in the test sample. We
 used the same cutpoints as in the training sample to bin the continuous
 predictions into the four priority levels. The AUROCC of the binned SuperLearner
 predictions in the test sample was \rinline{superlearner_cat_auc_test}. Table
-\ref{tab:superlearner-test-table} shows the number of patients and all cause
-30-day mortality in each group. 
+\ref{tab:superlearner_priorities_test} shows the number of patients and all cause
+30-day mortality in each group.
 
 %% begin.rcode superlearner_test, echo=FALSE, results="asis"
 % cat(superlearner_test_table)
@@ -89,7 +90,7 @@ predictions in the test sample was \rinline{superlearner_cat_auc_test}. Table
 
 In the test sample we compared the performance of the binned SuperLearner
 prediction with that of clinicians. The AUROCC of priority levels assigned by
-clinicians was \rinline{tc_auc_test}. Table \ref{tab:clinicians-test-table}
+clinicians was \rinline{tc_auc_test}. Table \ref{tab:clinicians_priorities_test}
 shows the priority levels assigned by clinicians and the all cause 30-day
 mortality in each group. The difference in AUROCC between the binned
 SuperLearner prediction and clinicians was
