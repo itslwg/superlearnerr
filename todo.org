@@ -139,8 +139,8 @@
    CLOCK: [2018-05-21 Mon 10:54]--[2018-05-21 Mon 10:58] =>  0:04
 ** DONE Modify how training and test samples are split		     :todo44:
    CLOCK: [2018-05-21 Mon 13:23]--[2018-05-21 Mon 13:47] =>  0:24
-** INPROGRESS Flip reclassification and save samples to disk	     :todo45:
-   CLOCK: [2018-05-21 Mon 16:16]
+** DONE Flip reclassification and save samples to disk		     :todo45:
+   CLOCK: [2018-05-21 Mon 16:16]--[2018-05-21 Mon 16:23] =>  0:07
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
