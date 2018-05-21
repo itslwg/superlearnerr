@@ -449,8 +449,8 @@ levels assigned by the SuperLearner and clinicians.
 % cat(reclass_all)
 %% end.rcode
 
-% ** Figures
-% *** ROC plots
+% *** Figures
+% **** ROC plots
 \begin{figure}
   \caption{Receiver operating characteristics curves in training (A) and test
     (B) samples}
@@ -458,7 +458,7 @@ levels assigned by the SuperLearner and clinicians.
   \includegraphics[width=\textwidth]{roc_plot.pdf}
 \end{figure}
 
-% *** Calibration plot
+% **** Calibration plot
 \begin{figure}
   \caption{Agreement between the continuous SuperLearner prediction and observed
     all cause 30-day mortality in the training (A) and test (B) samples.}
@@ -470,7 +470,7 @@ levels assigned by the SuperLearner and clinicians.
     mortality point estimates across the same deciles.}
 \end{figure}
 
-% *** Mortality plot
+% **** Mortality plot
 \begin{figure}
   \caption{All cause 30-day mortality across priority levels in the test sample}
   \label{fig:mortality_plot}
@@ -479,7 +479,71 @@ levels assigned by the SuperLearner and clinicians.
 
 % ** Discussion
 \section*{Discussion}
-Remains to be written.
+Our results indicate that using an ensemble machine learning algorithm developed
+with the SuperLearner to prioritise among adult trauma patients in the ED may be
+non-inferior to that of clinician gestalt. As far as we know this is the first
+study of its kind in this area and we hope that our results can work as
+benchmarks to which future work can be compared. 
+
+Levin et al. used a random forest learner to assign priority levels to patients
+in a general ED population \cite{Levin2018}. They used a composite outcome of
+in-hospital mortality and intensive care unit admission and reported an AUROCC
+ranging between 0.90 to 0.92 for this outcome. 
+
+Talbert et al. applied a tree based learner to the trauma team activation
+problem but found no improvement over standard criteria \cite{Talbert2007},
+whereas more recent research by Follin et al. demonstrated superior performance
+of the tree based learner compared to a model based on logistic regression
+\cite{Follin2016}. Pearl et al. used neural networks but could not demonstrate a
+difference \cite{Pearl2008}.
+
+In the prehospital setting patients are prioritised for transfer to a trauma
+centre \cite{Voskens2018}. In the in-hospital setting patiens are prioritised to
+match level of care with clinical acuity, to aid decisions on the order in which
+to assess and treat patients, and whether to activate a trauma team or not
+\cite{Granstrom2018}.
+
+In modern trauma systems in-hospital triage is based on a combination of
+measures of physiolocial and anatomical trauma severity as well as information
+about the underlying injury mechanism \cite{ASCOT2014}. The focus of the
+literature on in-hospital trauma triage has so far been how to use triage for
+trauma team activation.
+
+, namely the sorting of trauma patients that arrives to the emergency
+department. These patients are often prioritised using emergency department
+triage tools, which assigns each patient a priority coupled with a target time
+to treat.
+
+The key challenge associated with such criteria is to minimize under and over
+triage, which are analogue to false negative and false positive rates
+respectively. A widespread criticism of current triage criteria is that both
+false negative and false positive rates are too high
+\cite{VanRein2018,Benjamin2018,Kristiansen2010}.  Alternatives to the criteria
+based approach to trauma triage include the use of clinical prediction models,
+algorithms that allows estimation of an individual patient's risk of a specific
+outcome, for example mortality \cite{Collins2015}.
+
+Multiple clinical prediction models aimed for trauma triage have been published
+\cite{Rehn2011}, but few are used in practice. One reason may be that they fail
+to improve on the performance of the standard criteria based approach. These
+prediction models have conventionally been developed using logistic or
+propotional hazards regression, and in contrast to other fields of medicine
+modern machine learning techniques have been less used \cite{Liu2017}. 
+
+
+Several steps remain before a system to prioritse among adult trauma patients in
+the ED based on our algorithm can and should be implemented. These steps involve
+refining the algorithm, comparing it with other commonly used methods to
+prioritise patients in the ED, incorporating it into usable software, and
+designing an implementation study to assess both its effectiveness and
+safety. There are many ways in which the algorithm could be refined but we
+regard defining a sequence in which the variables should be measured as the most
+important. We think that this sequence should be based on a combination of
+individual variable importance and how feasible the variables are to record. We
+assume that once this sequence is defined the patients with the most severe
+trauma could be identified very quickly using only a small subset of the
+variables.
+
 
 % Discussion points
 % - Improve triage by clinicians
@@ -511,48 +575,8 @@ study?
 
 Handling of missing data. Exluding observations with missing outcome.
 
-% This problem is closely related, but not identical, to the problem of predicting
-% outcomes in trauma patients.
-
-% Talbert et al. applied a tree based learner to the trauma team activation
-% problem but found no improvement over standard criteria \cite{Talbert2007},
-% whereas more recent research by Follin et al. demonstrated superior performance
-% of the tree based learner compared to a model based on logistic regression
-% \cite{Follin2016}. Pearl et al. used neural networks but could not demonstrate a
-% difference \cite{Pearl2008}.
-
-% In the prehospital setting patients are prioritised for transfer to a trauma
-% centre \cite{Voskens2018}. In the in-hospital setting patiens are prioritised to
-% match level of care with clinical acuity, to aid decisions on the order in which
-% to assess and treat patients, and whether to activate a trauma team or not
-% \cite{Granstrom2018}.
-
-% In modern trauma systems in-hospital triage is based on a combination of
-% measures of physiolocial and anatomical trauma severity as well as information
-% about the underlying injury mechanism \cite{ASCOT2014}. The focus of the
-% literature on in-hospital trauma triage has so far been how to use triage for
-% trauma team activation.
-
-% , namely the sorting of trauma patients that arrives to the emergency
-% department. These patients are often prioritised using emergency department
-% triage tools, which assigns each patient a priority coupled with a target time
-% to treat.
-
-% The key challenge associated with such criteria is to minimize under and over
-% triage, which are analogue to false negative and false positive rates
-% respectively. A widespread criticism of current triage criteria is that both
-% false negative and false positive rates are too high
-% \cite{VanRein2018,Benjamin2018,Kristiansen2010}.  Alternatives to the criteria
-% based approach to trauma triage include the use of clinical prediction models,
-% algorithms that allows estimation of an individual patient's risk of a specific
-% outcome, for example mortality \cite{Collins2015}.
-
-% Multiple clinical prediction models aimed for trauma triage have been published
-% \cite{Rehn2011}, but few are used in practice. One reason may be that they fail
-% to improve on the performance of the standard criteria based approach. These
-% prediction models have conventionally been developed using logistic or
-% propotional hazards regression, and in contrast to other fields of medicine
-% modern machine learning techniques have been less used \cite{Liu2017}. 
+This problem is closely related, but not identical, to the problem of predicting
+outcomes in trauma patients.
 
 % ** Conclusion
 \section*{Conclusion}
@@ -770,19 +794,3 @@ Remains to be written.
 % \end{thebibliography}
 % ** End
 \end{document}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
