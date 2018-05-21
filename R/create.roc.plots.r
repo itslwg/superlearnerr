@@ -43,7 +43,6 @@ create.roc.plots <- function(
     colors <- brewer.pal(3, "Set2")
     linetypes <- c("solid", "dashed", "dotted")
     roc.plot <- function(plot_data) {
-        num <- length(levels(as.factor(as.character(plot_data$pretty_name))))
         plot_object <- ggplot(data = plot_data) +
             geom_line(aes(x = fpr, y = tpr, col = pretty_name, linetype = pretty_name), size = 0.5, alpha = 0.8) +
             xlab("False positive rate") +
