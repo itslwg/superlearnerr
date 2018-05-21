@@ -42,8 +42,8 @@ create.calibration.plots <- function(
                   strip.text = element_text(size = 20, hjust = 0),
                   legend.position = "none") +
             facet_wrap(~strip_title) +
-            ylab("Observed all cause 30-day mortality") +
-            xlab("Predicted all cause 30-day mortality") +
+            ylab("Observed all cause 30-day mortality %") +
+            xlab("Predicted all cause 30-day mortality %") +
             coord_fixed()
         return(plot_object)
     }
