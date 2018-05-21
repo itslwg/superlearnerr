@@ -32,6 +32,9 @@
     "Pearl2008"
     "Baker2013"
     "R"
-    "Rehn2011"))
+    "Rehn2011"
+    "Kunitake2018"
+    "DeMunter2017"
+    "Miller2017"))
  :bibtex)
 
