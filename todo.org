@@ -141,6 +141,8 @@
    CLOCK: [2018-05-21 Mon 13:23]--[2018-05-21 Mon 13:47] =>  0:24
 ** DONE Flip reclassification and save samples to disk		     :todo45:
    CLOCK: [2018-05-21 Mon 16:16]--[2018-05-21 Mon 16:23] =>  0:07
+** DONE Modify compile paper function				     :todo46:
+   CLOCK: [2018-05-21 Mon 18:28]--[2018-05-21 Mon 18:31] =>  0:03
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
