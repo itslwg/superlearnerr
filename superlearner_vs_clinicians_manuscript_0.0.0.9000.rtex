@@ -58,9 +58,10 @@ patients in the training and test samples were \rinline{n_training_sample} and
 %% end.rcode
 
 The AUROCC of the continuous SuperLearner prediction in the training sample was
-\rinline{superlearner_con_auc_train}. Figure XA shows the agreement between the
-continuous predictions and observed outcomes in the training sample. The
-cutpoints identified by the grid search were \rinline{optimal_breaks[1]},
+\rinline{superlearner_con_auc_train} (Figure \ref{fig:roc_plot}A). Figure
+\ref{fig:calibration_plot}A shows the agreement between the continuous
+predictions and observed outcomes in the training sample. The cutpoints
+identified by the grid search were \rinline{optimal_breaks[1]},
 \rinline{optimal_breaks[2]}, and \rinline{optimal_breaks[3]}. We used these
 cutpoints to bin the continuous SuperLearner prediction into the four priority
 levels green, yellow, orange, and red. The AUROCC of the binned SuperLearner
@@ -73,13 +74,14 @@ shows the number of patients and all cause 30-day mortality in each group.
 %% end.rcode
 
 We then applied the SuperLearner to the test sample. The AUROCC of the continous
-SuperLearner prediction was \rinline{superlearner_con_auc_test}. Figure XB shows
-the agreement between the continuous predictions and observed outcomes in the
-test sample. We used the same cutpoints as in the training sample to bin the
-continuous predictions into the four priority levels. The AUROCC of the binned
-SuperLearner predictions in the test sample was
-\rinline{superlearner_cat_auc_test}. Table \ref{tab:superlearner-test-table}
-shows the number of patients and all cause 30-day mortality in each group.
+SuperLearner prediction was \rinline{superlearner_con_auc_test} Figure
+\ref{fig:roc_plot}B. Figure \ref{fig:calibration_plot}B shows the agreement
+between the continuous predictions and observed outcomes in the test sample. We
+used the same cutpoints as in the training sample to bin the continuous
+predictions into the four priority levels. The AUROCC of the binned SuperLearner
+predictions in the test sample was \rinline{superlearner_cat_auc_test}. Table
+\ref{tab:superlearner-test-table} shows the number of patients and all cause
+30-day mortality in each group. 
 
 %% begin.rcode superlearner_test, echo=FALSE, results="asis"
 % cat(superlearner_test_table)
@@ -93,7 +95,9 @@ mortality in each group. The difference in AUROCC between the binned
 SuperLearner prediction and clinicians was
 \rinline{diff_superlearner_cat_tc_auc}. The net reclassifciation in events and
 non-events were \rinline{nre} and \rinline{nrne} respectively. The overall
-reclassification is show in Table \ref{tab:reclass_all}.
+reclassification is show in Table \ref{tab:reclass_all}. Figure
+\ref{fig:mortality_plot} shows the all cause 30-day mortality across priority
+levels assigned by the SuperLearner and clinicians.
 
 %% begin.rcode clinicians_test, echo=FALSE, results="asis"
 % cat(clinicians_test_table)
@@ -102,6 +106,34 @@ reclassification is show in Table \ref{tab:reclass_all}.
 %% begin.rcode reclass_all, echo=FALSE, results="asis"
 % cat(reclass_all)
 %% end.rcode
+
+% ** Figures
+% *** ROC plots
+\begin{figure}
+  \caption{Receiver operating characteristics curves in training (A) and test
+    (B) samples}
+  \label{fig:roc_plot}
+  \includegraphics[width=\textwidth]{roc_plot.pdf}
+\end{figure}
+
+% *** Calibration plot
+\begin{figure}
+  \caption{Agreement between the continuous SuperLearner prediction and observed
+    all cause 30-day mortality in the training (A) and test (B) samples.}
+  \label{fig:calibration_plot}
+  \includegraphics[width=\textwidth]{calibration_plot.pdf}
+  \caption*{The straight dotted line indicates perfect agreement. The solid
+    orange line is a smoothed association between mean mortality and mean
+    predicted mortality across deciles of predicted mortality. The triangles are
+    mortality point estimates across the same deciles.}
+\end{figure}
+
+% *** Mortality plot
+\begin{figure}
+  \caption{All cause 30-day mortality across priority levels in the test sample}
+  \label{fig:mortality_plot}
+  \includegraphics[width=\textwidth]{mortality_plot.pdf}
+\end{figure}
 
 % ** End document
 \end{document}
