@@ -29,7 +29,9 @@
     "lineno"
     "microtype"
     "xcolor"
-    "array")
+    "array"
+    "adjustbox"
+    "caption")
    (LaTeX-add-labels
     "fig:roc_plot"
     "fig:calibration_plot"
