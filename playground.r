@@ -60,7 +60,12 @@ prepped_sample <- to.dummy.variables(prepped_sample)
 saveRDS(prepped_sample, "original_sample.rds")
 ## Train and review SuperLearner on study sample. Remember to consider changing
 ## the sample setting in gridsearching for optimal cutpoints.
-study_sample <- predictions.with.superlearner(prepped_sample, save_breaks = TRUE, save_all_predictions = TRUE, sample = FALSE)
+study_sample <- predictions.with.superlearner(prepped_sample,
+                                              save_breaks = TRUE,
+                                              save_all_predictions = TRUE,
+                                              sample = FALSE,
+                                              gridsearch_parallel = TRUE,
+                                              n_cores = 4)
 ## Save point estimates to disk
 saveRDS(study_sample, "point_estimates.rds")
 ## Bootstrap samples
