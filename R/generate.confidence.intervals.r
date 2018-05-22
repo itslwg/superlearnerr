@@ -1,7 +1,6 @@
 #' Confidence interval function
 #'
 #' This function generates confidence intervals around difference of two given point estimates using empirical bootstrapping.
-#' @param measure The name of the measure to be estimated. No default.
 #' @param study_sample The study sample list. No default.
 #' @param func Function that generates key statistic. For example, model.review.AUROCC that generates AUROCC of a given model, or model.review.reclassification that generates reclassification elements. No default.
 #' @param model_or_pointestimate Character vector describing predictions or point estimates to analyse. For example, pred_cat and clinicians_predictions predictions for model.review.AUROCC or NRI+ and NRI- point estimates for model.review.reclassification. No default.
@@ -10,7 +9,6 @@
 #' @param outcome_name Name of outcome variable. No default.
 #' @export
 generate.confidence.intervals <- function(
-                                          measure,
                                           study_sample,
                                           model_or_pointestimate,
                                           func,
@@ -61,18 +59,14 @@ generate.confidence.intervals <- function(
                                                                        outcome_name))
         ## Matrixify samples
         matrixify <- sapply(generate_statistics_bssamples, unlist)
+        ## Make point estimate matrix
+        pe_matrix <- matrix(rep(performance_point_estimates, ncol(matrixify)), ncol = ncol(matrixify))
         ## Calculate deltastar
-        deltastar <- apply(matrixify,
-                           2,
-                           function (col) col - performance_point_estimates)
+        deltastar <- data.frame(t(matrixify - pe_matrix))
         ## Get 2.5% and 97.5% percentiles from difference of samples
-        quantiles <- apply(deltastar,
-                           1,
-                           function(row) quantile(row, c(.025,0.975)))
+        quantiles <- do.call(rbind, lapply(deltastar, quantile, probs = c(.025,0.975)))
         ## Generate confidence_intevals
-        confidence_intervals <- apply(quantiles,
-                                      1,
-                                      function(row) performance_point_estimates - row)
+        confidence_intervals <- matrix(rep(performance_point_estimates, 2), ncol = 2) - quantiles
         ## Format confidence intervals
         fmt_confidence_intervals <- t(apply(confidence_intervals,
                                             1,
