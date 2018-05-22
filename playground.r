@@ -5,7 +5,7 @@ files <- list.files("./R", pattern = ".r$", full.names = TRUE)
 for (f in files) source(f)
 ## Set parameters that are default in make.study
 data_path =  c("./extdata/sample.csv")
-bs_samples = 5
+bs_samples = 4
 
 ## Code below this line is more or less a copy of make.study. Make sure to
 ## modify make.study if you modify important stuff here.
@@ -60,7 +60,12 @@ prepped_sample <- to.dummy.variables(prepped_sample)
 saveRDS(prepped_sample, "original_sample.rds")
 ## Train and review SuperLearner on study sample. Remember to consider changing
 ## the sample setting in gridsearching for optimal cutpoints.
-study_sample <- predictions.with.superlearner(prepped_sample, save_breaks = TRUE, save_all_predictions = TRUE, sample = FALSE)
+study_sample <- predictions.with.superlearner(prepped_sample,
+                                              save_breaks = TRUE,
+                                              save_all_predictions = TRUE,
+                                              sample = FALSE,
+                                              gridsearch_parallel = TRUE,
+                                              n_cores = 4)
 ## Save point estimates to disk
 saveRDS(study_sample, "point_estimates.rds")
 ## Bootstrap samples
@@ -71,7 +76,7 @@ prepped_samples <- prep.bssamples(bootstrap_samples)
 ## Save prepped samples to disk
 saveRDS(prepped_samples, "bootstrap_samples.rds")
 ## Train and review SuperLearner on boostrap samples
-samples <- train.predict.bssamples(prepped_samples)
+samples <- train.predict.bssamples(prepped_samples, parallel = TRUE, n_cores = 4)
 ## Save bootstrapped estimates
 saveRDS(samples, "bootstrapped_estimates.rds")
 ## Create list of analyses to conduct
