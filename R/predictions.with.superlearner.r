@@ -5,6 +5,7 @@
 #' @param models Models to use in ensemble algorithm. Default: SL.mean and SL.glmnet.
 #' @param save_breaks Logical. If TRUE, save optimal breaks to results. Defaults to FALSE.
 #' @param save_all_predictions Logical. If TRUE all predictions are saved in pred_data. Defaults to FALSE.
+#' @param sample Logical. If TRUE the grid search will only search a random sample of possible cutpoint combinations, not all. Defaults to TRUE.
 #' @param verbose Logical. If TRUE information to help gauge progress is printed. Defaults to TRUE.
 #' @export
 predictions.with.superlearner <- function(
@@ -16,6 +17,7 @@ predictions.with.superlearner <- function(
                                                      'SL.gam'),
                                           save_breaks = FALSE,
                                           save_all_predictions = FALSE,
+                                          sample = TRUE,
                                           verbose = TRUE
                                           )
 {
@@ -37,7 +39,7 @@ predictions.with.superlearner <- function(
     train_pred <- continuous_predictions$train
     ## Do a grid search to find optimal cutpoints
     if (verbose) message("Finding optimal cutpoints")
-    breaks <- gridsearch.breaks(predictions = train_pred, outcomes = prepped_data$y_train)
+    breaks <- gridsearch.breaks(predictions = train_pred, outcomes = prepped_data$y_train, sample = sample)
     if (verbose) message("Optimal cutpoints identified")
     ## Save breaks
     if (save_breaks) results$optimal_breaks <<- breaks
