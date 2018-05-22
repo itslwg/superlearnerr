@@ -144,11 +144,12 @@
 ** DONE Modify compile paper function				     :todo46:
    CLOCK: [2018-05-21 Mon 18:28]--[2018-05-21 Mon 18:31] =>  0:03
 ** INPROGRESS Check that confidence intervals are correct	     :todo47:
-   CLOCK: [2018-05-22 Tue 09:17]
+   CLOCK: [2018-05-22 Tue 09:17]--[2018-05-22 Tue 09:43] =>  0:26
 ** TODO Remove calibration plots and add one with number and         :todo48:
    proportion of cases at each level
 ** TODO Add table of included techniques                             :todo49:
-** TODO Make analyses run in parallell                               :todo50:
+** INPROGRESS Make analyses run in parallell			     :todo50:
+   CLOCK: [2018-05-22 Tue 09:43]
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
