@@ -148,6 +148,7 @@
 ** TODO Remove calibration plots and add one with number and         :todo48:
    proportion of cases at each level
 ** TODO Add table of included techniques                             :todo49:
+** TODO Make analyses run in parallell                               :todo50:
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
