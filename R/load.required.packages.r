@@ -17,7 +17,8 @@ load.required.packages <- function()
                   "randomForest",
                   "xgboost",
                   "gam",
-                  "ggplot2")
+                  "ggplot2",
+                  "foreach")
     ## Require those packages using a loop
     for (p in packages) require(p, character.only = TRUE)
 }
