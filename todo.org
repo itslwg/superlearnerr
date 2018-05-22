@@ -148,8 +148,8 @@
 ** TODO Remove calibration plots and add one with number and         :todo48:
    proportion of cases at each level
 ** TODO Add table of included techniques                             :todo49:
-** INPROGRESS Make analyses run in parallell			     :todo50:
-   CLOCK: [2018-05-22 Tue 09:43]
+** DONE Make analyses run in parallell				     :todo50:
+   CLOCK: [2018-05-22 Tue 09:43]--[2018-05-22 Tue 15:49] =>  6:06
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
