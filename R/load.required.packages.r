@@ -18,7 +18,8 @@ load.required.packages <- function()
                   "xgboost",
                   "gam",
                   "ggplot2",
-                  "foreach")
+                  "foreach",
+                  "doParallel")
     ## Require those packages using a loop
     for (p in packages) require(p, character.only = TRUE)
 }
