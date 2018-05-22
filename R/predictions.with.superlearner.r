@@ -16,6 +16,7 @@ predictions.with.superlearner <- function(
                                                      'SL.gam'),
                                           save_breaks = FALSE,
                                           save_all_predictions = FALSE,
+                                          sample = TRUE,
                                           verbose = TRUE
                                           )
 {
@@ -37,7 +38,7 @@ predictions.with.superlearner <- function(
     train_pred <- continuous_predictions$train
     ## Do a grid search to find optimal cutpoints
     if (verbose) message("Finding optimal cutpoints")
-    breaks <- gridsearch.breaks(predictions = train_pred, outcomes = prepped_data$y_train)
+    breaks <- gridsearch.breaks(predictions = train_pred, outcomes = prepped_data$y_train, sample = sample)
     if (verbose) message("Optimal cutpoints identified")
     ## Save breaks
     if (save_breaks) results$optimal_breaks <<- breaks
