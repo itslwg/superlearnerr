@@ -143,8 +143,7 @@
    CLOCK: [2018-05-21 Mon 16:16]--[2018-05-21 Mon 16:23] =>  0:07
 ** DONE Modify compile paper function				     :todo46:
    CLOCK: [2018-05-21 Mon 18:28]--[2018-05-21 Mon 18:31] =>  0:03
-** INPROGRESS Check that confidence intervals are correct	     :todo47:
-   CLOCK: [2018-05-22 Tue 09:17]
+** DONE Check that confidence intervals are correct		     :todo47:
 ** TODO Remove calibration plots and add one with number and         :todo48:
    proportion of cases at each level
 ** TODO Add table of included techniques                             :todo49:
