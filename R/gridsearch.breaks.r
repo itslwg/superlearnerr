@@ -35,6 +35,7 @@ gridsearch.breaks <- function(
     breaks_to_search <- combn(seq(0.01, 0.99, 0.01), n_breaks, simplify = FALSE)
     ## Draw a random sample if sample is TRUE
     if (sample) breaks_to_search <- breaks_to_search[sample(1:length(breaks_to_search), ceiling(length(breaks_to_search) * 0.1))]
+    message("Estimating loss for each of ", length(breaks_to_search), " possible cutpoints combinations")
     ## Define estimate loss function
     estimate.loss <- function(breaks) {
         breaks <- c(-Inf, breaks, Inf)
