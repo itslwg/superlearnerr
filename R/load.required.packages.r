@@ -3,7 +3,8 @@
 load.required.packages <- function()
 {
     ## Vector of names of required packages
-    packages <- c("SuperLearner",
+    packages <- c("methods",
+                  "SuperLearner",
                   "data.table",
                   "nricens",
                   "dplyr",
