@@ -54,8 +54,8 @@ prepped_sample <- prep.data.for.superlearner(study_data, test = TRUE)
 tables <- create.table.of.sample.characteristics(prepped_sample, data_dictionary)
 results$table_of_sample_characteristics <- tables$formatted
 results$raw_table_of_sample_characteristics <- tables$raw
-results$n_training_sample <- nrow(prepped_sample$sets$x_train)
-results$n_test_sample <- nrow(prepped_sample$sets$x_review)
+results$n_training_sample <- nrow(prepped_sample$x_train)
+results$n_test_sample <- nrow(prepped_sample$x_review)
 ## Transform factors into dummy variables
 prepped_sample <- to.dummy.variables(prepped_sample)
 ## Save original sample to disk
@@ -69,7 +69,6 @@ study_sample <- predictions.with.superlearner(prepped_sample,
                                               sample = FALSE,
                                               gridsearch_parallel = TRUE,
                                               n_cores = 4,
-                                              save_superlearner = TRUE)
                                               log = TRUE,
                                               write_to_disk = TRUE,
                                               clean_start = TRUE)
@@ -141,3 +140,4 @@ create.mortality.plot(study_sample)
 saveRDS(results, "results.rds")
 ## Compile manuscript
 #compile.manuscript("superlearner_vs_clinicians_manuscript")
+
