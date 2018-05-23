@@ -151,6 +151,8 @@
    CLOCK: [2018-05-22 Tue 09:43]--[2018-05-22 Tue 15:49] =>  6:06
 ** DONE Check parallel computing and create logfile		     :todo51:
    CLOCK: [2018-05-23 Wed 17:24]--[2018-05-23 Wed 18:39] =>  1:15
+** INPROGRESS Add save superlearner option			     :todo52:
+   CLOCK: [2018-05-23 Wed 19:13]
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
