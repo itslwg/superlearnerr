@@ -163,5 +163,6 @@
    CLOCK: [2018-05-19 Sat 08:42]--[2018-05-19 Sat 09:19] =>  0:37
 ** DONE Fix table references in results				     :issue5:
    CLOCK: [2018-05-21 Mon 10:18]--[2018-05-21 Mon 10:27] =>  0:09
-** TODO Check weird error from glmnet                                :issue6:
+** INPROGRESS Check weird error from glmnet			     :issue6:
+   CLOCK: [2018-05-23 Wed 18:41]
 #+END_SRC
