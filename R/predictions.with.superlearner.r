@@ -10,6 +10,10 @@
 #' @param n_cores Integer. The number of cores to run any parallel computing on. Default to NULL.
 #' @param save_superlearner Logical. If TRUE the superlearner object will be saved to disk. Defaults to FALSE.
 #' @param verbose Logical. If TRUE information to help gauge progress is printed. Defaults to TRUE.
+#' @param log Logical. If TRUE progress is logged in logfile. Defaults to FALSE.
+#' @param boot Logical. Affects only what is printed to logfile. If TRUE prepped_sample is assumed to be a bootstrap sample. Defaults to FALSE.
+#' @param write_to_disk Logical. If TRUE the prediction data is saved as RDS to disk. Defaults to FALSE.
+#' @param clean_start Logical. If TRUE the predictions directory and all files in it are removed before saving new stuff there. Defaults to FALSE.
 #' @export
 predictions.with.superlearner <- function(
                                           prepped_sample,
@@ -23,8 +27,11 @@ predictions.with.superlearner <- function(
                                           sample = TRUE,
                                           gridsearch_parallel = FALSE,
                                           n_cores = NULL,
-                                          save_superlearner = FALSE,
-                                          verbose = TRUE
+                                          verbose = TRUE,
+                                          log = FALSE,
+                                          boot = FALSE,
+                                          write_to_disk = FALSE,
+                                          clean_start = FALSE
                                           )
 {
     ## Train algorithm with training set
@@ -32,9 +39,14 @@ predictions.with.superlearner <- function(
     train_algo <- with(prepped_sample, SuperLearner(Y = y_train,
                                                   X = x_train,
                                                   family = binomial(),
-                                                  SL.library = models))
-    if (save_superlearner) saveRDS(train_algo, "superlearner.rds")
-    if (verbose) message("SuperLearner trained")
+                                                  SL.library = models,
+                                                  verbose = TRUE))
+    if (verbose) {
+        print(train_algo)
+        print(train_algo$errorsInLibrary)
+        print(train_algo$errorsInCVLibrary)
+        message("SuperLearner trained")
+    }
     ## Predict with algorithm on training set
     sets <- list(train = prepped_sample$x_train, test = prepped_sample$x_review)
     continuous_predictions <- lapply(sets, function(sample) {
@@ -74,5 +86,28 @@ predictions.with.superlearner <- function(
         pred_data$outcome_train <- prepped_sample$y_train   
     }
     if (verbose) message("Returning prediction data \n")
+    ## Define timestamp
+    timestamp <- Sys.time()
+    filenum <- ""
+    dir_name <- "predictions"
+    ## Clean start
+    if (clean_start) {
+        if (dir.exists(dir_name)) unlink(dir_name, recursive = TRUE)
+        if (file.exists("logfile")) file.remove("logfile")
+    }
+    ## Write each prediction to disk
+    if (write_to_disk) {
+        if (!dir.exists(dir_name)) dir.create(dir_name)
+        filenum <- as.character(round(as.numeric(timestamp)))
+        saveRDS(pred_data, paste0(dir_name, "/superlearner_prediction_", filenum, ".rds"))
+        filenum <- paste0(filenum, " ")
+    }
+    ## Log
+    if (log) {
+        analysis_name <- "Main"
+        if (boot) analysis_name <- "Bootstrap"
+        logline <- paste0(analysis_name, " analysis ", filenum, "completed on ", timestamp)
+        write(logline, "logfile", append = TRUE)
+    }
     return (pred_data)
 }

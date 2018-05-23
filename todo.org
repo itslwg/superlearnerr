@@ -158,9 +158,11 @@
 ** DONE Check that confidence intervals are correct		     :todo47:
 ** TODO Remove calibration plots and add one with number and         :todo48:
    proportion of cases at each level
-** TODO Add table of included techniques                             :todo49:
+** DONE Add table of included techniques                             :todo49:
 ** DONE Make analyses run in parallell				     :todo50:
    CLOCK: [2018-05-22 Tue 09:43]--[2018-05-22 Tue 15:49] =>  6:06
+** DONE Check parallel computing and create logfile		     :todo51:
+   CLOCK: [2018-05-23 Wed 17:24]--[2018-05-23 Wed 18:39] =>  1:15
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
@@ -173,5 +175,6 @@
    CLOCK: [2018-05-19 Sat 08:42]--[2018-05-19 Sat 09:19] =>  0:37
 ** DONE Fix table references in results				     :issue5:
    CLOCK: [2018-05-21 Mon 10:18]--[2018-05-21 Mon 10:27] =>  0:09
-** TODO Check weird error from glmnet                                :issue6:
+** DONE Check weird error from glmnet				     :issue6:
+   CLOCK: [2018-05-23 Wed 18:41]--[2018-05-23 Wed 19:04] =>  0:23
 #+END_SRC

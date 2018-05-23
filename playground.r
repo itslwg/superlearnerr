@@ -12,6 +12,8 @@ bs_samples = 1000
 
 ##----------------------------------------------------------------------------##
 
+## Set seed
+set.seed(14813)
 ## Load all required packages (remove when turned into package)
 load.required.packages()
 ## Import study data
@@ -67,6 +69,9 @@ study_sample <- predictions.with.superlearner(prepped_sample,
                                               gridsearch_parallel = TRUE,
                                               n_cores = 4,
                                               save_superlearner = TRUE)
+                                              log = TRUE,
+                                              write_to_disk = TRUE,
+                                              clean_start = TRUE)
 ## Save point estimates to disk
 saveRDS(study_sample, "point_estimates.rds")
 ## Bootstrap samples
@@ -77,7 +82,12 @@ prepped_samples <- prep.bssamples(bootstrap_samples)
 ## Save prepped samples to disk
 saveRDS(prepped_samples, "bootstrap_samples.rds")
 ## Train and review SuperLearner on boostrap samples
-samples <- train.predict.bssamples(prepped_samples, parallel = TRUE, n_cores = 4)
+samples <- train.predict.bssamples(prepped_samples,
+                                   parallel = FALSE,
+                                   n_cores = 4,
+                                   log = TRUE,
+                                   boot = TRUE,
+                                   write_to_disk = TRUE)
 ## Save bootstrapped estimates
 saveRDS(samples, "bootstrapped_estimates.rds")
 ## Create list of analyses to conduct
@@ -129,4 +139,4 @@ create.mortality.plot(study_sample)
 ## Save results to disk
 saveRDS(results, "results.rds")
 ## Compile manuscript
-compile.manuscript("superlearner_vs_clinicians_manuscript")
+#compile.manuscript("superlearner_vs_clinicians_manuscript")
