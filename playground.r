@@ -65,6 +65,7 @@ saveRDS(prepped_sample, "original_sample.rds")
 study_sample <- predictions.with.superlearner(prepped_sample,
                                               save_breaks = TRUE,
                                               save_all_predictions = TRUE,
+                                              save_superlearner = TRUE,
                                               sample = FALSE,
                                               gridsearch_parallel = TRUE,
                                               n_cores = 4,
