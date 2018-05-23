@@ -1,4 +1,4 @@
-\documentclass{report}
+\documentclass{article}
 \usepackage{booktabs}
 \usepackage{array}
 
@@ -7,14 +7,19 @@
 \centering
 \begin{tabular}{llr}
 \toprule
-R package      & Learner \\
-\midrule
-glmnet       & Penalized regression model using elastic net  \\
-glm          & Generalized linear model      \\
-randomForest & Breiman's random forest algorithm   \\
-XGboost      & Extreme Gradient boosting machine      \\
-gam          & Generalized additive model      \\
-\bottomrule
+Learner & R package \\
+  \midrule
+  Breiman's random forest algorithm             & randomForest \cite{randomforest} \\
+  Extreme Gradient Boosting machine             & XGboost \cite{xgboost}\\
+Generalized Linear Model                      & glm          \\
+Generalized Additive Model                    & gam       \cite{gam}    \\
+Penalized regression model using elastic net  & glmnet \cite{glmnet}      \\
+
+  \bottomrule
+
 \end{tabular}
+
+\bibliographystyle{plain}
+\bibliography{bib.for.tables}
 
 \end{document}
