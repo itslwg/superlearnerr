@@ -83,7 +83,7 @@ prepped_samples <- prep.bssamples(bootstrap_samples)
 saveRDS(prepped_samples, "bootstrap_samples.rds")
 ## Train and review SuperLearner on boostrap samples
 samples <- train.predict.bssamples(prepped_samples,
-                                   parallel = FALSE,
+                                   parallel = TRUE,
                                    n_cores = 4,
                                    log = TRUE,
                                    boot = TRUE,
