@@ -5,7 +5,7 @@ files <- list.files("./R", pattern = ".r$", full.names = TRUE)
 for (f in files) source(f)
 ## Set parameters that are default in make.study
 data_path =  c("./../../data/sample.csv")
-bs_samples = 100
+bs_samples = 1000
 
 ## Code below this line is more or less a copy of make.study. Make sure to
 ## modify make.study if you modify important stuff here.
@@ -65,7 +65,8 @@ study_sample <- predictions.with.superlearner(prepped_sample,
                                               save_all_predictions = TRUE,
                                               sample = FALSE,
                                               gridsearch_parallel = TRUE,
-                                              n_cores = 4)
+                                              n_cores = 4,
+                                              save_superlearner = TRUE)
 ## Save point estimates to disk
 saveRDS(study_sample, "point_estimates.rds")
 ## Bootstrap samples

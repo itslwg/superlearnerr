@@ -8,6 +8,7 @@
 #' @param sample Logical. If TRUE the grid search will only search a random sample of possible cutpoint combinations, not all. Defaults to TRUE.
 #' @param gridsearch_parallel Logical. If TRUE the gridsearch is performed in parallel. Defaults to FALSE.
 #' @param n_cores Integer. The number of cores to run any parallel computing on. Default to NULL.
+#' @param save_superlearner Logical. If TRUE the superlearner object will be saved to disk. Defaults to FALSE.
 #' @param verbose Logical. If TRUE information to help gauge progress is printed. Defaults to TRUE.
 #' @export
 predictions.with.superlearner <- function(
@@ -22,6 +23,7 @@ predictions.with.superlearner <- function(
                                           sample = TRUE,
                                           gridsearch_parallel = FALSE,
                                           n_cores = NULL,
+                                          save_superlearner = FALSE,
                                           verbose = TRUE
                                           )
 {
@@ -31,6 +33,7 @@ predictions.with.superlearner <- function(
                                                   X = x_train,
                                                   family = binomial(),
                                                   SL.library = models))
+    if (save_superlearner) saveRDS(train_algo, "superlearner.rds")
     if (verbose) message("SuperLearner trained")
     ## Predict with algorithm on training set
     sets <- list(train = prepped_sample$x_train, test = prepped_sample$x_review)
