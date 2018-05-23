@@ -9,7 +9,6 @@
 #' @param sample Logical. If TRUE the grid search will only search a random sample of possible cutpoint combinations, not all. Defaults to TRUE.
 #' @param gridsearch_parallel Logical. If TRUE the gridsearch is performed in parallel. Defaults to FALSE.
 #' @param n_cores Integer. The number of cores to run any parallel computing on. Default to NULL.
-#' @param save_superlearner Logical. If TRUE the superlearner object will be saved to disk. Defaults to FALSE.
 #' @param verbose Logical. If TRUE information to help gauge progress is printed. Defaults to TRUE.
 #' @param log Logical. If TRUE progress is logged in logfile. Defaults to FALSE.
 #' @param boot Logical. Affects only what is printed to logfile. If TRUE prepped_sample is assumed to be a bootstrap sample. Defaults to FALSE.
