@@ -5,7 +5,7 @@ files <- list.files("./R", pattern = ".r$", full.names = TRUE)
 for (f in files) source(f)
 ## Set parameters that are default in make.study
 data_path =  c("./extdata/sample.csv")
-bs_samples = 10
+bs_samples = 2
 
 ## Code below this line is more or less a copy of make.study. Make sure to
 ## modify make.study if you modify important stuff here.
@@ -82,7 +82,7 @@ prepped_samples <- prep.bssamples(bootstrap_samples)
 saveRDS(prepped_samples, "bootstrap_samples.rds")
 ## Train and review SuperLearner on boostrap samples
 samples <- train.predict.bssamples(prepped_samples,
-                                   parallel = TRUE,
+                                   parallel = FALSE,
                                    n_cores = 4,
                                    log = TRUE,
                                    boot = TRUE,
@@ -138,4 +138,4 @@ create.mortality.plot(study_sample)
 ## Save results to disk
 saveRDS(results, "results.rds")
 ## Compile manuscript
-compile.manuscript("superlearner_vs_clinicians_manuscript")
+#compile.manuscript("superlearner_vs_clinicians_manuscript")

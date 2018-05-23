@@ -38,8 +38,14 @@ predictions.with.superlearner <- function(
     train_algo <- with(prepped_sample, SuperLearner(Y = y_train,
                                                   X = x_train,
                                                   family = binomial(),
-                                                  SL.library = models))
-    if (verbose) message("SuperLearner trained")
+                                                  SL.library = models,
+                                                  verbose = TRUE))
+    if (verbose) {
+        print(train_algo)
+        print(train_algo$errorsInLibrary)
+        print(train_algo$errorsInCVLibrary)
+        message("SuperLearner trained")
+    }
     ## Predict with algorithm on training set
     sets <- list(train = prepped_sample$x_train, test = prepped_sample$x_review)
     continuous_predictions <- lapply(sets, function(sample) {
