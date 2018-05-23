@@ -5,6 +5,7 @@
 #' @param models Models to use in ensemble algorithm. Default: SL.mean and SL.glmnet.
 #' @param save_breaks Logical. If TRUE, save optimal breaks to results. Defaults to FALSE.
 #' @param save_all_predictions Logical. If TRUE all predictions are saved in pred_data. Defaults to FALSE.
+#' @param save_superlearner Logical. If TRUE the SuperLearner object is saved to disk and returned to results. Defaults to FALSE.
 #' @param sample Logical. If TRUE the grid search will only search a random sample of possible cutpoint combinations, not all. Defaults to TRUE.
 #' @param gridsearch_parallel Logical. If TRUE the gridsearch is performed in parallel. Defaults to FALSE.
 #' @param n_cores Integer. The number of cores to run any parallel computing on. Default to NULL.
@@ -23,6 +24,7 @@ predictions.with.superlearner <- function(
                                                      'SL.gam'),
                                           save_breaks = FALSE,
                                           save_all_predictions = FALSE,
+                                          save_superlearner = FALSE,
                                           sample = TRUE,
                                           gridsearch_parallel = FALSE,
                                           n_cores = NULL,
@@ -45,6 +47,11 @@ predictions.with.superlearner <- function(
         print(train_algo$errorsInLibrary)
         print(train_algo$errorsInCVLibrary)
         message("SuperLearner trained")
+    }
+    ## Save superlearner
+    if (save_superlearner) {
+        saveRDS(train_algo, "superlearner.rds")
+        results$superlearner <<- train_algo
     }
     ## Predict with algorithm on training set
     sets <- list(train = prepped_sample$x_train, test = prepped_sample$x_review)
