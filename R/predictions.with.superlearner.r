@@ -9,6 +9,10 @@
 #' @param gridsearch_parallel Logical. If TRUE the gridsearch is performed in parallel. Defaults to FALSE.
 #' @param n_cores Integer. The number of cores to run any parallel computing on. Default to NULL.
 #' @param verbose Logical. If TRUE information to help gauge progress is printed. Defaults to TRUE.
+#' @param log Logical. If TRUE progress is logged in logfile. Defaults to FALSE.
+#' @param boot Logical. Affects only what is printed to logfile. If TRUE prepped_sample is assumed to be a bootstrap sample. Defaults to FALSE.
+#' @param write_to_disk Logical. If TRUE the prediction data is saved as RDS to disk. Defaults to FALSE.
+#' @param clean_start Logical. If TRUE the predictions directory and all files in it are removed before saving new stuff there. Defaults to FALSE.
 #' @export
 predictions.with.superlearner <- function(
                                           prepped_sample,
@@ -22,7 +26,11 @@ predictions.with.superlearner <- function(
                                           sample = TRUE,
                                           gridsearch_parallel = FALSE,
                                           n_cores = NULL,
-                                          verbose = TRUE
+                                          verbose = TRUE,
+                                          log = FALSE,
+                                          boot = FALSE,
+                                          write_to_disk = FALSE,
+                                          clean_start = FALSE
                                           )
 {
     ## Train algorithm with training set
@@ -71,5 +79,28 @@ predictions.with.superlearner <- function(
         pred_data$outcome_train <- prepped_sample$y_train   
     }
     if (verbose) message("Returning prediction data \n")
+    ## Define timestamp
+    timestamp <- Sys.time()
+    filenum <- ""
+    dir_name <- "predictions"
+    ## Clean start
+    if (clean_start) {
+        if (dir.exists(dir_name)) unlink(dir_name, recursive = TRUE)
+        if (file.exists("logfile")) file.remove("logfile")
+    }
+    ## Write each prediction to disk
+    if (write_to_disk) {
+        if (!dir.exists(dir_name)) dir.create(dir_name)
+        filenum <- as.character(round(as.numeric(timestamp)))
+        saveRDS(pred_data, paste0(dir_name, "/superlearner_prediction_", filenum, ".rds"))
+        filenum <- paste0(filenum, " ")
+    }
+    ## Log
+    if (log) {
+        analysis_name <- "Main"
+        if (boot) analysis_name <- "Bootstrap"
+        logline <- paste0(analysis_name, " analysis ", filenum, "completed on ", timestamp)
+        write(logline, "logfile", append = TRUE)
+    }
     return (pred_data)
 }
