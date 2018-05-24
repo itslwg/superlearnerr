@@ -4,8 +4,8 @@
 files <- list.files("./R", pattern = ".r$", full.names = TRUE)
 for (f in files) source(f)
 ## Set parameters that are default in make.study
-data_path =  c("./extdata/sample.csv")
-bs_samples = 4
+data_path =  c("../../data/sample.csv")
+bs_samples = 1000
 
 ## Code below this line is more or less a copy of make.study. Make sure to
 ## modify make.study if you modify important stuff here.
@@ -71,7 +71,7 @@ study_sample <- predictions.with.superlearner(prepped_sample,
                                               n_cores = 4,
                                               log = TRUE,
                                               write_to_disk = TRUE,
-                                              clean_start = TRUE)
+                                              clean_start = FALSE)
 ## Save point estimates to disk
 saveRDS(study_sample, "point_estimates.rds")
 ## Bootstrap samples
@@ -82,7 +82,7 @@ prepped_samples <- prep.bssamples(bootstrap_samples)
 ## Save prepped samples to disk
 saveRDS(prepped_samples, "bootstrap_samples.rds")
 ## Train and review SuperLearner on boostrap samples
-samples <- train.predict.bssamples(prepped_samples,
+samples <- train.predict.bssamples(prepped_samples[201:500],
                                    parallel = TRUE,
                                    n_cores = 4,
                                    log = TRUE,
