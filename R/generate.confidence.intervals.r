@@ -73,6 +73,7 @@ generate.confidence.intervals <- function(
                                             function(row) c(lb = min(row), ub = max(row))))
         ## Return confidence intervals with study_sample point_estimates
         confidence_intervals <- as.data.frame(cbind(fmt_confidence_intervals, performance_point_estimates))
+        rownames(confidence_intervals) <- model_or_pointestimate
         return_object <- confidence_intervals
     }
     return(return_object)
