@@ -13,15 +13,14 @@ model.review.reclassification <- function(
                                           for_tables = FALSE
                                           )
 {
-    ## Change levels of tc
-    levels(study_sample$tc) <- c("1","2","3","4")
     ## Safely convert character vector to numeric vector
-    study_sample$tc <- as.numeric(as.character(study_sample$tc))
+    study_sample$tc <- as.numeric(study_sample$tc)
+    study_sample$pred_cat_test <- as.numeric(study_sample$pred_cat_test)
     ## Compute reclassification of SuperLearner model and clinicians
     reclassification <- with(study_sample, nricens::nribin(event = outcome_test,
-                                                           p.std = as.numeric(tc),
-                                                           p.new = as.numeric(pred_cat_test),
-                                                           cut = c(1,2,3),
+                                                           p.std = tc,
+                                                           p.new = pred_cat_test,
+                                                           cut = unique(tc),
                                                            niter = 0,
                                                            msg = for_tables))
     ## Create list of point_estimates
