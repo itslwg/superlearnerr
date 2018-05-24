@@ -153,8 +153,9 @@
    CLOCK: [2018-05-23 Wed 17:24]--[2018-05-23 Wed 18:39] =>  1:15
 ** DONE Add save superlearner option				     :todo52:
    CLOCK: [2018-05-23 Wed 19:13]--[2018-05-23 Wed 19:19] =>  0:06
-** INPROGRESS Expand file names of predictions			     :todo53:
-   CLOCK: [2018-05-23 Wed 20:09]
+** DONE Expand file names of predictions			     :todo53:
+** DONE Swap missingness indicator to non-missingness		     :todo54:
+   CLOCK: [2018-05-24 Thu 22:15]--[2018-05-24 Thu 22:17] =>  0:02
 #+END_SRC
 * Issues
 #+BEGIN_SRC org

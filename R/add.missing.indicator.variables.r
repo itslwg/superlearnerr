@@ -27,7 +27,7 @@ add.missing.indicator.variables <- function(
     {
         n_missing <- sum(is.na(x))
         indicator_variable <- NULL
-        if (n_missing > 0) indicator_variable <- as.numeric(is.na(x))
+        if (n_missing > 0) indicator_variable <- as.numeric(!is.na(x))
         if (n & !variable) return(n_missing)
         if (variable) return(indicator_variable)
     }
