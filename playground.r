@@ -71,7 +71,7 @@ study_sample <- predictions.with.superlearner(prepped_sample,
                                               n_cores = 4,
                                               log = TRUE,
                                               write_to_disk = TRUE,
-                                              clean_start = FALSE)
+                                              clean_start = TRUE)
 ## Save point estimates to disk
 saveRDS(study_sample, "point_estimates.rds")
 ## Bootstrap samples
@@ -82,7 +82,7 @@ prepped_samples <- prep.bssamples(bootstrap_samples)
 ## Save prepped samples to disk
 saveRDS(prepped_samples, "bootstrap_samples.rds")
 ## Train and review SuperLearner on boostrap samples
-samples <- train.predict.bssamples(prepped_samples[201:500],
+samples <- train.predict.bssamples(prepped_samples[1:4],
                                    parallel = TRUE,
                                    n_cores = 4,
                                    log = TRUE,
