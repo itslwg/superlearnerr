@@ -48,6 +48,7 @@ predictions.with.superlearner <- function(
                                                   X = x_train,
                                                   family = binomial(),
                                                   SL.library = models,
+                                                  method = "method.AUC",
                                                   verbose = TRUE))
     if (verbose) {
         print(train_algo)
