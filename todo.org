@@ -170,5 +170,6 @@
    CLOCK: [2018-05-21 Mon 10:18]--[2018-05-21 Mon 10:27] =>  0:09
 ** DONE Check weird error from glmnet				     :issue6:
    CLOCK: [2018-05-23 Wed 18:41]--[2018-05-23 Wed 19:04] =>  0:23
-** TODO Fix NRE CIs                                                  :issue7:
+** DONE Fix NRE CIs						     :issue7:
+   CLOCK: [2018-05-24 Thu 23:19]--[2018-05-24 Thu 23:37] =>  0:18
 #+END_SRC
