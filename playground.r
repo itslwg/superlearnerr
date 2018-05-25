@@ -131,11 +131,19 @@ results <- c(results, extract.from.pe.and.ci(pe_and_ci))
 ## Create classification tables
 results <- c(results, create.classification.tables(study_sample))
 ## Create roc plots
-create.roc.plots(study_sample)
+#create.roc.plots(study_sample)
+## Alternative
+create.ROCR.plots(study_sample, "ROC")
+## Create roc plots for all models
+create.ROCR.all(study_sample)
+## Create precision/recall curve
+create.ROCR.plots(study_sample, "prec_rec")
 ## Create calibration plots
 create.calibration.plots(study_sample)
 ## Create mortality plot
 create.mortality.plot(study_sample)
+## Generate coefficiets table for all models
+coefficients.table(study_sample)
 ## Save results to disk
 saveRDS(results, "results.rds")
 ## Compile manuscript
