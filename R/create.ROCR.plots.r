@@ -2,7 +2,7 @@
 #'
 #' Plots reciever operating charecteristiqs curves or precision/recall curves.
 #' @param study_sample Study sample list. No default.
-#' @param ROC_or_precrec String. To perform ROC or precision/recall analysis. Acceptev values are "ROC" or "prec_rec". No default
+#' @param ROC_or_precrec String. To perform ROC or precision/recall analysis. Accepted values are "ROC" or "prec_rec". No default
 #' @export
 create.ROCR.plots <- function(
                               study_sample,
