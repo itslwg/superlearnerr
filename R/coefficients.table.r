@@ -9,7 +9,7 @@ coefficients.table <- function(
                                superlearner_object_path = "./superlearner.rds"
                                )
 {
-    ## Courtesy of Mikkos answer at https://stackoverflow.com/questions/35790652/removing-words-featured-in-character-vector-from-string
+    ## User Mikkos answer at https://stackoverflow.com/questions/35790652/removing-words-featured-in-character-vector-from-string
     removeWords <- function(str, stopwords) {
         x <- unlist(strsplit(str, " "))
         paste(x[!x %in% stopwords], collapse = " ")
@@ -46,7 +46,7 @@ coefficients.table <- function(
     ## Round columns
     t_coeff_risk[,-1] <- round(t_coeff_risk[,-1],
                                digits = 3)
-    print(xtable(t_coeff_risk),
+    print(xtable(t_coeff_risk, digits = c(0,0,3,3,3)),
           include.rownames = FALSE)
 }
 
