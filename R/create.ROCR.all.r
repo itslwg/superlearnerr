@@ -1,7 +1,7 @@
-#' Generate plot
+#' Generate ROCR plot for all SL learners
 #'
-#' Plots receiver operating characteristics curves of all models.
-#' @param study_sample Study sample object. No default.
+#' Plots receiver operating characteristics curves of all learners included in SL.
+#' @param study_sample The study sample list. No default.
 #' @export
 create.ROCR.all <- function(
                             study_sample
@@ -9,7 +9,7 @@ create.ROCR.all <- function(
 {
     ## Get predictions of SL learners from training set
     models_data <- readRDS("./superlearner.rds")$library.predict
-    ## Initiate vector with Titles for plot
+    ## Initiate vector with titles for plot
     pretty_names <- c("GLMnet",
                       "GLM",
                       "Random Forest",
@@ -38,7 +38,6 @@ create.ROCR.all <- function(
     }))
     ## Create plots
     colors <- brewer.pal(length(models), "Set2")
-    linetypes <- c("solid", "dashed", "dotted")
     roc.plot <- function(plot_data) {
         plot_object <- ggplot(data = plot_data) +
             geom_line(aes(x = fpr, y = tpr, col = pretty_name), size = 1, alpha = 0.8) +
