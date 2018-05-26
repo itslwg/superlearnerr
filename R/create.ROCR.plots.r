@@ -6,7 +6,7 @@
 #' @export
 create.ROCR.plots <- function(
                               study_sample,
-                              ROC_or_precrec = "prec_rec"
+                              ROC_or_precrec = "ROC"
                               )
 {
     ## Error handling
@@ -75,7 +75,8 @@ create.ROCR.plots <- function(
     }
     roc_plot <- roc.plot(plot_data)
     ## Save plots
-    plot_name <- "roc_plot.pdf"
+    if (ROC_or_precrec  == "ROC") plot_name <- "roc_plot.pdf"
+    if (ROC_or_precrec  == "prec_rec") plot_name <- "prec_rec_plot.pdf"
     ggsave(plot_name, roc_plot, units = "mm")
     if (grepl("pdf", plot_name)) system(paste("pdfcrop", plot_name, plot_name))
 }
