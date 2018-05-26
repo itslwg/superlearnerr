@@ -1,6 +1,6 @@
 #' Generate reclassification tables and Net Reclassification Index (NRI)
 #'
-#' This function compares categorisation of categorised SuperLearner predictions and clinician's predictions. Analysis is conducted with nribin which creates cross tabulations of categorisation of the two, description of net proportions patient movements upwards and downwards in categories, and NRI.
+#' This function compares categorisation of categorised SuperLearner (SL) predictions and clinician's predictions. Analysis is conducted with nribin.
 #' @param study_sample Sample as data frame. No default
 #' @param which_point_estimates Character vector describing which reclassification proportions to return, for example NRI+ and NRI. No default.
 #' @param outcome_name Currently ignored.
