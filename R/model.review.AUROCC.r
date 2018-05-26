@@ -1,8 +1,8 @@
 #' Area Under Receiver Operating Characteristics Curve (AUROCC) function
 #'
-#' This function calculates AUROCC of the specified predictions.
+#' This function calculates AUROCC of predictions of the specified models.
 #' @param study_sample The study sample list. No default.
-#' @param which_preds Character vector with predictions. Default: c('pred_cat', 'tc')
+#' @param which_preds Character vector with list name of predictions. Default: c('pred_cat', 'tc')
 #' @param outcome_name The name of the outcome variable. No default.
 #' @export
  model.review.AUROCC <- function(
@@ -11,10 +11,6 @@
                                 outcome_name
                                 )
 {
-    ### Stop if user inputs more than two predicitons
-    #if (length(which_preds) > 2) stop('Input two predictions')
-    ### Stop if study_sample isn't a dataframe
-    #if (!(is.data.frame(study_sample))) stop('Input study_sample as dataframe')
     ## Set up prediction obejects for ROCR
     pred_rocr <- lapply(which_preds,
                         function(pred) ROCR::prediction(
