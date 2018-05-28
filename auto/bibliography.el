@@ -35,6 +35,10 @@
     "Rehn2011"
     "Kunitake2018"
     "DeMunter2017"
-    "Miller2017"))
+    "Miller2017"
+    "gam"
+    "xgboost"
+    "randomforest"
+    "glmnet"))
  :bibtex)
 
