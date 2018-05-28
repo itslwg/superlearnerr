@@ -21,7 +21,7 @@ create.classification.tables <- function(
         simple_table <- cbind(c("No", "Yes"), simple_table)
         colnames(simple_table)[1] <- "All cause 30-day mortality"
         simple_table <- print.xtable(xtable(simple_table,
-                                           caption = caption,
+                                           caption = paste0("\\bf ", caption),
                                            label = label),
                                     include.rownames = FALSE,
                                     sanitize.text.function = function(x) x,
@@ -48,7 +48,7 @@ create.classification.tables <- function(
         rownames(reclass_table) <- NULL
         reclass_table[reclass_table == NaN | reclass_table == "NA"] <- ""
         reclass_xtable <- xtable(reclass_table,
-                                 caption = caption,
+                                 caption = paste0("\\bf ", caption),,
                                  label = label)
         addtorow <- list()
         addtorow$pos <- list(0, 0)
