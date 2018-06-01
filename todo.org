@@ -3,38 +3,50 @@
 #+BEGIN_SRC org
 ** DONE Add todo						      :todo1:
 ** DONE Add README						      :todo2:
-** INPROGRESS Draft paper [14%]					      :todo3:
+** DONE Draft paper [100%] 					      :todo3:
+   CLOCK: [2018-05-16 Wed 10:38]--[2018-05-16 Wed 18:45] =>  8:07
    CLOCK: [2018-05-06 Sun 08:27]--[2018-05-07 Mon 11:03] => 26:36
    CLOCK: [2018-05-03 Thu 15:28]--[2018-05-04 Fri 06:52] => 15:24
    CLOCK: [2018-05-03 Thu 12:24]--[2018-05-03 Thu 15:13] =>  2:49
    - [X] Identify all sections
-   - [-] Title [1/2]
-     - [ ] Working title
+   - [X] Title [2/2]
+     - [X] Working title
      - [X] Final title
-   - [ ] Authors
-   - [ ] Affiliations
-   - [ ] Current address
-   - [ ] Abstract
-   - [ ] Author Summary
+   - [X] Authors
+   - [X] Affiliations
+   - [X] Current address
+   - [X] Abstract
+   - [X] Author Summary
    - [X] Introduction
-   - [-] Materials and Methods [6/9]
+   - [X] Materials and Methods [9/9]
      - [X] Study Design
      - [X] Setting
      - [X] Participants
      - [X] Variables
      - [X] Data Sources and Measurement
-     - [ ] Bias
-     - [ ] Study Size
+     - [X] Bias
+     - [X] Study Size
      - [X] Quantitative Variables
-     - [-] Statistical Methods
+     - [X] Statistical Methods
        - [X]  Drafted something
-       - [ ]  Get expert input
-   - [ ] Results
-   - [ ] Discussion
-   - [ ] Conclusion
-   - [ ] Acknowledgments
-   - [ ] Bibliography
-** TODO Finalise paper						      :todo4:
+       - [X]  Get expert input
+   - [X] Results
+   - [X] Discussion
+   - [X] Conclusion
+   - [X] Acknowledgments
+   - [X] Bibliography
+   - [X] Revise introduction and methods according to comments [8/8]
+     - [X] Catherine
+     - [X] Kapil
+       - [X] Sent email asking for clarifications
+       - [X] Incorporate changes
+     - [X] Deepa
+     - [X] Anurag
+     - [X] Monty
+     - [X] Vineet
+     - [X] Alan
+     - [X] Sara
+** DONE Finalise paper						      :todo4:
 ** DONE Update this file to have TODO|DONE show on github	      :todo5:
    <2018-05-03 Thu>
 ** DONE Add sample data						      :todo6:
@@ -79,7 +91,7 @@
    CLOCK: [2018-05-11 Fri 11:31]--[2018-05-12 Sat 08:16] => 20:45
 ** DONE Modify prep.data.for.superlearner [0/1]                      :todo16:
    - [ ] Fix date issue
-** TODO Add a create table of missing data function                  :todo17:
+** DONE Add a create table of missing data function		     :todo17:
 ** DONE Add do.median.imputation function			     :todo18:
 ** DONE Add documentation to functions [2/2]			     :todo19:
    - [X] get.data.dictionary
@@ -91,7 +103,7 @@
 ** DONE Modify create table of sample characteristics function	     :todo22:
    CLOCK: [2018-05-18 Fri 06:20]--[2018-05-18 Fri 06:23] =>  0:03
    Change Abbreviations: to Abbreviations and explanations:
-** TODO Update descriptions of functions                             :todo23:
+** DONE Update descriptions of functions			     :todo23:
 ** DONE Move playground to top directory			     :todo24:
    CLOCK: [2018-05-17 Thu 10:32]--[2018-05-17 Thu 10:35] =>  0:03
 ** DONE Modify README						     :todo25:
@@ -103,7 +115,7 @@
 ** DONE Move create table function to after the sample has	     :todo28:
    been divided into training and test
    CLOCK: [2018-05-18 Fri 06:25]--[2018-05-18 Fri 07:44] =>  1:19
-** INPROGRESS Test adding results to manuscript			     :todo29:
+** DONE Test adding results to manuscript			     :todo29:
    CLOCK: [2018-05-18 Fri 17:02]--[2018-05-18 Fri 17:09] =>  0:07
    CLOCK: [2018-05-18 Fri 07:47]--[2018-05-18 Fri 10:59] =>  3:12
 ** DONE Add informed consent no as exclusion criteria		     :todo30:
@@ -132,7 +144,7 @@
    CLOCK: [2018-05-20 Sun 13:34]--[2018-05-20 Sun 16:33] =>  2:59
 ** DONE Format table of sample characteristics			     :todo40:
    CLOCK: [2018-05-20 Sun 16:37]--[2018-05-20 Sun 16:56] =>  0:19
-** TODO Modify plot dimenstions                                      :todo41:
+** DONE Modify plot dimenstions					     :todo41:
 ** DONE Save results to disk and read from there		     :todo42:
    CLOCK: [2018-05-21 Mon 10:30]--[2018-05-21 Mon 10:35] =>  0:05
 ** DONE Crop pdf plots						     :todo43:
@@ -144,7 +156,7 @@
 ** DONE Modify compile paper function				     :todo46:
    CLOCK: [2018-05-21 Mon 18:28]--[2018-05-21 Mon 18:31] =>  0:03
 ** DONE Check that confidence intervals are correct		     :todo47:
-** TODO Remove calibration plots and add one with number and         :todo48:
+** DONE Remove calibration plots and add one with number and	     :todo48:
    proportion of cases at each level
 ** DONE Add table of included techniques                             :todo49:
 ** DONE Make analyses run in parallell				     :todo50:
@@ -157,6 +169,8 @@
 ** DONE Swap missingness indicator to non-missingness		     :todo54:
    CLOCK: [2018-05-24 Thu 22:15]--[2018-05-24 Thu 22:17] =>  0:02
 ** DONE Use method.AUC for optimising superlearner		     :todo55:
+** DONE Crop eps						     :todo56:
+** DONE Finalise code						     :todo57:
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
