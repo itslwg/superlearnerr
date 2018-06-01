@@ -108,7 +108,8 @@ create.table.of.sample.characteristics <- function(
             index <- grep(paste0(variable, " "), rownames(table))
             missing_column[index] <- missing_entry
         }
-        total_n_missing <- sum(full_table_data[, grep("_missing", colnames(full_table_data))] == 0)
+        missing_cols <- full_table_data[, grep("_missing", colnames(full_table_data))]
+        total_n_missing <- nrow(full_table_data) - nrow(missing_cols[-unique(which(missing_cols == 0, arr.ind = TRUE)[, 1]), ])
         total_p_missing <- round(total_n_missing/nrow(full_table_data) * 100, digits = digits)
         missing_column[1] <- paste0(total_n_missing, " (", total_p_missing, ")*")
         missing_column <- matrix(missing_column, ncol = 1)
@@ -125,7 +126,7 @@ create.table.of.sample.characteristics <- function(
     abbrv <- paste0("Abbreviations and explanations: ", paste0(sort(unlist(abbr)), collapse = "; ")) # Make abbreviation string
     ## Format the table using xtable
     formatted_table <- print.xtable(xtable(table,
-                                           caption = "\\bf Sample characteristics",
+                                           caption = "\\bf Characteristics of the samples analysed in this study",
                                            label = "tab:sample-characteristics"),
                                     type = "latex",
                                     table.placement = "!ht",
