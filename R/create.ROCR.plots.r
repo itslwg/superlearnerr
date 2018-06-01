@@ -17,17 +17,17 @@ create.ROCR.plots <- function(
                 "pred_con_test",
                 "pred_cat_test",
                 "tc")
-
+    ## Pretty names
     pretty_names <- c("SuperLearner continuous prediction",
                       "SuperLearner priority levels",
                       "SuperLearner continuous prediction",
                       "SuperLearner priority levels",
                       "Clinicians priority levels")
-
+    ## Define setting depending on type of plot
     if (ROC_or_precrec == "ROC") measures <- list(tpr = "tpr",
                                                   fpr = "fpr",
-                                                  FPR = "False Positive Rate",
-                                                  TPR = "True Positive Rate")
+                                                  TPR = "True positive rate",
+                                                  FPR = "False positive rate")
     if (ROC_or_precrec == "prec_rec") measures <- list(prec = "prec",
                                                        rec = "rec",
                                                        PREC = "Precision",
@@ -51,32 +51,13 @@ create.ROCR.plots <- function(
         colnames(new_data) <- c(measures[[1]], measures[[2]], "set", "pretty_name")
         return(new_data)
     }))
-    ## Create plots
-    colors <- brewer.pal(3, "Set2")
-    linetypes <- c("solid", "dashed", "dotted")
-    roc.plot <- function(plot_data) {
-        plot_object <- ggplot(data = plot_data) +
-            geom_line(aes_string(x = measures[[2]],
-                                 y = measures[[1]],
-                                 col = "pretty_name",
-                                 linetype = "pretty_name"),
-                      size = 1,
-                      alpha = 0.8) +
-            ylab(measures[[3]]) +
-            xlab(measures[[4]]) +
-            scale_color_manual(name = "", values = colors) +
-            scale_linetype_manual(name = "", values = linetypes) +
-            theme(legend.position = "bottom",
-                  strip.background = element_rect(fill="white"),
-                  strip.text = element_text(size = 20, hjust = 0)) +
-            facet_wrap(~set) +
-            coord_fixed()
-        return(plot_object)
-    }
-    roc_plot <- roc.plot(plot_data)
-    ## Save plots
-    if (ROC_or_precrec  == "ROC") plot_name <- "roc_plot.pdf"
-    if (ROC_or_precrec  == "prec_rec") plot_name <- "prec_rec_plot.pdf"
-    ggsave(plot_name, roc_plot, units = "mm")
-    if (grepl("pdf", plot_name)) system(paste("pdfcrop", plot_name, plot_name))
+    ## Create and save plots
+    if (ROC_or_precrec  == "ROC") plot_name <- "roc_plot"
+    if (ROC_or_precrec  == "prec_rec") plot_name <- "prec_rec_plot"
+    rocr.plot(plot_data = plot_data,
+              y_name = measures[[1]],
+              x_name = measures[[2]],
+              ylab = measures[[3]],
+              xlab = measures[[4]],
+              file_name = plot_name)
 }

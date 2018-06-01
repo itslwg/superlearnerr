@@ -20,7 +20,10 @@ load.required.packages <- function()
                   "gam",
                   "ggplot2",
                   "foreach",
-                  "doParallel")
+                  "doParallel",
+                  "extrafont",
+                  "gridExtra",
+                  "ggpubr")
     ## Require those packages using a loop
     for (p in packages) require(p, character.only = TRUE)
     ## Save list of packages to parent environment
