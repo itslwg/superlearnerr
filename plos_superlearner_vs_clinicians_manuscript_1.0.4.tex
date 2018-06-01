@@ -251,10 +251,10 @@ Monty Khajanchi\textsuperscript{9},
 Nitin Borle\textsuperscript{10},
 Vineet Kumar\textsuperscript{11}, 
 Sara Moore\textsuperscript{2}, 
-Martin Gerdin Wärnberg\textsuperscript{1*\textcurrency, \Yinyang, \ddag}
+Martin Gerdin Wärnberg\textsuperscript{12*\textcurrency, \Yinyang, \ddag}
 \\
-\bigskip \textbf{1} Global Health: Health Systems and Policy, Department of
-Public Health Sciences, Karolinska Institutet, Stockholm, Sweden
+\bigskip
+\textbf{1} KTH Royal Institute of Technology, Stockholm, Sweden
 \\
 \textbf{2} Division of Epidemiology and Biostatistics, School of Public Health, University of California, Berkeley, California, USA.
 \\
@@ -275,6 +275,8 @@ Public Health Sciences, Karolinska Institutet, Stockholm, Sweden
 \textbf{10} Department of Surgery, Khershedji Behramji Bhabha hospital, Mumbai, Maharashtra, India
 \\
 \textbf{11} Department of Surgery, Lokmanya Tilak Municipal General Hospital, Mumbai, Maharashtra, India
+\\
+\textbf{12} Global Health: Health Systems and Policy, Department of Public Health Sciences, Karolinska Institutet, Stockholm, Sweden
 \bigskip
 
 % Insert additional author notes using the symbols described below. Insert symbol callouts after author names as necessary.
@@ -309,33 +311,30 @@ Health Sciences, Karolinska Institutet, 171 77 Stockholm, Sweden
 % Please keep the abstract below 300 words
 \section*{Abstract}
 \subsection*{Background}
-Trauma is a major threat to population health globally. Trauma care is highly
-time sensitive and delays in treatment are associated with preventable mortality
-across settings. A key component of trauma care is therefore the process of
-prioritizing patients to match level of care with clinical acuity. In many
-emergency departments in low resource setting hospitals trauma patients arrive
-with no or little prenotification. In such settings patients are often
-prioritised by clinicians based on patients' clinical gestalt. We aimed to
-compare the performance of an ensemble machine learning methodology called
-SuperLearner to that of clinician gestalt based on patients’ presentation.
+A key component of trauma care is the process of prioritizing patients to match
+level of care with clinical acuity. In many emergency departments in low
+resource setting hospitals trauma patients arrive with no or little
+prenotification. In such settings patients are often prioritised by clinicians
+based on patients' presentation. We aimed to compare the performance of an
+ensemble machine learning methodology called SuperLearner to that of clinician
+gestalt based on patients’ presentation.
 
 \subsection*{Methods and findings}
 Our hypothesis was that the performance of the SuperLearner would be
-non-inferior to that of clinician gestalt. We used data from an ongoing
-prospective cohort study in three public hospitals in urban India. All adult
-patients presenting to the emergency departments of these hospitals with history
-of trauma were approached for enrollment. The outcome was all cause mortality
-within 30 days of arrival to a participating centre. For the purpose of this
-study, clinicians were instructed to assign patients to one of four levels
-corresponding to clinical acuity. The levels were green (least urgent), yellow,
-orange, and red (most urgent). The SuperLearner included five machine learners
-and was developed in a training sample and then compared to clinicians in a test
-sample. Performance was compared in terms of reclassification and area under the
-receiver operating characteristics curve (AUROCC). We concluded that the
-SuperLearner was non-inferior to clinicians if the lower bound of the 95\%
+non-inferior to that of clinician gestalt in terms of classification. We used
+data from an ongoing prospective cohort study in three public hospitals in urban
+India. Adult patients presenting to the emergency departments of these hospitals
+with history of trauma were approached for enrolment. The outcome was all cause
+mortality within 30 days of arrival to a participating centre. For the purpose
+of this study, clinicians were instructed to assign patients to one of four
+levels corresponding to clinical acuity. The SuperLearner included five machine
+learners and was developed in a training sample and then compared to clinicians
+in a test sample. Performance was compared in terms of reclassification and area
+under the receiver operating characteristics curve (AUROCC). We concluded that
+the SuperLearner was non-inferior to clinicians if the lower bound of the 95\%
 confidence intervals (CI) of the net reclassification in events was not less
 than -0.05. From 28 July 2016 to 21 November 2017 we approached a total of
-5667 patients for enrollment. Out of these,
+5667 patients for enrolment. Out of these,
 4545 patients consented, had a priority
 level assigned by a clinician, and had complete outcome data and were therefore
 included in subsequent analysis. A total of 404 (9\%)
@@ -349,7 +348,7 @@ respectively. The difference in AUROCC was
 0.0114 (95\% CI -0.0185 - 0.0299) and in non-events 0.3500 (95\% CI 0.2405 - 0.6895).
 
 \subsection*{Conclusions}
-In terms of reclassification and discrimination an ensemble machine learning
+In terms of classification and discrimination an ensemble machine learning
 algorithm developed using the SuperLearner was non-inferior in prioritising
 among adult trauma patients in the ED compared to clinician gestalt based on
 patients’ presentation.
@@ -372,8 +371,8 @@ We analysed data from 4545 adult trauma
 patients who presented to emergency departments at three public hospitals in
 urban India. Out of these 404 (9\%) patients died from any
 cause within 30 days of arrival to a participating hospital. We used the
-SuperLearner to combine multiple machine learning techniques to assign priority
-levels to included trauma patients based on demographic and clinical patient
+SuperLearner to combine multiple machine learners to assign priority levels to
+included trauma patients based on demographic and clinical patient
 characteristics. We asked clinicians to also assign priority levels to the same
 patients and compared the performance of the SuperLearner and clinicians. We
 found that the SuperLearner was non-inferior to clinicians.
@@ -381,8 +380,8 @@ found that the SuperLearner was non-inferior to clinicians.
 \subsection*{What do these findings mean?}
 Using an ensemble machine learning algorithm to prioritise among trauma patients
 in the ED may allow clinicians to focus on treating patients. This would free
-valuable resources that are particularly scarce the low resource settings where
-most trauma deaths happen.
+valuable resources that are particularly scarce in the low resource settings
+where most trauma deaths occur.
 
 \linenumbers
 
@@ -467,37 +466,37 @@ compare the performance of clinical prediction models with clinicians
 
 % *** Setting
 \subsection*{Study Setting}
-Data anlysed for this study came from patients enrolled between 28 July 2016 and
-21 November 2017 at the three hospitals Khershedji Behramji Bhabha hospital
+Data analysed for this study came from patients enrolled between 28 July 2016
+and 21 November 2017 at the three hospitals Khershedji Behramji Bhabha hospital
 (KBBH) in Mumbai, Lok Nayak Hospital of Maulana Azad Medical College (MAMC) in
 Delhi, and the Institute of Post-Graduate Medical Education and Research and
 Seth Sukhlal Karnani Memorial Hospital (SSKM) in Kolkata. The time frame was
 decided to ensure that all included patients had completed six months follow
 up. KBBH is a community hospital with 436 inpatient beds. There are departments
-of surgery, orthopedics, anesthesia, and both adult and pediatric intensive care
-units. It has a general ED where all patients are seen. Most patients present
-directly and are not transferred from another health centre. Plain X-rays and
-ultrasonography are available around the clock but computed tomography (CT) is
-only available in-house during day-time. During evenings and nights patients in
-need of a CT are referred elsewhere. MAMC and SSKM are both university and
-tertiary referral hospitals. This means that all specialities and imaging
-facilities relevant to trauma care, except emergency medicine, are available
-in-house around the clock. MAMC has approximately 2200 inpatient beds and SSKM
-has around 1775 inpatient beds. Both MAMC and SSKM have general EDs. Because
-both MAMC and SSKM are tertiary referral hospitals a large proportion of
-patients arriving at their EDs are transferred from other health facilities,
-with almost no transfer protocols in place. Prehospital care is rudimentary in
-all three cities, with no organised emergency medical services. Ambulances are
-predominatly used for inter-hospital transfers and most patients who arrive
-directly from the scene of the incident are brought by the police or in private
-vehicles. Patients arriving to the ED are at all centres first seen by a
-casualty medical officer on a largely first come first served basis. There is no
-formalised system for prioritising ED patients at any of the centres. The
-research was approved by the ethical review board at each participating
-hospital. The names of the boards and the approval numbers were Ethics and
-Scientific Committee (KBBH, HO/4982/KBB), the Institutional Ethics Committee
-(MAMC, F.1/IEC/MAMC/53/2/2016/No97), and the IPGME\&R Research Oversight
-Committee (SSKM, Inst/IEC/2016/328).
+of surgery, orthopaedics, anaesthesia, and both adult and paediatric intensive
+care units. It has a general ED where all patients are seen. Most patients
+present directly and are not transferred from another health centre. Plain
+X-rays and ultrasonography are available around the clock but computed
+tomography (CT) is only available in-house during day-time. During evenings and
+nights patients in need of a CT are referred elsewhere. MAMC and SSKM are both
+university and tertiary referral hospitals. This means that all specialities and
+imaging facilities relevant to trauma care, except emergency medicine, are
+available in-house around the clock. MAMC has approximately 2200 inpatient beds
+and SSKM has around 1775 inpatient beds. Both MAMC and SSKM have general
+EDs. Because both MAMC and SSKM are tertiary referral hospitals a large
+proportion of patients arriving at their EDs are transferred from other health
+facilities, with almost no transfer protocols in place. Prehospital care is
+rudimentary in all three cities, with no organised emergency medical
+services. Ambulances are predominately used for inter-hospital transfers and
+most patients who arrive directly from the scene of the incident are brought by
+the police or in private vehicles. Patients arriving to the ED are at all
+centres first seen by a casualty medical officer on a largely first come first
+served basis. There is no formalised system for prioritising ED patients at any
+of the centres. The research was approved by the ethical review board at each
+participating hospital. The names of the boards and the approval numbers were
+Ethics and Scientific Committee (KBBH, HO/4982/KBB), the Institutional Ethics
+Committee (MAMC, F.1/IEC/MAMC/53/2/2016/No97), and the IPGME\&R Research
+Oversight Committee (SSKM, Inst/IEC/2016/328).
 
 % *** Data Collection
 \subsection*{Data Collection}
@@ -520,7 +519,7 @@ emergency department (ED) of participating sites with history of trauma was
 included. The age cutoff was chosen to align with Indian laws on research ethics
 and informed consent. We defined history of trauma as having any of the external
 causes of morbidity and mortality listed in block V01-Y36, chapter XX of the
-International Classification of Disease version 10 (ICD-10) codebook as primary
+International Classification of Disease version 10 (ICD-10) code book as primary
 complaint. Drownings, inhalation and ingestion of objects causing obstruction of
 respiratory tract, contact with venomous snakes and lizards, accidental
 poisoning by and exposure to drugs, and overexertion were excluded because they
@@ -528,14 +527,14 @@ are not considered trauma at the participating centres.
 
 \subsubsection*{Source and methods of selection of participants and follow up}
 The project officers enrolled the first ten consecutive patients who presented
-to the ED during each shift. The number of patients to enroll was set to ten to
+to the ED during each shift. The number of patients to enrol was set to ten to
 make follow up feasible. Written informed consent from the patient or a patient
 representative was obtained either in the ED or in the ward if the patient was
 admitted. A follow-up was completed by the project officer 30 days and 6 months
 after participant arrived at participating hospital. The follow-up was completed
 in person or on phone, depending on whether the patient was still hospitalised
 or if the patient had been discharged. Phone numbers of one or more contact
-persons (e.g. relatives), were collected on enrollment and contacted if the
+persons (e.g. relatives), were collected on enrolment and contacted if the
 participant did not reply on follow up. Only if neither the participant nor the
 contact person answered any of three repeated phone calls was the outcome
 recorded as missing and the patient was considered lost to follow up.
@@ -602,7 +601,7 @@ the more urgent priority levels.
 Project officers underwent two days of training in study procedures and were
 then supervised locally. We conducted continuous data quality assurance by having
 weekly online data review meetings during which data discrepancies were
-identifed, discussed and resolved. We conducted quarterly on site quality
+identified, discussed and resolved. We conducted quarterly on site quality
 control sessions during which data collection was conducted both by the centre's
 own project officer and a quality control officer. Data entry errors were
 prevented by having extensive logical checks in the digital data collection
@@ -617,7 +616,7 @@ non-random temporal split of the complete data set into a training and test
 set. The split was made so that 75\% of the complete cohort was assigned to the
 training set and the remaining 25\% to the test set, ensuring that the relative
 contribution of each centre was maintained in both sets. We then calculated
-descriptive statistics of all variables, using medians and interquartile ranges
+descriptive statistics of all variables, using medians and inter quartile ranges
 (IQR) for continuous variables and counts and percentages for qualitative
 variables. All quantitative features (age, SBP, DBP, HR, SpO\textsubscript{2},
 and RR) were treated as continuous and the levels of all qualitative variables
@@ -667,31 +666,32 @@ combinations of unique cutoffs, where each cutoff could take any value from 0.01
 to 0.99 in 0.01 unit increments. These bins corresponded to the green, yellow,
 orange, and red priority levels assigned by the clinicians. The performance of
 both the continuous SuperLearner prediction and the SuperLearner priority levels
-in the training set was then evaluated using AUROCC. We then used the
-SuperLearner to predict the outcomes of the patients in the test set and used
-the cutoff values from the training set to assign a level of priority to each
-patient in this set.
+in the training set was then evaluated by estimating their AUROCC. We also
+visualised the performance by plotting ROC and precision-recall curves.
 
 \subsubsection*{Comparing the SuperLearner and Clinicians}
-The perfomance of the continuous SuperLearner prediction, the SuperLearner
-priority levels, and the clinicians' priority levels, was then evaluated by
-estimating and comparing their AUROCC. The levels of priority assigned by the
-SuperLearner and clinicians respectively were then compared by estimating the
-net reclassification, in events (patient with the outcome, i.e. who died within
-30-days from arrival) and non-events (patient without the outcome)
-respectively. The net reclassification in events was defined as the difference
-between the proportion of events assigned a higher priority by the SuperLearner
-than the clinicians and the proportion of events assigned a lower priority by
-the SuperLearner than the clinicians. Conversely, the net reclassification in
-non-events was defined as the difference between the proportion of non-events
-assigned to a lower priority by the SuperLearner than the clinicians and the
-proportion of non-events assigned a higher priority by the SuperLearner than the
-clinicians. We used an empirical bootstrap with 1000 draws of the same size as
-the original set to estimate 95\% confidence interval (CI) around
-differences. We concluded that the SuperLearner was non-inferior to clinicians
-if the 95\% CI of the net reclassification in events did not exceed a
-pre-specified level of -0.05, indicating that clinicians correctly classified 5
-in 100 events more than the SuperLearner.
+We then used the SuperLearner to predict the outcomes of the patients in the
+test set and used the cutoff values from the training set to assign a level of
+priority to each patient in this set. The performance of the continuous
+SuperLearner prediction, the SuperLearner priority levels, and the clinicians'
+priority levels, was then evaluated by estimating and comparing their
+AUROCC. The levels of priority assigned by the SuperLearner and clinicians
+respectively were then compared by estimating the net reclassification, in
+events (patient with the outcome, i.e. who died within 30-days from arrival) and
+non-events (patient without the outcome) respectively. The net reclassification
+in events was defined as the difference between the proportion of events
+assigned a higher priority by the SuperLearner than the clinicians and the
+proportion of events assigned a lower priority by the SuperLearner than the
+clinicians. Conversely, the net reclassification in non-events was defined as
+the difference between the proportion of non-events assigned to a lower priority
+by the SuperLearner than the clinicians and the proportion of non-events
+assigned a higher priority by the SuperLearner than the clinicians. We used an
+empirical bootstrap with 1000 draws of the same size as the original set to
+estimate 95\% confidence interval (CI) around differences. We concluded that the
+SuperLearner was non-inferior to clinicians if the 95\% CI of the net
+reclassification in events did not exceed a pre-specified level of -0.05,
+indicating that clinicians correctly classified 5 in 100 events more than the
+SuperLearner.
 
 \subsubsection*{Handling of missing data}
 Observations with missing data on all cause 30-day mortality or priority level
@@ -706,7 +706,7 @@ the SuperLearner.
 % Results and Discussion can be combined.
 \section*{Results}
 During the study period, we approached a total of
-5724 patients for enrollment. A random sample of
+5724 patients for enrolment. A random sample of
 57 observations were removed during data
 de-identification. Consent was declined by 215 patients. Out of the
 5452 patients who provided informed consent,
@@ -813,25 +813,26 @@ Fig. \ref{fig:prec_rec_plot}A shows the precision-recall curves in the training
 sample.
 
 \begin{figure}[!h]
+  \includegraphics{roc_plot.eps}
   \caption{\bf Receiver operating characteristics curves in training (A) and test
     (B) samples}
   \label{fig:roc_plot}
-  \includegraphics{roc_plot.eps}
 \end{figure}
 
 \begin{figure}[!h]
+  \includegraphics{prec_rec_plot.eps}
   \caption{\bf Precision-recall curves in training (A) and test (B) samples}
   \label{fig:prec_rec_plot}
-  \includegraphics{prec_rec_plot.eps}
 \end{figure}
 
 We then applied the SuperLearner to the test sample. The AUROCC of the
-continuous SuperLearner prediction was 0.9828
-Figure \ref{fig:roc_plot}B.  We used the same cutpoints as in the training
-sample to bin the continuous predictions into the four priority levels. The
-AUROCC of the SuperLearner priority levels in the test sample was
-0.9574. Fig. \ref{fig:prec_rec_plot}B shows the
-precision-recall curves in the test sample.
+continuous SuperLearner prediction was 0.9828 (Fig
+\ref{fig:roc_plot}B). The performance of each included learner is available as
+supporting information in \nameref{S3_Fig} and \nameref{S4_Table}. We used the
+same cutpoints as in the training sample to bin the continuous predictions into
+the four priority levels. The AUROCC of the SuperLearner priority levels in the
+test sample was 0.9574. Fig
+\ref{fig:prec_rec_plot}B shows the precision-recall curves in the test sample.
 
 In the test sample we compared the performance of the binned SuperLearner
 prediction with that of clinicians. The AUROCC of priority levels assigned by
@@ -862,15 +863,14 @@ Green & 522 & 7 & 3 & 0 & 2 & 2 &  \\
 \end{table}
 
 
-Fig. \ref{fig:mortality_plot} shows the number of patients assigned to each
-priority level by the SuperLearner and clinicians. The number of patients
-assigned to the four priority levels differed substantially between the
-two. This difference was particularly marked in the green and yellow priority
-levels. The SuperLearner assigned the green priority level to
+Fig \ref{fig:mortality_plot} shows that the number of patients assigned to each
+priority level differed substantially between the SuperLearner and
+clinicians. This difference was particularly marked in the green and yellow
+priority levels. The SuperLearner assigned the green priority level to
 934 patients whereas clinicians assigned this
-level to 532. Among the patients that the
-SuperLearner prioritised as green 5 died. The
-corresponding figure for the clinicans was
+level to 532 patients. Among the patients that
+the SuperLearner prioritised as green 5
+died. The corresponding figure for the clinicians was
 1. In contrast, the SuperLearner assigned the
 yellow priority level to 82 patients, out of
 which 2 died. Corresponding figures for the
@@ -879,9 +879,9 @@ clinicians were 492 and
 
 % **** Mortality plot
 \begin{figure}[!h]
-  \caption{\bf Number of patients assigned to each priority level by the SuperLearner and clinicians in the test sample. Percentages are \% with all cause mortality at each level.}
-  \label{fig:mortality_plot} 
   \includegraphics{mortality_plot.eps}
+  \caption{\bf Number of patients assigned to each priority level by the SuperLearner and clinicians in the test sample. Percentages are \% with all cause 30-day mortality at each level.}
+  \label{fig:mortality_plot} 
 \end{figure}
 
 
@@ -906,25 +906,26 @@ clinicians were 492 and
 
 % ** Discussion
 \section*{Discussion}
-Our results indicate that using an ensemble machine learner developed with the
-SuperLearner to prioritise among adult trauma patients in the ED is non-inferior
-to that of clinician gestalt. In fact, our results suggest that the ensemble
-learner is superior to clinician gestalt in terms of discrimination. We have not
-been able to identify any previous study that has applied machine learning to
-prioritise among trauma patients in the ED. Hence, as far as we know this is the
-first study of its kind in this area and we hope that our results can work as
+Our study suggest that in terms of classification an ensemble machine learner
+developed with the SuperLearner may be non-inferior to clinicians to prioritise
+among adult trauma patients in the ED. Further, the ensemble learner is superior
+to clinician gestalt in terms of discrimination. We have not been able to
+identify any previous study that has applied machine learning to prioritise
+among trauma patients in the ED. Hence, as far as we know this is the first
+study of its kind in this area and we hope that our results can work as
 benchmarks to which future work can be compared.
 
-We found that the ensemble learner in general reclassified events to a higher
-priority level and non-events to a lower priority level, compared to
-clinicians. Specifically, the SuperLearner reclassified a majority of patients
+We found that the SuperLearner reclassified non-events to a lower priority
+level, compared to clinicians, as indicated by the net reclassification in
+non-events. Specifically, the SuperLearner reclassified a majority of patients
 from the yellow priority to the green priority level. This is analogous to
 reduced overtriage. Overtriage and undertriage are concepts used extensively in
 the trauma literature. Undertriage refers to for example patients with major
 trauma not being transferred to a trauma centre and overtriage to patients with
-minor trauma being transferred to a trauma centre. Our findings would indicate
-that most of the patients assigned to the yellow priority level by clinicians
-were overtriaged and strain the health system in face of limited resources.
+minor trauma being transferred to a trauma centre. Our findings indicate that
+most of the patients assigned to the yellow priority level by clinicians were
+overtriaged and strain the health system in face of limited resources. The
+SuperLearner may have the potential to reduce this overtriage substantially.
 
 Three studies have used MMTH learners to limit under and overtriage of trauma
 patients.  Talbert et al. applied a tree based learner but found no improvement
@@ -950,20 +951,19 @@ Our study was limited by the relatively small sample size. For example, we did
 not have enough data to run centre wise analysis, which should be a focus of
 future studies. Instead we concentrated on data quality and had dedicated
 project officers record all data. This resulted in very low levels of missing
-feature data. In contrast, we did have a considerable amount of missing outcome
-data, with about 20\% of patients being lost to follow up. We handled this
-missingness using list wise deletion, aware of the potential bias introduced by
-this approach. One alternative would have been to use multiple imputation to
-replace missing values, however we had no way of determining the mechanism
-underlying the missing outcomes why results based on multiple imputed data might
-be biased as well. Further, we did not consider it computionally feasible to
-combine multiple imputation and bootstraping for uncertainty estimation. We do
-however consider it a strength of our study that the outcome included out of
-hospital deaths, when comparably recent research does not \cite{Levin2018,
-  Kunitake2018}.
+feature data. We did however have a considerable amount of missing outcome data,
+with about 20\% of patients being lost to follow up. We handled this missingness
+using list wise deletion, aware of the potential bias introduced by this
+approach. One alternative would have been to use multiple imputation to replace
+missing values, however we had no way of determining the mechanism underlying
+the missing outcomes why results based on multiple imputed data might be biased
+as well. Further, we did not consider it computationally feasible to combine
+multiple imputation and bootstrapping for uncertainty estimation. We do however
+consider it a strength of our study that the outcome included out of hospital
+deaths, when comparably recent research does not \cite{Levin2018, Kunitake2018}.
 
-We used point measurements to train the ensemble learner, meaning that we failed
-to account for potential changes in patients' clinical condition between the
+We used point measurements to train the SuperLearner, meaning that we could
+not account for potential changes in patients' clinical condition between the
 time when feature and outcome data were collected. The clinicians were however
 also limited to the data available when they decided on a priority level,
 although this could have included laboratory or imaging findings from a
@@ -983,47 +983,52 @@ available to the learner would likely improve it further.  Also, we used the
 default hyperparameter settings for each technique. Future research may improve
 the learner's performance by modifying the included learners' hyperparameters.
 
-Several steps remain before a system to prioritse among adult trauma patients in
-the ED based on our algorithm can and should be implemented. These steps involve
-refining the algorithm, comparing it with other commonly used methods to
+Several steps remain before a system to prioritise among adult trauma patients in
+the ED based on the SuperLearner can and should be implemented. These steps
+involve refining the algorithm, comparing it with other commonly used methods to
 prioritise patients in the ED, incorporating it into usable software that may be
 used in parallel even in settings with no electronic health records, and
 designing an implementation study to assess both its effectiveness and
-safety. There are many ways in which the algorithm could be refined but we
-regard defining a sequence in which the variables should be measured as the most
-important. We think that this sequence should be based on a combination of
+safety.
+
+There are many ways in which the algorithm could be refined. We regard
+optimising the algorithm to minimize deaths in the green priority level as the
+most important. Secondly, a sequence in which to measure the variables should be
+defined. We think that this sequence should be based on a combination of
 individual variable importance and how feasible the variables are to record. We
 assume that once this sequence is defined the patients with the most severe
 trauma could be identified very quickly using only a small subset of the
-variables. Further, our ensemble learner did assign more events to the green
-priority level than the clinicians. This should be explored in depth in future
-studies.
+variables. Finally, other outcomes should be explored. In a larger dataset a
+composite outcome of early deaths, e.g. within 24 hours, and admission to
+intensive care or acute surgery could be explored.
 
 \section*{Conclusion}
-An ensemble machine learner developed with the SuperLearner to prioritise among
-adult trauma patients in the ED is non-inferior to that of clinician
-gestalt. The SuperLearner may be especially useful to reduce the number of
-patients that would be unnecessarily prioritised to a high priority level.
+In terms of classification and discrimination an ensemble machine learning
+algorithm developed using the SuperLearner was non-inferior in prioritising
+among adult trauma patients in the ED compared to clinician gestalt based on
+patients’ presentation. It is possible that the SuperLearner is especially
+useful to reduce the number of patients that would be prioritised to a
+unnecessarily high priority level.
 
 \section*{Supporting Information}
 
 % Include only the SI item label in the paragraph heading. Use the
 % \nameref{label} command to cite SI items in the text.
-\paragraph*{S1 Text}
+\paragraph*{S1 Text.}
 \label{S1_Text}
 {\bf Details of de-identification procedures.}
 
-\paragraph*{S2 Text}
+\paragraph*{S2 Text.}
 \label{S2_Text}
 {\bf Short descriptions of included learners.}
 
-% \paragraph*{S1 File.}
-% \label{S1_File}
-% {\bf Lorem Ipsum.}  Maecenas convallis mauris sit amet sem ultrices gravida. Etiam eget sapien nibh. Sed ac ipsum eget enim egestas ullamcorper nec euismod ligula. Curabitur fringilla pulvinar lectus consectetur pellentesque.
+\paragraph*{S3 Fig.}
+\label{S3_Fig}
+{\bf Receiver operating characteristic and precision recall curves of included learners.}
 
-% \paragraph*{S1 Video.}
-% \label{S1_Video}
-% {\bf Lorem Ipsum.}  Maecenas convallis mauris sit amet sem ultrices gravida. Etiam eget sapien nibh. Sed ac ipsum eget enim egestas ullamcorper nec euismod ligula. Curabitur fringilla pulvinar lectus consectetur pellentesque.
+\paragraph*{S4 Table.}
+\label{S4_Table}
+{\bf Risk, weight and area under receiver operating characteristic curve of included learners.}
 
 % \paragraph*{S1 Appendix.}
 % \label{S1_Appendix}
