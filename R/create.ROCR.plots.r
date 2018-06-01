@@ -31,7 +31,7 @@ create.ROCR.plots <- function(
     if (ROC_or_precrec == "prec_rec") measures <- list(prec = "prec",
                                                        rec = "rec",
                                                        PREC = "Precision",
-                                                       REC = "Recall")
+                                                       REC = "True positive rate (recall)")
     ## Get tpr and fpr
     tpr_fpr <- lapply(setNames(nm = models), function(model) {
         outcome <- "outcome_test"

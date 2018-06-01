@@ -29,8 +29,8 @@ rocr.plot <- function(
     if (is.null(y_name)) y_name <- names(plot_data)[1]
     if (is.null(x_name)) x_name <- names(plot_data)[2]
     ## Define axis labels
-    if (is.null(ylab)) ylab <- gsub("_", " ", y_name)
-    if (is.null(xlab)) xlab <- gsub("_", " ", x_name)
+    if (is.null(ylab)) ylab <- gsub("EP", ")", gsub("BP", "(", gsub("_", " ", y_name)))
+    if (is.null(xlab)) xlab <- gsub("EP", ")", gsub("BP", "(", gsub("_", " ", x_name)))
     ## Define axis limits
     lim <- c(0,1)
     ## Create plot object
