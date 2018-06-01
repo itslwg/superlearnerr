@@ -4,8 +4,8 @@
 files <- list.files("./R", pattern = ".r$", full.names = TRUE)
 for (f in files) source(f)
 ## Set parameters that are default in make.study
-data_path =  c("./extdata/sample.csv")
-bs_samples = 4
+data_path =  c("../../data/sample.csv")
+bs_samples = 1000
 
 ## Code below this line is more or less a copy of make.study. Make sure to
 ## modify make.study if you modify important stuff here.

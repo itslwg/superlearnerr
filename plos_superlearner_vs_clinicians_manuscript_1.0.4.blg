@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: plos_superlearner_vs_clinicians_manuscript_1.0.4.aux
+The style file: plos2015.bst
+Database file #1: bibliography.bib
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Warning--there's a number but no volume in Beam2018
+You've used 35 entries,
+            3058 wiz_defined-function locations,
+            899 strings with 13933 characters,
+and the built_in function-call counts, 66647 in all, are:
+= -- 8531
+> -- 520
+< -- 1
++ -- 303
+- -- 130
+* -- 5730
+:= -- 7267
+add.period$ -- 140
+call.type$ -- 35
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 36
+duplicate$ -- 5289
+empty$ -- 6321
+format.name$ -- 154
+if$ -- 15500
+int.to.chr$ -- 0
+int.to.str$ -- 35
+missing$ -- 316
+newline$ -- 190
+num.names$ -- 35
+pop$ -- 503
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 532
+stack$ -- 0
+substring$ -- 13544
+swap$ -- 763
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 1
+while$ -- 321
+width$ -- 37
+write$ -- 411
+(There was 1 warning)
