@@ -23,7 +23,7 @@ create.classification.tables <- function(
         simple_table <- print.xtable(xtable(simple_table,
                                            caption = caption,
                                            label = label),
-                                     table.placement = "h",
+                                     table.placement = "!ht",
                                      include.rownames = FALSE,
                                      sanitize.text.function = function(x) x,
                                      print.results = FALSE,
@@ -61,7 +61,7 @@ create.classification.tables <- function(
                                        include.colnames = FALSE,
                                        print.results = FALSE,
                                        caption.placement = "top",
-                                       table.placement = "h")
+                                       table.placement = "!ht")
         star_caption <- "Reclassification (Rec.) figures refer to \\% of patients reclassified by the SuperLearner compared to clinicians. Rec. up and Rec. down indicates \\% of patients reclassified to a higher or lower priority level respectively."
         reclass_xtable <- add.star.caption(reclass_xtable, star_caption)
         return(reclass_xtable)

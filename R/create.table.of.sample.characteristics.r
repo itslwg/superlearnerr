@@ -128,7 +128,7 @@ create.table.of.sample.characteristics <- function(
                                            caption = "Sample characteristics",
                                            label = "tab:sample-characteristics"),
                                     type = "latex",
-                                    table.placement = "h",
+                                    table.placement = "!ht",
                                     include.rownames = FALSE,
                                     include.colnames = TRUE,
                                     caption.placement = "top",
