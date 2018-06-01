@@ -22,8 +22,17 @@ coefficients.table <- function(
     learner_names <- unlist(lapply(superlearner_object$SL.library$library$predAlgorithm,
                                    function(name) strsplit(name, ".", fixed = TRUE)))
     learner_names <- learner_names[!(learner_names %in% "SL")]
+    ## Define pretty names
+    pretty_names <- c("SuperLearner",
+                      "GLMnet",
+                      "GLM",
+                      "Random Forest",
+                      "XGboost",
+                      "GAM")
     ## Get predictons on training set from each model
     preds <- superlearner_object$library.predict
+    preds <- cbind(superlearner_object$SL.predict, preds)
+    colnames(preds) <- pretty_names
     ## Initiate list and save preds columns, i.e. model predictions, to list
     l_of_predictions <- list()
     for (i in colnames(preds)){
@@ -38,15 +47,20 @@ coefficients.table <- function(
                           return(perf)
                       })
     ## Set table
-    t_coeff_risk <- data.frame(Learner = learner_names,
-                               Weight = superlearner_object$coef,
-                               Risk = superlearner_object$cvRisk,
-                               AUROCC = unlist(auroccs)
-                               )
+    t_coeff_risk <- data.frame(Learner = pretty_names,
+                               Risk = c(NA, superlearner_object$cvRisk),
+                               Weight = c(NA, superlearner_object$coef),
+                               AUROCC = unlist(auroccs),
+                               stringsAsFactors = FALSE)
     ## Round columns
-    t_coeff_risk[,-1] <- round(t_coeff_risk[,-1],
-                               digits = 3)
-    print(xtable(t_coeff_risk, digits = c(0,0,3,3,3)),
-          include.rownames = FALSE)
+    t_coeff_risk[] <- lapply(t_coeff_risk, function(x) if(!is.character(x)) sprintf("%.3f", x) else x)
+    ## Format table
+    coeff_risk_table <- print(xtable(t_coeff_risk,
+                                      caption = "Cross validated risk, weight and area under the receiver operating curve characteristics (AUROCC) in the complete training sample for SuperLearner and each included learner",
+                                      label = "tab:coeff_risk"),
+                               include.rownames = FALSE,
+                               print.results = FALSE)
+    coeff_risk_table <- add.star.caption(coeff_risk_table, "NA is not applicable. The SuperLearner was not cross validated, only the included learners were. Abbreviations: GAM Generalises Additive Model, GLM Generalised Linear Model, XGboost Extreme Gradient Boosting Machine")
+    return(coeff_risk_table)
 }
 
