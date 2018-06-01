@@ -1,8 +1,0 @@
-Main analysis saved in predictions/superlearner_prediction_main_1527848361020.rds completed on 2018-06-01 12:19:21
-Started running analysis of 4 bootstrap samples on 2018-06-01 12:20:27
-Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527848515015.rds completed on 2018-06-01 12:21:55
-Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527848531327.rds completed on 2018-06-01 12:22:11
-Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527848537830.rds completed on 2018-06-01 12:22:17
-Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527848548491.rds completed on 2018-06-01 12:22:28
-Stopped running analysis of 4 bootstrap samples on 2018-06-01 12:22:28
-It took 2.0115506529808 minutes
