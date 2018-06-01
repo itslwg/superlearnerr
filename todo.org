@@ -157,7 +157,7 @@
 ** DONE Swap missingness indicator to non-missingness		     :todo54:
    CLOCK: [2018-05-24 Thu 22:15]--[2018-05-24 Thu 22:17] =>  0:02
 ** DONE Use method.AUC for optimising superlearner		     :todo55:
-** TODO Crop eps                                                     :todo56:
+** DONE Crop eps						     :todo56:
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
