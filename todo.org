@@ -165,6 +165,12 @@
    CLOCK: [2018-05-23 Wed 17:24]--[2018-05-23 Wed 18:39] =>  1:15
 ** DONE Add save superlearner option				     :todo52:
    CLOCK: [2018-05-23 Wed 19:13]--[2018-05-23 Wed 19:19] =>  0:06
+** DONE Expand file names of predictions			     :todo53:
+** DONE Swap missingness indicator to non-missingness		     :todo54:
+   CLOCK: [2018-05-24 Thu 22:15]--[2018-05-24 Thu 22:17] =>  0:02
+** DONE Use method.AUC for optimising superlearner		     :todo55:
+** DONE Crop eps						     :todo56:
+** INPROGRESS Finalise code                                          :todo57:
 #+END_SRC
 * Issues
 #+BEGIN_SRC org
@@ -179,4 +185,6 @@
    CLOCK: [2018-05-21 Mon 10:18]--[2018-05-21 Mon 10:27] =>  0:09
 ** DONE Check weird error from glmnet				     :issue6:
    CLOCK: [2018-05-23 Wed 18:41]--[2018-05-23 Wed 19:04] =>  0:23
+** DONE Fix NRE CIs						     :issue7:
+   CLOCK: [2018-05-24 Thu 23:19]--[2018-05-24 Thu 23:37] =>  0:18
 #+END_SRC
