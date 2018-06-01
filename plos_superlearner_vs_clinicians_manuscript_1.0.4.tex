@@ -583,7 +583,7 @@ respond at all. These represent standard variables commonly collected in many
 health systems. They are also included in several well known clinical prediction
 models designed to predict trauma mortality \cite{Rehn2011}.
 
-\subsubsection*{Clinicians' priorities}
+\subsubsection*{Clinicians' priority levels}
 For the purpose of this study, clinicians were instructed by the project
 officers to assign a priority to each patient. The priority levels were color
 coded. Red was assigned to the most serious patients that should be treated
@@ -631,29 +631,32 @@ algorithm, meaning that it uses a library of techniques or specific learners, in
 principle any technique or learner that the analyst wants, to come up with an
 ``optimal learner''. Table \ref{tab:superlearner-library} show our library of
 techniques that included three MHTM and two MMTH learners. All were implemented
-using the default hyperparameters. The SuperLearner was trained using ten fold
-cross validation. This procedure is implemented by default in the SuperLearner
-package and entails splitting the development data in ten mutually exclusive
-parts of approximately the same size. All learners included in the library are
-then fitted using the combined data of nine of these parts and evaluated in the
-tenth. This procedure is then repeated ten times, i.e. each part is used once as
-the evaluation data, and is intended to limit overfitting and reduce optimism.
+using the default hyperparameters. Short descriptions of the individual learners
+are available as supporting information in \nameref{S2_Text}. The SuperLearner
+was trained using ten fold cross validation. This procedure is implemented by
+default in the SuperLearner package and entails splitting the development data
+in ten mutually exclusive parts of approximately the same size. All learners
+included in the library are then fitted using the combined data of nine of these
+parts and evaluated in the tenth. This procedure is then repeated ten times,
+i.e. each part is used once as the evaluation data, and is intended to limit
+overfitting and reduce optimism.
 
 \begin{table}[h!]
-  \centering
+  \begin{adjustwidth}{-0.25in}{0in}
   \caption{\bf Techniques included in our SuperLearner library}
   \label{tab:superlearner-library}
   \begin{tabular}{llr}
     \hline
-    Learner                                       & R package \\
+    Learner                                       & R package                        & SuperLearner function \\
     \hline
-    Breiman's random forest algorithm             & randomForest \cite{randomforest} \\
-    Extreme Gradient Boosting machine             & XGboost \cite{xgboost} \\
-    Generalized Linear Model                      & glm (built-in) \\
-    Generalized Additive Model                    & gam       \cite{gam} \\
-    Penalized regression model using elastic net  & glmnet \cite{glmnet} \\
+    Breiman's random forest algorithm             & randomForest \cite{randomforest} & SL.randomForest \\
+    Extreme Gradient Boosting machine             & XGboost \cite{xgboost}           & SL.xgboost \\
+    Generalized Linear Model                      & glm (built-in)                   & SL.glm \\
+    Generalized Additive Model                    & gam       \cite{gam}             & SL.gam \\
+    Penalized regression model using elastic net  & glmnet \cite{glmnet}             & SL.glmnet \\
     \hline
   \end{tabular}
+  \end{adjustwidth}
 \end{table}
 
 The SuperLearner was then used to assign levels of priority to the patients in
@@ -1010,9 +1013,9 @@ patients that would be unnecessarily prioritised to a high priority level.
 \label{S1_Text}
 {\bf Details of de-identification procedures.}
 
-% \paragraph*{S2 Fig.}
-% \label{S2_Fig}
-% {\bf Lorem Ipsum.} Maecenas convallis mauris sit amet sem ultrices gravida. Etiam eget sapien nibh. Sed ac ipsum eget enim egestas ullamcorper nec euismod ligula. Curabitur fringilla pulvinar lectus consectetur pellentesque.
+\paragraph*{S2 Text}
+\label{S2_Text}
+{\bf Short descriptions of included learners.}
 
 % \paragraph*{S1 File.}
 % \label{S1_File}
