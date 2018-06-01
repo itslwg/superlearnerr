@@ -1,9 +1,12 @@
-Main analysis saved in predictions/superlearner_prediction_main_1527199689125.rds completed on 2018-05-25 00:08:09
-Started running analysis of 4 bootstrap samples on 2018-05-25 00:09:27
-Started running analysis of 4 bootstrap samples on 2018-05-25 00:11:20
-Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527200218884.rds completed on 2018-05-25 00:16:58
-Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527200259078.rds completed on 2018-05-25 00:17:39
-Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527200267535.rds completed on 2018-05-25 00:17:47
-Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527200309612.rds completed on 2018-05-25 00:18:29
-Stopped running analysis of 4 bootstrap samples on 2018-05-25 00:18:29
-It took 7.15918143192927 minutes
+Main analysis saved in predictions/superlearner_prediction_main_1527545660288.rds completed on 2018-05-29 00:14:20
+Started running analysis of 8 bootstrap samples on 2018-05-29 00:14:43
+Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527545777296.rds completed on 2018-05-29 00:16:17
+Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527545791702.rds completed on 2018-05-29 00:16:31
+Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527545797521.rds completed on 2018-05-29 00:16:37
+Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527545807366.rds completed on 2018-05-29 00:16:47
+Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527545881427.rds completed on 2018-05-29 00:18:01
+Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527545888237.rds completed on 2018-05-29 00:18:08
+Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527545897382.rds completed on 2018-05-29 00:18:17
+Bootstrap analysis saved in predictions/superlearner_prediction_boot_1527545907037.rds completed on 2018-05-29 00:18:27
+Stopped running analysis of 8 bootstrap samples on 2018-05-29 00:18:27
+It took 3.73041940132777 minutes
