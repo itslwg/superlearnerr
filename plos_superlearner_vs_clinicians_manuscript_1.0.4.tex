@@ -610,17 +610,19 @@ instrument.
 
 % *** Statistical methods
 \subsection*{Statistical Methods}
-We used R for all analyses \cite{R}. We first made a non-random temporal split
-of the complete data set into a training and test set. The split was made so
-that 75\% of the complete cohort was assigned to the training set and the
-remaining 25\% to the test set, ensuring that the relative contribution of each
-centre was maintained in both sets. We then calculated descriptive statistics of
-all variables, using medians and interquartile ranges (IQR) for continuous
-variables and counts and percentages for qualitative variables. All quantitative
-features (age, SBP, DBP, HR, SpO\textsubscript{2}, and RR) were treated as
-continuous and the levels of all qualitative variables (sex, mechanism of
-injury, type of injury, mode of transport, transfer status, and GCS components)
-were treated as bins (dummy variables).
+All data was de-identified before it was analysed for this study. Details of the
+de-identification procedures are available as supporting information in
+\nameref{S1_Text}. We used R for all analyses \cite{R}. We first made a
+non-random temporal split of the complete data set into a training and test
+set. The split was made so that 75\% of the complete cohort was assigned to the
+training set and the remaining 25\% to the test set, ensuring that the relative
+contribution of each centre was maintained in both sets. We then calculated
+descriptive statistics of all variables, using medians and interquartile ranges
+(IQR) for continuous variables and counts and percentages for qualitative
+variables. All quantitative features (age, SBP, DBP, HR, SpO\textsubscript{2},
+and RR) were treated as continuous and the levels of all qualitative variables
+(sex, mechanism of injury, type of injury, mode of transport, transfer status,
+and GCS components) were treated as bins (dummy variables).
 
 \subsubsection*{Development of the SuperLearner}
 We then developed our SuperLearner in the training set using the SuperLearner R
@@ -714,7 +716,7 @@ included 4545 patients.
 
 Table \ref{tab:sample-characteristics} shows the characteristics of our study
 sample. A total of 46 (1\%) patients had
-missing data in at least one feature. Among the included patients the median age
+missing values in at least one feature. Among the included patients the median age
 was 32 (IQR 24-45) years. A majority, 3539 (78\%)
 patients, were males. The most common mechanism of injury was transport
 accidents, accounting for 1925 (42\%)
@@ -1000,13 +1002,13 @@ adult trauma patients in the ED is non-inferior to that of clinician
 gestalt. The SuperLearner may be especially useful to reduce the number of
 patients that would be unnecessarily prioritised to a high priority level.
 
-% \section*{Supporting Information}
+\section*{Supporting Information}
 
-% % Include only the SI item label in the paragraph heading. Use the
-% % \nameref{label} command to cite SI items in the text.
-% \paragraph*{S1 Fig.}
-% \label{S1_Fig}
-% {\bf Bold the title sentence.} Add descriptive text after the title of the item (optional).
+% Include only the SI item label in the paragraph heading. Use the
+% \nameref{label} command to cite SI items in the text.
+\paragraph*{S1 Text}
+\label{S1_Text}
+{\bf Details of de-identification procedures.}
 
 % \paragraph*{S2 Fig.}
 % \label{S2_Fig}
