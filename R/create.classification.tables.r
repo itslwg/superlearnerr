@@ -21,12 +21,13 @@ create.classification.tables <- function(
         simple_table <- cbind(c("No", "Yes"), simple_table)
         colnames(simple_table)[1] <- "All cause 30-day mortality"
         simple_table <- print.xtable(xtable(simple_table,
-                                           caption = caption,
+                                           caption = paste0("\\bf ", caption),
                                            label = label),
-                                    include.rownames = FALSE,
-                                    sanitize.text.function = function(x) x,
-                                    print.results = FALSE,
-                                    caption.placement = "top")
+                                     table.placement = "!ht",
+                                     include.rownames = FALSE,
+                                     sanitize.text.function = function(x) x,
+                                     print.results = FALSE,
+                                     caption.placement = "top")
         return(simple_table)
     }
     ## Reclassification table function
@@ -48,7 +49,7 @@ create.classification.tables <- function(
         rownames(reclass_table) <- NULL
         reclass_table[reclass_table == NaN | reclass_table == "NA"] <- ""
         reclass_xtable <- xtable(reclass_table,
-                                 caption = caption,
+                                 caption = paste0("\\bf ", caption),,
                                  label = label)
         addtorow <- list()
         addtorow$pos <- list(0, 0)
@@ -59,7 +60,8 @@ create.classification.tables <- function(
                                        include.rownames = FALSE,
                                        include.colnames = FALSE,
                                        print.results = FALSE,
-                                       caption.placement = "top")
+                                       caption.placement = "top",
+                                       table.placement = "!ht")
         star_caption <- "Reclassification (Rec.) figures refer to \\% of patients reclassified by the SuperLearner compared to clinicians. Rec. up and Rec. down indicates \\% of patients reclassified to a higher or lower priority level respectively."
         reclass_xtable <- add.star.caption(reclass_xtable, star_caption)
         return(reclass_xtable)

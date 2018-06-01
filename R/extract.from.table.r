@@ -39,5 +39,7 @@ extract.from.table <- function(
         formatted_numbers <- as.list(setNames(sprintf(format, numbers), c("pe", "perc")))
         new_data <- with(formatted_numbers, paste0(pe, " (", perc, "\\%", ")"))
     }
+    ## Remove *
+    new_data <- sub("*", "", new_data, fixed = TRUE)
     return(new_data)
 }

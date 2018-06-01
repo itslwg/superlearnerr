@@ -5,7 +5,7 @@ files <- list.files("./R", pattern = ".r$", full.names = TRUE)
 for (f in files) source(f)
 ## Set parameters that are default in make.study
 data_path =  c("./extdata/sample.csv")
-bs_samples = 4
+bs_samples = 1000
 
 ## Code below this line is more or less a copy of make.study. Make sure to
 ## modify make.study if you modify important stuff here.
@@ -18,10 +18,6 @@ set.seed(14813)
 load.required.packages()
 ## Import study data
 study_data <- read.csv(data_path, stringsAsFactors = FALSE)
-## Drop obsevations collected before all centres started collecting triage
-## category data and observations later than one month prior to creating
-## this dataset
-study_data <- drop.observations(study_data, test = TRUE)
 ## Get data dictionary
 data_dictionary <- get.data.dictionary()
 ## Keep only variables relevant to this study
@@ -29,7 +25,7 @@ study_data <- keep.relevant.variables(study_data, data_dictionary)
 ## Define 999 as missing
 study_data[study_data == 999] <- NA
 ## Prepare study data using the data dictionary
-study_data <- prepare.study.data(study_data, data_dictionary, test = TRUE)
+study_data <- prepare.study.data(study_data, data_dictionary)
 ## Set patients to dead if dead at discharge or at 24 hours
 ## and alive if coded alive and admitted to other hospital
 study_data <- set.to.outcome(study_data)
@@ -49,19 +45,18 @@ study_data <- apply.exclusion.criteria(study_data)
 ## values per variable
 study_data <- add.missing.indicator.variables(study_data)
 ## Prepare data for SuperLearner predictions
-prepped_sample <- prep.data.for.superlearner(study_data, test = TRUE)
+prepped_sample <- prep.data.for.superlearner(study_data)
 ## Create table of sample characteristics
 tables <- create.table.of.sample.characteristics(prepped_sample, data_dictionary)
 results$table_of_sample_characteristics <- tables$formatted
 results$raw_table_of_sample_characteristics <- tables$raw
-results$n_training_sample <- nrow(prepped_sample$x_train)
-results$n_test_sample <- nrow(prepped_sample$x_review)
+results$n_training_sample <- nrow(prepped_sample$sets$x_train)
+results$n_test_sample <- nrow(prepped_sample$sets$x_review)
 ## Transform factors into dummy variables
 prepped_sample <- to.dummy.variables(prepped_sample)
 ## Save original sample to disk
 saveRDS(prepped_sample, "original_sample.rds")
-## Train and review SuperLearner on study sample. Remember to consider changing
-## the sample setting in gridsearching for optimal cutpoints.
+## Train and review SuperLearner on study sample 
 study_sample <- predictions.with.superlearner(prepped_sample,
                                               save_breaks = TRUE,
                                               save_all_predictions = TRUE,
@@ -131,20 +126,21 @@ results <- c(results, extract.from.pe.and.ci(pe_and_ci))
 ## Create classification tables
 results <- c(results, create.classification.tables(study_sample))
 ## Create roc plots
-#create.roc.plots(study_sample)
-## Alternative
 create.ROCR.plots(study_sample, "ROC")
-## Create roc plots for all models
-create.ROCR.all(study_sample)
 ## Create precision/recall curve
 create.ROCR.plots(study_sample, "prec_rec")
-## Create calibration plots
-create.calibration.plots(study_sample)
+## Create roc plots for all models
+create.ROCR.all(prepped_sample)
 ## Create mortality plot
 create.mortality.plot(study_sample)
 ## Generate coefficiets table for all models
-coefficients.table(study_sample)
+results$coeff_risk_table <- coefficients.table(prepped_sample)
 ## Save results to disk
 saveRDS(results, "results.rds")
 ## Compile manuscript
-#compile.manuscript("superlearner_vs_clinicians_manuscript")
+compile.manuscript("plos_superlearner_vs_clinicians_manuscript")
+## Compile supporting information
+compile.supporting.information("S3_Fig")
+compile.supporting.information("S4_Table")
+## Message
+message("All done")
