@@ -152,7 +152,7 @@ create.table.of.sample.characteristics <- function(
                            fixed = TRUE)
     ## Add adjustbox to make table fit on page
     formatted_table <- sub("\\begin{tabular}",
-                           paste0("\\begin{adjustbox}{max width=\\textwidth+2.25in} \n",
+                           paste0("\\begin{adjustbox}{max width=\\linewidth} \n",
                                   "\\begin{tabular} \n"),
                            formatted_table,
                            fixed = TRUE)
