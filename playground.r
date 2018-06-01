@@ -141,7 +141,7 @@ create.ROCR.plots(study_sample, "prec_rec")
 ## Create mortality plot
 create.mortality.plot(study_sample)
 ## Generate coefficiets table for all models
-coefficients.table(study_sample)
+results$coeff_risk_table <- coefficients.table(study_sample)
 ## Save results to disk
 saveRDS(results, "results.rds")
 ## Compile manuscript
