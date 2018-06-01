@@ -878,21 +878,21 @@ patients that would be unnecessarily prioritised to a high priority level.
 
 % Include only the SI item label in the paragraph heading. Use the
 % \nameref{label} command to cite SI items in the text.
-\paragraph*{S1 Text}
+\paragraph*{S1 Text.}
 \label{S1_Text}
 {\bf Details of de-identification procedures.}
 
-\paragraph*{S2 Text}
+\paragraph*{S2 Text.}
 \label{S2_Text}
 {\bf Short descriptions of included learners.}
 
-\paragraph*{S3 Fig}
+\paragraph*{S3 Fig.}
 \label{S3_Fig}
 {\bf Receiver operating characteristic and precision recall curves of included learners.}
 
-% \paragraph*{S1 Video.}
-% \label{S1_Video}
-% {\bf Lorem Ipsum.}  Maecenas convallis mauris sit amet sem ultrices gravida. Etiam eget sapien nibh. Sed ac ipsum eget enim egestas ullamcorper nec euismod ligula. Curabitur fringilla pulvinar lectus consectetur pellentesque.
+\paragraph*{S4 Table.}
+\label{S1_Video}
+{\bf Risk, weight and area under receiver operating characteristic curve of included learners.}
 
 % \paragraph*{S1 Appendix.}
 % \label{S1_Appendix}

@@ -137,13 +137,16 @@ create.ROCR.plots(study_sample, "ROC")
 ## Create precision/recall curve
 create.ROCR.plots(study_sample, "prec_rec")
 ## Create roc plots for all models
-create.ROCR.all(study_sample)
+create.ROCR.all(prepped_sample)
 ## Create mortality plot
 create.mortality.plot(study_sample)
 ## Generate coefficiets table for all models
-results$coeff_risk_table <- coefficients.table(study_sample)
+results$coeff_risk_table <- coefficients.table(prepped_sample)
 ## Save results to disk
 saveRDS(results, "results.rds")
 ## Compile manuscript
 compile.manuscript("plos_superlearner_vs_clinicians_manuscript")
+## Compile supporting information
+compile.supporting.information("S3_Fig")
+compile.supporting.information("S4_Table")
 
