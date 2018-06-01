@@ -533,7 +533,7 @@ respond at all. These represent standard variables commonly collected in many
 health systems. They are also included in several well known clinical prediction
 models designed to predict trauma mortality \cite{Rehn2011}.
 
-\subsubsection*{Clinicians' priorities}
+\subsubsection*{Clinicians' priority levels}
 For the purpose of this study, clinicians were instructed by the project
 officers to assign a priority to each patient. The priority levels were color
 coded. Red was assigned to the most serious patients that should be treated
@@ -560,17 +560,19 @@ instrument.
 
 % *** Statistical methods
 \subsection*{Statistical Methods}
-We used R for all analyses \cite{R}. We first made a non-random temporal split
-of the complete data set into a training and test set. The split was made so
-that 75\% of the complete cohort was assigned to the training set and the
-remaining 25\% to the test set, ensuring that the relative contribution of each
-centre was maintained in both sets. We then calculated descriptive statistics of
-all variables, using medians and interquartile ranges (IQR) for continuous
-variables and counts and percentages for qualitative variables. All quantitative
-features (age, SBP, DBP, HR, SpO\textsubscript{2}, and RR) were treated as
-continuous and the levels of all qualitative variables (sex, mechanism of
-injury, type of injury, mode of transport, transfer status, and GCS components)
-were treated as bins (dummy variables).
+All data was de-identified before it was analysed for this study. Details of the
+de-identification procedures are available as supporting information in
+\nameref{S1_Text}. We used R for all analyses \cite{R}. We first made a
+non-random temporal split of the complete data set into a training and test
+set. The split was made so that 75\% of the complete cohort was assigned to the
+training set and the remaining 25\% to the test set, ensuring that the relative
+contribution of each centre was maintained in both sets. We then calculated
+descriptive statistics of all variables, using medians and interquartile ranges
+(IQR) for continuous variables and counts and percentages for qualitative
+variables. All quantitative features (age, SBP, DBP, HR, SpO\textsubscript{2},
+and RR) were treated as continuous and the levels of all qualitative variables
+(sex, mechanism of injury, type of injury, mode of transport, transfer status,
+and GCS components) were treated as bins (dummy variables).
 
 \subsubsection*{Development of the SuperLearner}
 We then developed our SuperLearner in the training set using the SuperLearner R
@@ -579,13 +581,15 @@ algorithm, meaning that it uses a library of techniques or specific learners, in
 principle any technique or learner that the analyst wants, to come up with an
 ``optimal learner''. Table \ref{tab:superlearner-library} show our library of
 techniques that included three MHTM and two MMTH learners. All were implemented
-using the default hyperparameters. The SuperLearner was trained using ten fold
-cross validation. This procedure is implemented by default in the SuperLearner
-package and entails splitting the development data in ten mutually exclusive
-parts of approximately the same size. All learners included in the library are
-then fitted using the combined data of nine of these parts and evaluated in the
-tenth. This procedure is then repeated ten times, i.e. each part is used once as
-the evaluation data, and is intended to limit overfitting and reduce optimism.
+using the default hyperparameters. Short descriptions of the individual learners
+are available as supporting information in \nameref{S2_Text}. The SuperLearner
+was trained using ten fold cross validation. This procedure is implemented by
+default in the SuperLearner package and entails splitting the development data
+in ten mutually exclusive parts of approximately the same size. All learners
+included in the library are then fitted using the combined data of nine of these
+parts and evaluated in the tenth. This procedure is then repeated ten times,
+i.e. each part is used once as the evaluation data, and is intended to limit
+overfitting and reduce optimism.
 
 \begin{table}[h!]
   \centering
@@ -867,17 +871,17 @@ adult trauma patients in the ED is non-inferior to that of clinician
 gestalt. The SuperLearner may be especially useful to reduce the number of
 patients that would be unnecessarily prioritised to a high priority level.
 
-% \section*{Supporting Information}
+\section*{Supporting Information}
 
-% % Include only the SI item label in the paragraph heading. Use the
-% % \nameref{label} command to cite SI items in the text.
-% \paragraph*{S1 Fig.}
-% \label{S1_Fig}
-% {\bf Bold the title sentence.} Add descriptive text after the title of the item (optional).
+% Include only the SI item label in the paragraph heading. Use the
+% \nameref{label} command to cite SI items in the text.
+\paragraph*{S1 Text}
+\label{S1_Text}
+{\bf Details of de-identification procedures.}
 
-% \paragraph*{S2 Fig.}
-% \label{S2_Fig}
-% {\bf Lorem Ipsum.} Maecenas convallis mauris sit amet sem ultrices gravida. Etiam eget sapien nibh. Sed ac ipsum eget enim egestas ullamcorper nec euismod ligula. Curabitur fringilla pulvinar lectus consectetur pellentesque.
+\paragraph*{S2 Text}
+\label{S2_Text}
+{\bf Short descriptions of included learners.}
 
 % \paragraph*{S1 File.}
 % \label{S1_File}
