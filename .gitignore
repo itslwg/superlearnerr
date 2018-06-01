@@ -3,9 +3,3 @@
 commented_manuscripts/*
 predictions/*
 auto/*
-
-superlearner.rds
-bootstrapped_estimates.rds
-bootstrap_samples.rds
-point_estimates.rds
-results.rds
