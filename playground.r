@@ -5,7 +5,7 @@ files <- list.files("./R", pattern = ".r$", full.names = TRUE)
 for (f in files) source(f)
 ## Set parameters that are default in make.study
 data_path =  c("./extdata/sample.csv")
-bs_samples = 8
+bs_samples = 4
     
 ## Code below this line is more or less a copy of make.study. Make sure to
 ## modify make.study if you modify important stuff here.
@@ -54,8 +54,8 @@ prepped_sample <- prep.data.for.superlearner(study_data, test = TRUE)
 tables <- create.table.of.sample.characteristics(prepped_sample, data_dictionary)
 results$table_of_sample_characteristics <- tables$formatted
 results$raw_table_of_sample_characteristics <- tables$raw
-results$n_training_sample <- nrow(prepped_sample$x_train)
-results$n_test_sample <- nrow(prepped_sample$x_review)
+results$n_training_sample <- nrow(prepped_sample$sets$x_train)
+results$n_test_sample <- nrow(prepped_sample$sets$x_review)
 ## Transform factors into dummy variables
 prepped_sample <- to.dummy.variables(prepped_sample)
 ## Save original sample to disk
@@ -134,10 +134,10 @@ results <- c(results, create.classification.tables(study_sample))
 #create.roc.plots(study_sample)
 ## Alternative
 create.ROCR.plots(study_sample, "ROC")
-## Create roc plots for all models
-create.ROCR.all(study_sample)
 ## Create precision/recall curve
 create.ROCR.plots(study_sample, "prec_rec")
+## Create roc plots for all models
+create.ROCR.all(study_sample)
 ## Create mortality plot
 create.mortality.plot(study_sample)
 ## Generate coefficiets table for all models
@@ -145,4 +145,4 @@ results$coeff_risk_table <- coefficients.table(study_sample)
 ## Save results to disk
 saveRDS(results, "results.rds")
 ## Compile manuscript
-#compile.manuscript("superlearner_vs_clinicians_manuscript")
+compile.manuscript("plos_superlearner_vs_clinicians_manuscript")
