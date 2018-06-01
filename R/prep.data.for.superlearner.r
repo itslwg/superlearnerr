@@ -3,12 +3,10 @@
 #' This function prepares and generates training and review sets by splitting the dataset in half according to a time variable . Factor variables are removed.
 #' @param study_data The study data as a data frame. No default
 #' @param outcome The outcome variable as a string. Default: "s30d".
-#' @param test Logical. If TRUE, seqn is used to split data in training and review set. Defaults to FALSE.
 #' @export
 prep.data.for.superlearner <- function(
                                        study_data,
-                                       outcome = "s30d",
-                                       test = FALSE
+                                       outcome = "s30d"
                                        )
 {
     split.dataset <- function(
@@ -63,8 +61,7 @@ prep.data.for.superlearner <- function(
                      y_levels = levels(study_data[, outcome])))
     }
     ## Split 
-    time_variable <- "doar" # Define time variable
-    if (test) time_variable <- "seqn" # Change if test is TRUE
+    time_variable <- "seqn" 
     datasets <- lapply(levels(as.factor(study_data$centre)), function(level) study_data[study_data$centre == level, ])
     sets_list <- lapply(datasets, function(dataset) {
         dataset$centre <- NULL
