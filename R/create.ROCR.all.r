@@ -1,18 +1,16 @@
 #' Generate ROCR plot for all SL learners
 #'
 #' Plots receiver operating characteristics curves of all learners included in SL.
-#' @param study_sample The study sample list. No default.
+#' @param prepped_sample The prepped_sample list. No default.
 #' @export
 create.ROCR.all <- function(
-                            study_sample
+                            prepped_sample
                             )
 {
     ## Load model object
     superlearner <- readRDS("./superlearner.rds")
     ## Get predictions of SL learners from training set
-    model_data <- superlearner$library.predict
-    ## Add combined superlearner prediction
-    model_data <- data.frame(cbind(superlearner$SL.predict, model_data))
+    model_data <- data.frame(do.call(cbind, predict(superlearner_object, newdata = prepped_sample$x_review)))
     ## Initiate vector with titles for plot
     pretty_names <- c("SuperLearner",
                       "GLMnet",
@@ -45,7 +43,7 @@ create.ROCR.all <- function(
         }))
     }
     ## Get true positive and false positive rates
-    outcome <- study_sample[["outcome_train"]]
+    outcome <- prepped_sample$y_review
     measures <- list(measure = "tpr", x.measure = "fpr")
     tpr_fpr <- get.perf.list(predictions_list, measures, outcome)
     roc_plot_data <- create.plot.data(tpr_fpr, "A")

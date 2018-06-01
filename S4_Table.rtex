@@ -1,0 +1,15 @@
+\documentclass{article}
+\usepackage{caption}
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  left=20mm,
+  right=20mm,
+}
+\begin{document}
+
+%% begin.rcode S4_table, echo=FALSE, results="asis"
+% cat(coeff_risk_table)
+%% end.rcode
+
+\end{document}
