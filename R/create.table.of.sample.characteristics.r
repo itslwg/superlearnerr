@@ -139,9 +139,20 @@ create.table.of.sample.characteristics <- function(
     ## Dirty fix to make sure subscripts format correctly
     formatted_table <- gsub("SUPS ", "\\textsubscript{", formatted_table, fixed = TRUE)
     formatted_table <- gsub(" SUPE", "}", formatted_table, fixed = TRUE)
+    ## Adjust width to fit plos latex template
+    formatted_table <- sub("\\begin{table}[!ht]",
+                           paste("\\begin{table}[!ht] \n",
+                                 "\\begin{adjustwidth}{-2.25in}{0in}"),
+                           formatted_table,
+                           fixed = TRUE)
+    formatted_table <- sub("\\end{table}",
+                           paste("\\end{adjustwidth} \n",
+                                 "\\end{table}"),
+                           formatted_table,
+                           fixed = TRUE)
     ## Add adjustbox to make table fit on page
     formatted_table <- sub("\\begin{tabular}",
-                           paste0("\\begin{adjustbox}{max width=\\textwidth} \n",
+                           paste0("\\begin{adjustbox}{max width=\\textwidth+2.25in} \n",
                                   "\\begin{tabular} \n"),
                            formatted_table,
                            fixed = TRUE)
