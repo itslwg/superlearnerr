@@ -134,7 +134,7 @@ create.table.of.sample.characteristics <- function(
                                     caption.placement = "top",
                                     print.results = FALSE)
     star_caption <- abbr
-    if (include_missing_column) star_caption <- paste0("*The total number (%) of observations with missing data. ", abbrv)
+    if (include_missing_column) star_caption <- paste0("*The total number (\\%) of observations with missing data. ", abbrv)
     formatted_table <- add.star.caption(formatted_table, star_caption) # add caption*
     ## Dirty fix to make sure subscripts format correctly
     formatted_table <- gsub("SUPS ", "\\textsubscript{", formatted_table, fixed = TRUE)
