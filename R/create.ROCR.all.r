@@ -36,6 +36,7 @@ create.ROCR.all <- function(
             new_data <- cbind(data@y.values[[1]], data@x.values[[1]])
             y_name <- gsub(" ", "_", data@y.name)
             x_name <- gsub(" ", "_", data@x.name)
+            if (x_name == "Recall") x_name <- paste0("True_positive_rate_BP", tolower(x_name), "EP")
             new_data <- data.frame(new_data,
                                    rep(model, nrow(new_data)),
                                    rep(set, nrow(new_data)))

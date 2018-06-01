@@ -617,31 +617,32 @@ combinations of unique cutoffs, where each cutoff could take any value from 0.01
 to 0.99 in 0.01 unit increments. These bins corresponded to the green, yellow,
 orange, and red priority levels assigned by the clinicians. The performance of
 both the continuous SuperLearner prediction and the SuperLearner priority levels
-in the training set was then evaluated using AUROCC. We then used the
-SuperLearner to predict the outcomes of the patients in the test set and used
-the cutoff values from the training set to assign a level of priority to each
-patient in this set.
+in the training set was then evaluated by estimating their AUROCC. We also
+visualised the performance by plotting ROC and precision-recall curves.
 
 \subsubsection*{Comparing the SuperLearner and Clinicians}
-The perfomance of the continuous SuperLearner prediction, the SuperLearner
-priority levels, and the clinicians' priority levels, was then evaluated by
-estimating and comparing their AUROCC. The levels of priority assigned by the
-SuperLearner and clinicians respectively were then compared by estimating the
-net reclassification, in events (patient with the outcome, i.e. who died within
-30-days from arrival) and non-events (patient without the outcome)
-respectively. The net reclassification in events was defined as the difference
-between the proportion of events assigned a higher priority by the SuperLearner
-than the clinicians and the proportion of events assigned a lower priority by
-the SuperLearner than the clinicians. Conversely, the net reclassification in
-non-events was defined as the difference between the proportion of non-events
-assigned to a lower priority by the SuperLearner than the clinicians and the
-proportion of non-events assigned a higher priority by the SuperLearner than the
-clinicians. We used an empirical bootstrap with 1000 draws of the same size as
-the original set to estimate 95\% confidence interval (CI) around
-differences. We concluded that the SuperLearner was non-inferior to clinicians
-if the 95\% CI of the net reclassification in events did not exceed a
-pre-specified level of -0.05, indicating that clinicians correctly classified 5
-in 100 events more than the SuperLearner.
+We then used the SuperLearner to predict the outcomes of the patients in the
+test set and used the cutoff values from the training set to assign a level of
+priority to each patient in this set. The perfomance of the continuous
+SuperLearner prediction, the SuperLearner priority levels, and the clinicians'
+priority levels, was then evaluated by estimating and comparing their
+AUROCC. The levels of priority assigned by the SuperLearner and clinicians
+respectively were then compared by estimating the net reclassification, in
+events (patient with the outcome, i.e. who died within 30-days from arrival) and
+non-events (patient without the outcome) respectively. The net reclassification
+in events was defined as the difference between the proportion of events
+assigned a higher priority by the SuperLearner than the clinicians and the
+proportion of events assigned a lower priority by the SuperLearner than the
+clinicians. Conversely, the net reclassification in non-events was defined as
+the difference between the proportion of non-events assigned to a lower priority
+by the SuperLearner than the clinicians and the proportion of non-events
+assigned a higher priority by the SuperLearner than the clinicians. We used an
+empirical bootstrap with 1000 draws of the same size as the original set to
+estimate 95\% confidence interval (CI) around differences. We concluded that the
+SuperLearner was non-inferior to clinicians if the 95\% CI of the net
+reclassification in events did not exceed a pre-specified level of -0.05,
+indicating that clinicians correctly classified 5 in 100 events more than the
+SuperLearner.
 
 \subsubsection*{Handling of missing data}
 Observations with missing data on all cause 30-day mortality or priority level
