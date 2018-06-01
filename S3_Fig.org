@@ -1,0 +1,5 @@
+#+OPTIONS: author:nil toc:nil date:nil num:nil
+#+TITLE: 
+
+#+CAPTION: Receiver operating characteristics (A) and precision recall curves (B) for all learners in the training sample. 
+[[./roc_prec_plots.eps]]
