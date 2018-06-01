@@ -1,15 +1,11 @@
 * README
-This is the code repository of the "SuperLearner vs clinicians" (working title)
-study. The bulk of the code is in [[./R]], but testing can and perhaps should, be
-performed from [[playground.r]], located here in the top directory. The main
-function is [[./R/make.study.r][make.study.r]], which calls, either directly or indirectly, the
-functions in remaining .r files.
+This is the code repository of the "SuperLearner vs clinicians" study. The bulk
+of the code is in [[./R]], but testing can and perhaps should, be performed from
+[[playground.r]], located here in the top directory. The main function is
+[[./R/make.study.r][make.study.r]], which calls, either directly or indirectly, the functions in
+remaining .r files.
 
 ** To test and review code
 1. Start with [[./playground.r][playground.r]].
 2. Run the first lines to source all functions in [[./R]].
 3. The remaining content of playground.r is more or less a copy of make.study.r
-
-** To contribute
-Make sure to read our [[./todo.org][todo]]. Do a git log. Contribute new functions as a new file.
-
