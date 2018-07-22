@@ -3,3 +3,6 @@
 commented_manuscripts/*
 predictions/*
 auto/*
+.Rproj.user
+.Rhistory
+.RData
