@@ -1,14 +1,14 @@
 #' Create sample characteristics table
 #'
-#' Creates a table of sample characteristics 
+#' Creates a table of sample characteristics
 #' @param data_for_table The data to use to create the table, no default.
 #' @param data_dictionary the data dictionary, no default.
-#' @param strata The strata variable, defaults to NULL. 
+#' @param strata The strata variable, defaults to NULL.
 #' @param vars The variables to include in the table, defaults to NULL, in which case it is defined as names(data_dictionary)[sapply(data_dictionary, function(x) x$incl == "Yes")].
 #' @param exclude_vars Character vector of variable names to exclude from table, defaults to NULL.
 #' @param include_overall Logical and used only if strata is not NULL. defaults to TRUE in which case an overall column is also included.
 #' @param include_missing_column Logical. If TRUE a column is missing indicating the number (%) of missing values in each variable. Details to TRUE.
-#' @param digits Integer. Number of digits to use when rounding table entries. Defaults to 1. 
+#' @param digits Integer. Number of digits to use when rounding table entries. Defaults to 1.
 #' @param save Logical. If TRUE the table object is also saved to disk as a .tex file. Defaults to FALSE.
 #' @export
 create.table.of.sample.characteristics <- function(
@@ -44,10 +44,10 @@ create.table.of.sample.characteristics <- function(
     ## Create the stratified table if there should be one
     if (!is.null(strata)) {
         vars <- vars[!(vars %in% strata)] # Remove the strata variable from the list of variables to be put in the table
-        table_list$t0 <- CreateTableOne(vars = vars, strata = strata, data = table_data, test = FALSE) # Create the stratified table
+        table_list$t0 <- tableone::CreateTableOne(vars = vars, strata = strata, data = table_data, test = FALSE) # Create the stratified table
     }
     ## Create the overall table if there should be one
-    if (is.null(strata) | include_overall) table_list$t1 <- CreateTableOne(vars = vars, data = table_data)
+    if (is.null(strata) | include_overall) table_list$t1 <- tableone::CreateTableOne(vars = vars, data = table_data)
     ## Define variables to be treated as non-normally distributed, i.e. so that they are reported using medians and IQR
     nonormal <- sapply(table_data, is.numeric)
     ## Format the tables in table_list
@@ -125,15 +125,15 @@ create.table.of.sample.characteristics <- function(
     ## Make abbreviations and explanations text
     abbrv <- paste0("Abbreviations and explanations: ", paste0(sort(unlist(abbr)), collapse = "; ")) # Make abbreviation string
     ## Format the table using xtable
-    formatted_table <- print.xtable(xtable(table,
-                                           caption = "\\bf Characteristics of the samples analysed in this study",
-                                           label = "tab:sample-characteristics"),
-                                    type = "latex",
-                                    table.placement = "!ht",
-                                    include.rownames = FALSE,
-                                    include.colnames = TRUE,
-                                    caption.placement = "top",
-                                    print.results = FALSE)
+    formatted_table <- xtable::print.xtable(xtable::xtable(table,
+                                                           caption = "\\bf Characteristics of the samples analysed in this study",
+                                                           label = "tab:sample-characteristics"),
+                                            type = "latex",
+                                            table.placement = "!ht",
+                                            include.rownames = FALSE,
+                                            include.colnames = TRUE,
+                                            caption.placement = "top",
+                                            print.results = FALSE)
     star_caption <- abbr
     if (include_missing_column) star_caption <- paste0("*The total number (\\%) of observations with missing data. ", abbrv)
     formatted_table <- add.star.caption(formatted_table, star_caption) # add caption*

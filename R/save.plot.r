@@ -35,8 +35,8 @@ save.plot <- function(
         ggargs$device <- cairo_ps
     }
     ## Save plot
-    loadfonts(device = font_device, quiet = TRUE)
-    do.call(ggsave, ggargs)
+    extrafont::loadfonts(device = font_device, quiet = TRUE)
+    do.call(ggplot2::ggsave, ggargs)
     ## Embed fonts
     ## embed_fonts(full_file_name, outfile = full_file_name, options = "-dEPSCrop")
     ## Report that plot is saved
@@ -53,4 +53,4 @@ save.plot <- function(
                  error = function(e) print(e))
     }
 }
-    
+

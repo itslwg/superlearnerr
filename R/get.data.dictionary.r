@@ -12,7 +12,7 @@ get.data.dictionary <- function(
     ## Paste path and filename to form a full path
     fp <- paste0(path, file_name)
     ## Get data dictionary
-    data_dictionary <- fread(fp, data.table = FALSE)
+    data_dictionary <- data.table::fread(fp, data.table = FALSE)
     ## Modify data dictionary column names
     data_dictionary_names <- names(data_dictionary) # Store current dictionary names
     new_names <- unlist(lapply(data_dictionary_names, function(x) unlist(strsplit(x, "\\(|\\)"))[2])) # Get short names
