@@ -10,7 +10,7 @@
 #' @param pretty_names Names to be used in plots. As character vector. Defaults to c("SuperLearner continuous prediction", "SuperLearner priority levels", "SuperLearner continuous prediction", "SuperLearner priority levels", "Clinicians priority levels")
 #' @param subscript Logical. If TRUE, underscores in pretty names in converted to expression. Passed to rocr.plots. Defaults to FALSE.
 #' @export
-create.ROCR.plots <- function(
+create.ROCR.plots.v2 <- function(
                               study_sample,
                               outcome_name,
                               device = "eps",

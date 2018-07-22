@@ -4,6 +4,31 @@ Version: 0.0.0.9000
 Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
 Description: What the package does (one paragraph).
 Depends: R (>= 3.4.4)
+Imports:
+	methods,
+	SuperLearner,
+	data.table,
+	nricens,
+	dplyr,
+	boot,
+	knitr,
+	tableone,
+	xtable,
+	lattice,
+	RColorBrewer,
+	glmnet,
+	randomForest,
+	xgboost,
+	gam,
+	ggplot2,
+	foreach,
+	doParallel,
+	extrafont,
+	gridExtra,
+	ggpubr,
+	desc,
+	latex2exp
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 6.0.1.9000
