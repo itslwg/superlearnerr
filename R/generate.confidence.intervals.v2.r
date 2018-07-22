@@ -9,16 +9,16 @@
 #' @param outcome_name Name of outcome variable. No default.
 #' @param digits Integer. Number of decimals when rounded. Defaults to 2.
 #' @export
-generate.confidence.intervals <- function(
-                                          study_sample,
-                                          model_names,
-                                          the_func,
-                                          samples,
-                                          diffci_or_ci,
-                                          outcome_name,
-                                          digits = 2,
-                                          ...
-                                          )
+generate.confidence.intervals.v2 <- function(
+                                             study_sample,
+                                             model_names,
+                                             the_func,
+                                             samples,
+                                             diffci_or_ci,
+                                             outcome_name,
+                                             digits = 2,
+                                             ...
+                                             )
 {
     ## Get function name
     review_function_name <- as.character(substitute(the_func))[[3]]
