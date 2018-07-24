@@ -1,6 +1,6 @@
-#' Function to train and predict SuperLearner on each sample
+#' Function to generate predictions on each sample
 #'
-#' This trains SuperLearner on every sample training set and reviews SuperLearner on every sample review set.
+#' This makes predictions on the input samples using a prediciton function as parameter.
 #' @param samples Bootstrap samples as prepared by prep.bssamples. No default.
 #' @param prediction_func Name of function that generates predictions. Defaults to "predictions.with.superlearner"
 #' @param parallel Logical. If TRUE the training will be run in parallel. Defaults to FALSE.
