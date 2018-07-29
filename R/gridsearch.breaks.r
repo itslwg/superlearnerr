@@ -11,6 +11,7 @@
 #' @param n_cores Integer. The number of cores to use for parallel computing. Defaults to NULL.
 #' @param save_plot Logical. If TRUE a wireframe plot is saved to disk. Defaults to FALSE.
 #' @param verbose Logical. If TRUE then information is printed as the gridsearch runs. Defaults to FALSE. Currently ignored.
+#' @param maximise Logical. If TRUE, grid search maximizes performance metric. Defaults to TRUE.
 #' @importFrom foreach %dopar%
 #' @export
 gridsearch.breaks <- function(
@@ -23,11 +24,10 @@ gridsearch.breaks <- function(
                               parallel = FALSE,
                               n_cores = NULL,
                               save_plot = FALSE,
-                              verbose = FALSE
+                              verbose = FALSE,
+                              maximise = TRUE
                               )
 {
-    ## Verify if predictions appear to be probabilites.
-    if (min(predictions) < 0 | max(predictions) > 1) stop ("Predictions is not probabilities")
     ## Verify that outcomes is a vector of binary data with 0 and 1
     if (!all(levels(as.factor(outcomes)) %in% c("0", "1"))) stop("Outcomes is not a vector of binary data with only 0 and 1")
     ## Verify that there are no missing values in predictions or outcomes
@@ -68,8 +68,12 @@ gridsearch.breaks <- function(
     loss_data <- data.frame(do.call(rbind, breaks_to_search), loss = unlist(loss_list))
     ## Make and save plot
     if (save_plot) create.and.save.gridsearch.plot(loss_data)
+    ## Get function of max or min
+    optimise_function <- get("max")
+    if (!maximise) optimise_function <- get("min")
     ## Get optimal cutoffs
-    optimal_cutpoints <- loss_data[loss_data$loss == max(loss_data$loss), 1:n_breaks]
+    optimal_cutpoints <- loss_data[loss_data$loss == optimise_function(loss_data$loss),
+                                   1:n_breaks]
     optimal_cutpoints <- as.numeric(optimal_cutpoints[sample(1:nrow(optimal_cutpoints), 1), ]) # Select one random set of cutpoints if more than one has the same loss
     return(optimal_cutpoints)
 }
