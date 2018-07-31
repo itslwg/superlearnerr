@@ -9,6 +9,7 @@
 #' @param models Model names as character vector. Defaults to c("pred_con_train", "pred_cat_train", "pred_con_test", "pred_cat_test", "tc")
 #' @param pretty_names Names to be used in plots. As character vector. Defaults to c("SuperLearner continuous prediction", "SuperLearner priority levels", "SuperLearner continuous prediction", "SuperLearner priority levels", "Clinicians priority levels")
 #' @param subscript Logical. If TRUE, underscores in pretty names in converted to expression. Passed to rocr.plots. Defaults to FALSE.
+#' @param models_to_invert Character vector. Names of models to invert. Defaults to NULL.
 #' @export
 create.ROCR.plots.v2 <- function(
                               study_sample,
@@ -27,7 +28,8 @@ create.ROCR.plots.v2 <- function(
                                                "SuperLearner continuous prediction",
                                                "SuperLearner priority levels",
                                                "Clinicians priority levels"),
-                              subscript = FALSE
+                              subscript = FALSE,
+                              models_to_invert = NULL
                               )
 {
     ## Error handling
@@ -59,7 +61,13 @@ create.ROCR.plots.v2 <- function(
         pretty_name <- pretty_names[grep(model, models)]
         set <- "B"
         if (!grepl(split_var, model)) set <- "A"
-        new_data <- cbind(data@y.values[[1]], data@x.values[[1]])
+        y.values <- data@y.values[[1]]
+        x.values <- data@x.values[[1]]
+        if (model %in% models_to_invert) {
+            x.values <- 1 - x.values
+            y.values <- 1 - y.values
+        }
+        new_data <- cbind(y.values, x.values)
         new_data <- data.frame(new_data, rep(set, nrow(new_data)), rep(pretty_name, nrow(new_data)))
         colnames(new_data) <- c(measures[[1]], measures[[2]], "set", "pretty_name")
         return(new_data)
