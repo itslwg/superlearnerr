@@ -6,7 +6,7 @@
 #' @param model_names Character vector with list name of predictions. Default: c('pred_cat', 'tc')
 #' @param measure String. Performance measure for ROCR prediction object. Defaults to "auc".
 #' @param invert Logical. If TRUE, 1 - measure is returned. Defaults to FALSE.
-#' @param models_to_invert Character vector. Names of models to invert. Has to be given if invert is given. Defaults to NULL.
+#' @param models_to_invert Character vector. Names of models to invert. Defaults to NULL.
 #' @export
  model.review.with.rocr <- function(
                                     study_sample,
