@@ -9,7 +9,7 @@
 #' @param xlab The x label. Defaults to NULL in which case the variable name is used.
 #' @param file_name If not NULL the plot object will be saved to disk using the name provided. Defaults to NULL.
 #' @param return_plot Logical. If TRUE the plot object is returned. Defaults to FALSE.
-#' @param subscript Logical. If TRUE, underscores in pretty names in converted to expression. Defaults to FALSE.
+#' @param subscript Logical. If TRUE, underscores in pretty names in converted to LaTex expression. Defaults to FALSE.
 #' @export
 rocr.plot <- function(
                       plot_data,
