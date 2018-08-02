@@ -124,6 +124,7 @@ create.table.of.sample.characteristics <- function(
     rownames(tables$raw) <- orns # Add old rownames back, for easy access
     ## Make abbreviations and explanations text
     abbrv <- paste0("Abbreviations and explanations: ", paste0(sort(unlist(abbr)), collapse = "; ")) # Make abbreviation string
+    tables$caption <- abbrv # Append caption to tables list
     ## Format the table using xtable
     formatted_table <- xtable::print.xtable(xtable::xtable(table,
                                                            caption = "\\bf Characteristics of the samples analysed in this study",
