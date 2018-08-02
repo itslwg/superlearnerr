@@ -20,10 +20,9 @@ model.review.reclassification <- function(
         ## Invert models given by models_to_invert
         p.new <- study_sample[[model]]
         if (model %in% models_to_invert){
-            print (model)
             p.new <- factor(study_sample[[model]])
             levels(p.new) <- c(4,3,2,1)
-            p.new <- as.numeric(p.new)
+            p.new <- as.numeric(as.character(p.new))
         }
         reclass <- nricens::nribin(event = study_sample[[outcome_name]],
                                    p.std = study_sample$tc,
