@@ -171,6 +171,8 @@
 ** DONE Use method.AUC for optimising superlearner		     :todo55:
 ** DONE Crop eps						     :todo56:
 ** DONE Finalise code						     :todo57:
+** TODO Generalize bootstrap sampling function                       :todo58:
+** TODO Generalize prep.bssamples function                           :todo59:
 #+END_SRC
 * Issues
 #+BEGIN_SRC org

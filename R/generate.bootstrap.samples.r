@@ -11,10 +11,10 @@ generate.bootstrap.samples <- function(
 {
     ## Error handling
     if (!is.data.frame(study_data)) stop("Study_data is not a data frame.")
-    #Generate bootstrap samples
+    # Generate bootstrap samples
     bootstrap_samples <- lapply(1:bs_samples,
-                                function(i) study_data[sample(1:nrow(study_data),
-                                                              replace = TRUE),]
-                                )
-    return (bootstrap_samples)
+                                function(i) splitstackshape::stratified(study_data,
+                                                                        "s30d",
+                                                                        size = 0.9999,
+                                                                        replace = TRUE))
 }

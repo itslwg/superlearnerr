@@ -65,9 +65,9 @@ generate.confidence.intervals.v2 <- function(
                               CI_diff = confidence_intervals,
                               performance_point_estimates = performance_point_estimates)
     }
-    ## Get confidence_intervals around point estimatesp
+    ## Get confidence_intervals around point estimates
     if (diffci_or_ci == "ci"){
-        ## Get point estimates of func
+        ## Merge point estimates from each model into numeric vector
         performance_point_estimates <- lapply(performance_point_estimates,
                                               function (p_ests)
                                                   unlist(p_ests))
@@ -79,10 +79,10 @@ generate.confidence.intervals.v2 <- function(
                                     ...)
         }
         )
-        ## Matrixify samples, i.e. generate matrix with point estimate names
-        ## as rows and samples as cols. Model estimates are binded rowwise.
+        ## Matrixify. NRI estimates are merged into one vector.
+        ## Vector for each sample as columns
         matrixify <- sapply(generate_statistics_bssamples, unlist)
-        ## Adjust for model_names length
+        ## Adjust for model_names input of length 1
         if (length(model_names) == 1 && !is.matrix(matrixify)) {
             ## Make point estimate matrix
             pe_matrix <- rep(performance_point_estimates[[model_names]],
@@ -96,25 +96,23 @@ generate.confidence.intervals.v2 <- function(
             ## Generate confidence_intevals
             confidence_intervals <- performance_point_estimates[[model_names]] - quantiles
         } else {
-            ## Make point estimate matrix
-            pe_matrix <- do.call(rbind,
-                                 lapply(performance_point_estimates,
-                                        function(props)
-                                            matrix(rep(props,
-                                                       ncol(matrixify)),
-                                                   ncol = ncol(matrixify))))
+            ## Point estimate matrix for each model. Each sample as column. 
+            pe_matrices <- lapply(performance_point_estimates,
+                                  function(nri_estimates){
+                                      matrix(rep(nri_estimates,
+                                                 ncol(matrixify)),
+                                             ncol = ncol(matrixify))})
+            ## Merge point estimate matrices of each model to one matrix
+            pe_matrix <- do.call(rbind, pe_matrices)
             ## Calculate deltastar, i.e difference between sample estimates
             ## and study_sample estimates.
             deltastar <- data.frame(t(matrixify - pe_matrix))
-            ## Get 2.5% and 97.5% percentiles from difference of samples
+            ## Get percentiles for each model estimate, i.e. percentiles column wise.
+            ## Then bind list elements into data frame
             quantiles <- do.call(rbind,
-                                 lapply(deltastar, quantile, probs = c(.025,0.975)))
-            ## Generate confidence_intevals
-            confidence_intervals <- do.call(rbind,
-                                            lapply(performance_point_estimates,
-                                                   function(props)
-                                                       matrix(rep(props, 2),
-                                                              ncol = 2))) - quantiles
+                                 lapply(deltastar, quantile, probs = c(0.025,0.975)))
+            ## Subtract point estimates from quantiles to get confidence intervals
+            confidence_intervals <- pe_matrix[, 1:ncol(quantiles)] - quantiles
         }
         ## Format confidence intervals
         fmt_confidence_intervals <- t(apply(confidence_intervals,
