@@ -27,7 +27,6 @@ generate.confidence.intervals.v2 <- function(
     if (!diffci_or_ci %in% c("diff","ci","none")) stop("Accepted strings are diff, ci, or none")
     if (review_function_name == "model.review.reclassification" && diffci_or_ci == "diff") stop ("Diff ci not useful for reclassification.")
     if (!(length(model_names) == 2) && diffci_or_ci == "diff") stop ("Input two models for diff ci.")
-    ## Get func and get study_sample point estimates
     performance_point_estimates <- the_func(study_sample = study_sample,
                                             model_names = model_names,
                                             outcome_name = outcome_name,
