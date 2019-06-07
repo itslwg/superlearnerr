@@ -1,28 +1,24 @@
-#' Prepare study data function
+#' PrepareStudySample
 #'
-#' Prepares the study data using the data dictionary
-#' @param study_data The study data frame. No default.
-#' @param data_dictionary The data dictionary object. No default.
+#' Prepares the study data using the data dictionary.
+#' @param study.sample The study data frame. No default.
+#' @param data.dictionary The data dictionary object. No default.
 #' @export
-prepare.study.data <- function(
-                               study_data,
-                               data_dictionary
-                               )
-{
+PrepareStudySample <- function(study.sample, data.dictionary) {
     ## Error handling
-    if (!is.data.frame(study_data)) stop ("Study data has to be a data frame")
+    if (!is.data.frame(study.data)) stop ("Study sample has to be type data frame.")
     ## If seqn in dataset, remove seqn to later bind it to the dataframe
     seqn_in_data <- FALSE
-    if ("seqn" %in% names(study_data)) {
-        seqn <- study_data$seqn # Get seqn as object
+    if ("seqn" %in% names(study.sample)) {
+        seqn <- study.sample$seqn # Get seqn as object
         seqn[is.na(seqn)] <- 999 # seqn = 999 should not be NA
-        study_data$seqn <- NULL # Remove from study_data
+        study.sample$seqn <- NULL # Remove from study.sample
         seqn_in_data <- TRUE
     }
     ## Prepare study data using the data dictionary
-    study_data[] <- lapply(names(study_data), function(n) {
+    study.sample[] <- lapply(names(study.sample), function(n) {
         vdd <- data_dictionary[[n]] # Get variable specific data dictionary and assign that to vdd
-        data <- study_data[, n]
+        data <- study.sample[, n]
         if (vdd$t == "qual") {
             values <- vdd$vs # Get values
             if (values != ""){
@@ -36,8 +32,7 @@ prepare.study.data <- function(
         return(data)
     })
     ## If seqn is in study data, add seqn again
-    if (seqn_in_data) study_data <- data.frame(study_data, seqn = seqn)
-
-    return(study_data)
+    if (seqn_in_data) study.sample <- data.frame(study.sample, seqn = seqn)
+    return(study.sample)
 }
 

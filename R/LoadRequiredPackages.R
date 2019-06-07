@@ -1,7 +1,7 @@
-#' Load required packages function
-#' @export
-load.required.packages <- function()
-{
+#' LoadRequiredPackages
+#'
+#' Imports the required packages for the project.
+LoadRequiredPackages <- function() {
     ## Vector of names of required packages
     packages <- c("methods",
                   "SuperLearner",
