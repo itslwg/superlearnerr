@@ -23,9 +23,10 @@ LoadRequiredPackages <- function() {
                   "doParallel",
                   "extrafont",
                   "gridExtra",
-                  "ggpubr")
+                  "ggpubr",
+                  "caret")
     ## Require those packages using a loop
-    for (p in packages) require(p, character.only = TRUE)
+    for (package in packages) require(package, character.only = TRUE)
     ## Save list of packages to parent environment
     .package_list <<- packages
 }
