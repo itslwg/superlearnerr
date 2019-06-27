@@ -1,44 +1,38 @@
 #' Add missing indicator variables function
 #'
-#' This function creates missing indicator variables for each predictor variable
-#' (feature) with missing values
-#' @param study_data The study data as a data frame. No default
-#' @param outcome_name The name of outcome variable. Defaults to "m30d"
-#' @param features The names of the feature variables, as a character vector. Defaults to NULL, in which case all columns except outcome_name and those potentially listed in excluded_columns are treated as features.
-#' @param excluded_columns The names of columns that should not be treated as features. Defaults to NULL and is then ignored. Is also ignored if features is specified.
+#' Creates missing indicator variables for each predictor variable (feature) with missing values
+#' @param study.sample Data Frame. The study sample. No default
+#' @param outcome.name String. The name of outcome variable. Defaults to "s30d"
+#' @param features Character vector. The names of the feature variables. Defaults to NULL, in which case all columns except outcome.name and those potentially listed in excluded.columns are treated as features.
+#' @param excluded.columns Character vector. The names of columns that should not be treated as features. Defaults to NULL and is then ignored. Is also ignored if features is specified.
 #' @export
-add.missing.indicator.variables <- function(
-                                            study_data,
-                                            outcome_name = "s30d",
-                                            features = NULL,
-                                            excluded_columns = c("tc")
-                                            )
-{
-    ## Test that all columns specified in outcome_name, features and excluded
-    ## features (if any) are in study_data
-    column_names <- colnames(study_data)
-    stopifnot(all(c(outcome_name, features, excluded_columns) %in% column_names))
+AddMissingIndicatorVariables <- function(study.sample, outcome.name = "s30d",
+                                         features = NULL, excluded.columns = c("tc")) {
+    ## Test that all columns specified in outcome.name, features and excluded
+    ## features (if any) are in study.data
+    column.names <- colnames(study.sample)
+    stopifnot(all(c(outcome.name, features, excluded.columns) %in% column.names))
     ## Create vector of features
-    if (is.null(features)) features <- column_names[!(column_names %in% c(outcome_name, excluded_columns))]
+    if (is.null(features)) features <- column.names[!(column.names %in% c(outcome.name, excluded.columns))]
     ## Get feature data only
-    feature_data <- study_data[, features]
+    feature.data <- study.sample[, features]
     ## Define function to get either number of missing values or indicator variable
-    get.missing.info <- function(x, n = TRUE, variable = FALSE)
+    GetMissingInfo <- function(x, n = TRUE, variable = FALSE)
     {
-        n_missing <- sum(is.na(x))
-        indicator_variable <- NULL
-        if (n_missing > 0) indicator_variable <- as.numeric(!is.na(x))
-        if (n & !variable) return(n_missing)
-        if (variable) return(indicator_variable)
+        n.missing <- sum(is.na(x))
+        indicator.variable <- NULL
+        if (n.missing > 0) indicator.variable <- as.numeric(!is.na(x))
+        if (n & !variable) return(n.missing)
+        if (variable) return(indicator.variable)
     }
     ## Count number of missing values in each feature
-    missing_data_counts <- lapply(feature_data, get.missing.info)
-    missing_data_matrix <- do.call(rbind, missing_data_counts)
-    ## results$missing_data_table <<- create.missing.data.table(missing_data_matrix)
+    missing.data.counts <- lapply(feature.data, GetMissingInfo)
+    missing.data.matrix <- do.call(rbind, missing.data.counts)
+    ## results$missing.data.table <<- create.missing.data.table(missing.data.matrix)
     ## Create a dummy variable for each feature with missing
-    indicator_variables <- lapply(feature_data, get.missing.info, variable = TRUE)
-    indicator_data <- do.call(cbind, indicator_variables)
-    colnames(indicator_data) <- paste0(colnames(indicator_data), "_missing")
-    study_data <- data.frame(study_data, indicator_data)
-    return(study_data)
+    indicator.variables <- lapply(feature.data, GetMissingInfo, variable = TRUE)
+    indicator.data <- do.call(cbind, indicator.variables)
+    colnames(indicator.data) <- paste0(colnames(indicator.data), "_missing")
+    study.sample <- data.frame(study.sample, indicator.data)
+    return(study.sample)
 }
