@@ -1,63 +1,65 @@
-#' Create ROCR plots
+#' Create Roc Plot
 #'
-#' Plots reciever operating charecteristiqs curves or precision/recall curves.
-#' @param study_sample Study sample list. No default.
-#' @param ROC_or_precrec String. To perform ROC or precision/recall analysis. Accepted values are "ROC" or "prec_rec". No default
+#' Plots receiver operating charecteristiqs curves or precision/recall curves using ROCR.
+#' @param predictions.outcome.and.tc List. Predicted probabilities, cut predicted probabilites, clinicians triage category and the outcome for both the training and test partitions. Assumes that the list elements have suffix "train" and "test" indicating study sample partition it belongs to. No default.
+#' @param model.labels Character vector. The model labels in the predictions.outcome.and.tc list. Defaults to c("con.model.train","cut.model.train","con.model.test","cut.model.test", "tc.train", "tc.test")
+#' @param pretty.names Character vector. The pretty labels for the model labels. The labels that are used in the plot. Defaults to c("SuperLearner continuous prediction","SuperLearner priority levels","SuperLearner continuous prediction", "SuperLearner priority levels", "Clinicians priority levels", "Clinicians priority levels")
+#' @param roc.or.precrec String. To perform ROC or precision/recall analysis. Accepted values are "ROC" or "prec.rec". No default.
+#' @param ... Arguments for helper function RocrPlot.
 #' @export
-create.ROCR.plots <- function(
-                              study_sample,
-                              ROC_or_precrec = "ROC"
-                              )
-{
+CreateRocPlot <- function(predictions.outcome.and.tc,
+                          model.labels = c("con.model.train",
+                                           "cut.model.train",
+                                           "con.model.test",
+                                           "cut.model.test",
+                                           "tc.train",
+                                           "tc.test"),
+                          pretty.names = c("SuperLearner continuous prediction",
+                                           "SuperLearner priority levels",
+                                           "SuperLearner continuous prediction",
+                                           "SuperLearner priority levels",
+                                           "Clinicians priority levels",
+                                           "Clinicians priority levels"),
+                          roc.or.precrec = "roc", ...) {
     ## Error handling
-    if (!(ROC_or_precrec %in% c("ROC", "prec_rec"))) stop("Accepted values for ROC_or_precrec argument is ROC and prec_rec")
-    ## Models
-    models <- c("pred_con_train",
-                "pred_cat_train",
-                "pred_con_test",
-                "pred_cat_test",
-                "tc")
-    ## Pretty names
-    pretty_names <- c("SuperLearner continuous prediction",
-                      "SuperLearner priority levels",
-                      "SuperLearner continuous prediction",
-                      "SuperLearner priority levels",
-                      "Clinicians priority levels")
+    if (!is.list(predictions.outcome.and.tc))
+        stop("predictions.outcome.and.tc must be of type list")
+    if (length(model.labels) != length(pretty.names))
+        stop("pretty.names vector must be the same length as model.labels")
+    if (!(roc.or.precrec %in% c("roc", "prec.rec")))
+        stop("Accepted values for roc.or.precrec is roc and prec.rec")
     ## Define setting depending on type of plot
-    if (ROC_or_precrec == "ROC") measures <- list(tpr = "tpr",
+    if (roc.or.precrec == "roc") measures <- list(tpr = "tpr",
                                                   fpr = "fpr",
                                                   TPR = "True positive rate",
                                                   FPR = "False positive rate")
-    if (ROC_or_precrec == "prec_rec") measures <- list(prec = "prec",
+    if (roc.or.precrec == "prec.rec") measures <- list(prec = "prec",
                                                        rec = "rec",
                                                        PREC = "Precision",
                                                        REC = "True positive rate (recall)")
-    ## Get tpr and fpr
-    tpr_fpr <- lapply(setNames(nm = models), function(model) {
-        outcome <- "outcome_test"
-        if (grepl("train", model)) outcome <- "outcome_train"
-        pred <- ROCR::prediction(as.numeric(study_sample[[model]]), study_sample[[outcome]])
+    ## Get list of ROCR performance objects. One for each model.label.
+    tpr.fpr <- lapply(setNames(nm = model.labels), function(model) {
+        outcome <- "outcome.test"
+        if (grepl("train", model)) outcome <- "outcome.train"
+        pred <- ROCR::prediction(predictions = predictions.outcome.and.tc[[model]],
+                                 labels = predictions.outcome.and.tc[[outcome]])
         perf <- ROCR::performance(pred, measure = measures[[1]], x.measure = measures[[2]])
         return(perf)
     })
     ## Create plot data
-    plot_data <- do.call(rbind, lapply(setNames(nm = models), function(model) {
-        data <- tpr_fpr[[model]]
-        pretty_name <- pretty_names[grep(model, models)]
+    plot.data <- do.call(rbind, lapply(setNames(nm = model.labels), function(model) {
+        rocr.data <- tpr.fpr[[model]]
+        pretty.name <- pretty.names[grep(model, model.labels)]
         set <- "B"
         if (grepl("train", model)) set <- "A"
-        new_data <- cbind(data@y.values[[1]], data@x.values[[1]])
-        new_data <- data.frame(new_data, rep(set, nrow(new_data)), rep(pretty_name, nrow(new_data)))
-        colnames(new_data) <- c(measures[[1]], measures[[2]], "set", "pretty_name")
-        return(new_data)
+        new.data <- cbind(rocr.data@y.values[[1]], rocr.data@x.values[[1]])
+        new.data <- data.frame(new.data, rep(set, nrow(new.data)), rep(pretty.name, nrow(new.data)))
+        colnames(new.data) <- c(measures[[1]], measures[[2]], "set", "pretty.name")
+        return(new.data)
     }))
     ## Create and save plots
-    if (ROC_or_precrec  == "ROC") plot_name <- "roc_plot"
-    if (ROC_or_precrec  == "prec_rec") plot_name <- "prec_rec_plot"
-    rocr.plot(plot_data = plot_data,
-              y_name = measures[[1]],
-              x_name = measures[[2]],
-              ylab = measures[[3]],
-              xlab = measures[[4]],
-              file_name = plot_name)
+    plot.name <- ifelse(roc.or.precrec == "roc", yes = "roc.plot", no = "prec.rec.plot")
+    PlotRoc(plot.data = plot.data, y.name = measures[[1]],
+            x.name = measures[[2]], ylab = measures[[3]],
+            xlab = measures[[4]], file.name = plot.name, ...)
 }
