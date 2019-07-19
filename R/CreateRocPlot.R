@@ -10,14 +10,20 @@
 CreateRocPlot <- function(predictions.outcome.and.tc,
                           model.labels = c("con.model.train",
                                            "cut.model.train",
+                                           "con.model.validation",
+                                           "cut.model.validation",                                           
                                            "con.model.test",
                                            "cut.model.test",
                                            "tc.train",
+                                           "tc.validation",
                                            "tc.test"),
                           pretty.names = c("SuperLearner continuous prediction",
                                            "SuperLearner priority levels",
                                            "SuperLearner continuous prediction",
                                            "SuperLearner priority levels",
+                                           "SuperLearner continuous prediction",
+                                           "SuperLearner priority levels",
+                                           "Clinicians priority levels",
                                            "Clinicians priority levels",
                                            "Clinicians priority levels"),
                           roc.or.precrec = "roc", ...) {
@@ -29,20 +35,27 @@ CreateRocPlot <- function(predictions.outcome.and.tc,
     if (!(roc.or.precrec %in% c("roc", "prec.rec")))
         stop("Accepted values for roc.or.precrec is roc and prec.rec")
     ## Define setting depending on type of plot
-    if (roc.or.precrec == "roc") measures <- list(tpr = "tpr",
-                                                  fpr = "fpr",
-                                                  TPR = "True positive rate",
-                                                  FPR = "False positive rate")
-    if (roc.or.precrec == "prec.rec") measures <- list(prec = "prec",
-                                                       rec = "rec",
-                                                       PREC = "Precision",
-                                                       REC = "True positive rate (recall)")
-    ## Get list of ROCR performance objects. One for each model.label.
+    if (roc.or.precrec == "roc")
+        measures <- list(tpr = "tpr",
+                         fpr = "fpr",
+                         TPR = "True positive rate",
+                         FPR = "False positive rate")
+    if (roc.or.precrec == "prec.rec")
+        measures <- list(prec = "prec",
+                         rec = "rec",
+                         PREC = "Precision",
+                         REC = "True positive rate (recall)")
+    ## Get list of ROCR performance objects. One for each model.label
     tpr.fpr <- lapply(setNames(nm = model.labels), function(model) {
-        outcome <- "outcome.test"
-        if (grepl("train", model)) outcome <- "outcome.train"
+        ## Get the model extension
+        outcome.label <- "y.train"
+        if (grepl("validation", model)) {
+            outcome.label <- "y.validation"
+        } else if (grepl("test", model)) {
+            outcome.label <- "y.test"
+        }
         pred <- ROCR::prediction(predictions = predictions.outcome.and.tc[[model]],
-                                 labels = predictions.outcome.and.tc[[outcome]])
+                                 labels = predictions.outcome.and.tc[[outcome.label]])
         perf <- ROCR::performance(pred, measure = measures[[1]], x.measure = measures[[2]])
         return(perf)
     })
@@ -50,8 +63,12 @@ CreateRocPlot <- function(predictions.outcome.and.tc,
     plot.data <- do.call(rbind, lapply(setNames(nm = model.labels), function(model) {
         rocr.data <- tpr.fpr[[model]]
         pretty.name <- pretty.names[grep(model, model.labels)]
-        set <- "B"
-        if (grepl("train", model)) set <- "A"
+        set <- "A"
+        if (grepl("validation", model)){
+            set <- "B"
+        } else if (grepl("test", model)) {
+            set <- "C"
+        }
         new.data <- cbind(rocr.data@y.values[[1]], rocr.data@x.values[[1]])
         new.data <- data.frame(new.data, rep(set, nrow(new.data)), rep(pretty.name, nrow(new.data)))
         colnames(new.data) <- c(measures[[1]], measures[[2]], "set", "pretty.name")
