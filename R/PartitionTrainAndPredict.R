@@ -4,22 +4,26 @@
 #' @param study.sample Data frame. The study.sample. No default.
 #' @param outcome.variable.name Character vector of length 1. The name of the outcome variable of interest. Defaults to "s30d".
 #' @param n.partitions Numeric vector of length 1. The number of partitions to create with PartitionSample. Accepted values are 2 or 3. If 2, a train and test set is created. If 3, train, validation, and test sets are created - the models is fitted on the training set, optimal breaks is gridsearched on the validation set, and the model is tested on the test set. Defaults to 2. 
+#' @param models.names Character vector. The model names to stack in SuperLearner. Defaults to c("SL.gam", "SL.randomForest", "SL.nnet, SL.xgboost", "SL.svm")
 #' @param save.to.results Logical. If TRUE SuperLearner predictions, outcome and tc in each partition is saved to the Results list. Defaults to TRUE.
-#' @param models.names Character vector. The model names to stack in SuperLearner. Defaults to c("SL.gam", "SL.randomForest", "SL.nnet, SL.xgboost", "SL.svm") 
+#' @param verbose Logical. If TRUE the modelling process is printed to console. Defaults to FALSE.
 #' @export
 PartitionTrainAndPredict <- function(study.sample, outcome.variable.name = "s30d",
                                      model.names = c("SL.randomForest"), n.partitions = 2, 
-                                     save.to.results = TRUE){
+                                     save.to.results = TRUE, verbose = FALSE){
     ## Error handling
     if (!is.data.frame(study.sample))
         stop ("data must be of type data frame")
+    if (!bengaltiger::IsLength1(outcome.variable.name) | !is.character(outcome.variable.name))
+        stop ("outome.variable.name must be of a character vector of length 1")     
     ## Partition the sample, and return the separate partitions, the corresponding outcome
     ## for both sets and tc in both sets
     n.partitions = 3
     partitions.outcome.and.tc <- PartitionSample(study.sample = study.sample,
                                                  outcome.variable.name = outcome.variable.name,
                                                  n.partitions = n.partitions)
-    message("Fitting SuperLearner...")
+    if (verbose)
+        message("\nFitting SuperLearner...")
     ## Fit the model to the training data
     fitted.sl <- with(partitions.outcome.and.tc, SuperLearner::SuperLearner(Y = train$y, X = train$x,
                                                                             family = binomial(),
@@ -33,7 +37,8 @@ PartitionTrainAndPredict <- function(study.sample, outcome.variable.name = "s30d
                                                             newdata = partition.list$x,
                                                             onlySL = TRUE)$pred)
     label <- ifelse(n.partitions == 2, "train", "validation")
-    message(paste("Finding Optimal breaks for continuous probabilities on the", label, "set..."))
+    if (verbose)
+        message(paste("\nFinding Optimal breaks for continuous probabilities on the", label, "set..."))
     ## Gridsearch the optimal cut-points for the predicted probabilities on
     ## the appropriate set
     optimal.breaks <- GridsearchBreaks(predictions = predictions[grepl(label, con.list.labels)][[1]],
