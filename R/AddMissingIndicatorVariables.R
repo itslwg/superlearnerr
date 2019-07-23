@@ -13,17 +13,20 @@ AddMissingIndicatorVariables <- function(study.sample, outcome.name = "s30d",
     column.names <- colnames(study.sample)
     stopifnot(all(c(outcome.name, features, excluded.columns) %in% column.names))
     ## Create vector of features
-    if (is.null(features)) features <- column.names[!(column.names %in% c(outcome.name, excluded.columns))]
+    if (is.null(features))
+        features <- column.names[!(column.names %in% c(outcome.name, excluded.columns))]
     ## Get feature data only
     feature.data <- study.sample[, features]
     ## Define function to get either number of missing values or indicator variable
-    GetMissingInfo <- function(x, n = TRUE, variable = FALSE)
-    {
+    GetMissingInfo <- function(x, n = TRUE, variable = FALSE) {
         n.missing <- sum(is.na(x))
         indicator.variable <- NULL
-        if (n.missing > 0) indicator.variable <- as.numeric(!is.na(x))
-        if (n & !variable) return(n.missing)
-        if (variable) return(indicator.variable)
+        if (n.missing > 0)
+            indicator.variable <- as.numeric(!is.na(x))
+        if (n & !variable)
+            return(n.missing)
+        if (variable)
+            return(indicator.variable)
     }
     ## Count number of missing values in each feature
     missing.data.counts <- lapply(feature.data, GetMissingInfo)
