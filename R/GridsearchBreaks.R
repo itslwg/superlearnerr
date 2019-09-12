@@ -23,13 +23,12 @@ GridsearchBreaks <- function(predictions, outcome.vector,
     if (!all(levels(as.factor(outcome.vector)) %in% c("0", "1"))) stop("outcome.vector is not a vector of binary data with only 0 and 1")
     ## Verify that there are no missing values in predictions or outcomes
     if (!all(!is.na(predictions)) | !all(!is.na(outcome.vector))) stop("There is missing data in predictions or outcomes")
-    ## Loss functions
-##    loss_functions <- list(auc = function(pred) ROCR::performance(pred, "auc", x.measure =  "cutoff")@y.values[[1]])
     ## Define grid
     breaks.to.search <- combn(grid, n.breaks, simplify = FALSE)
     ## Draw a random sample if sample is TRUE
     if (sample) breaks.to.search <- breaks.to.search[sample(1:length(breaks.to.search), ceiling(length(breaks.to.search) * 0.1))]
-    message("Estimating loss for each of ", length(breaks.to.search), " possible cutpoints combinations")
+    if (verbose)
+        message("Estimating loss for each of ", length(breaks.to.search), " possible cutpoints combinations")
     ## Define function to estimate loss for each set of cut points (breaks)
     EstimateLoss <- function(breaks) {
         breaks <- c(-Inf, breaks, Inf)
@@ -55,7 +54,7 @@ GridsearchBreaks <- function(predictions, outcome.vector,
         parallel::stopCluster(cl)
         loss_list <- do.call(c, parallel_list)
     } else {
-        loss_list <- lapply(breaks.to.search, EstimateLoss)
+        loss.list <- lapply(breaks.to.search, EstimateLoss)   
     }
     loss.data <- data.frame(breaks = do.call(rbind, breaks.to.search), auc = unlist(loss.list))
     ## Make and save plot
@@ -65,7 +64,5 @@ GridsearchBreaks <- function(predictions, outcome.vector,
     if (!maximise) optimise.function <- get("min")
     ## Get optimal cutoffs
     optimal.cutpoints <- unlist(loss.data[order(-loss.data$auc), ][1, 1:n.breaks])
-##    optimal_cutpoints <- loss_data[loss_data$loss == optimise_function(loss_data$loss), 1:n_breaks]
-##    optimal_cutpoints <- as.numeric(optimal_cutpoints[sample(1:nrow(optimal_cutpoints), 1), ]) # Select one random set of cutpoints if more than one has the same loss
     return(optimal.cutpoints)
 }
