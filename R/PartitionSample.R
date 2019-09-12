@@ -1,6 +1,6 @@
 #' Partition Sample
 #'
-#' Partitions the sample using stratified random sampling of the outcome of interest. Attempts to maintain class distribution as observed in the study sample. Accepted number of partitions are 2 or 3. If n.partitions is 3, 1 - train.size) / 2 is partitioned into both the validation and test sets.
+#' Partitions the sample using stratified random sampling of the outcome of interest. Attempts to maintain class distribution as observed in the study sample. Accepted number of partitions are 2 or 3. If n.partitions is 3, 1 - train.size) / 2 is partitioned into both the validation and test sets. 
 #' @param study.sample Data frame. The study sample. No default
 #' @param outcome.variable.name Character vector of length 1. The name of the outcome variable of interest. Defaults to "s30d"
 #' @param n.partitions Numeric vector of length 1. The number of partitions to create. Either 2 of 3. If  Defaults to 2.
