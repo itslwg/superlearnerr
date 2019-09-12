@@ -6,7 +6,8 @@
 #' @export
 PrepareStudySample <- function(study.sample, data.dictionary) {
     ## Error handling
-    if (!is.data.frame(study.sample)) stop ("Study sample has to be type data frame.")
+    if (!is.data.frame(study.sample))
+        stop("Study sample has to be type data frame.")
     SplitLabels <- function(labels) {
         ## Remove quotation marks and split on commas
         labels <- trimws(gsub("\\\"", "", unlist(strsplit(labels, ","))))
@@ -39,7 +40,8 @@ PrepareStudySample <- function(study.sample, data.dictionary) {
         return(data)
     })
     ## If seqn is in study data, add seqn again
-    if (seqn.in.data) study.sample <- data.frame(study.sample, seqn = seqn)
+    if (seqn.in.data)
+        study.sample <- data.frame(study.sample, seqn = seqn)
     return(study.sample)
 }
 
