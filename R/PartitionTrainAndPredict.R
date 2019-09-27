@@ -8,9 +8,12 @@
 #' @param save.to.results Logical. If TRUE SuperLearner predictions, outcome and tc in each partition is saved to the Results list. Defaults to TRUE.
 #' @param verbose Logical. If TRUE the modelling process is printed to console. Defaults to FALSE.
 #' @export
-PartitionTrainAndPredict <- function(study.sample, outcome.variable.name = "s30d",
-                                     model.names = c("SL.randomForest"), n.partitions = 2, 
-                                     save.to.results = TRUE, verbose = FALSE){
+PartitionTrainAndPredict <- function(study.sample,
+                                     outcome.variable.name = "s30d",
+                                     model.names = c("SL.randomForest"),
+                                     n.partitions = 2,
+                                     save.to.results = TRUE,
+                                     verbose = FALSE){
     ## Error handling
     if (!is.data.frame(study.sample))
         stop ("data must be of type data frame")
@@ -23,16 +26,18 @@ PartitionTrainAndPredict <- function(study.sample, outcome.variable.name = "s30d
                                                  outcome.variable.name = outcome.variable.name,
                                                  n.partitions = n.partitions)
     if (verbose)
-        message("\nFitting SuperLearner...")
+        message("Fitting SuperLearner...")
     ## Fit the model to the training data
     fitted.sl <- with(partitions.outcome.and.tc, SuperLearner::SuperLearner(Y = train$y, X = train$x,
                                                                             family = binomial(),
                                                                             SL.library = model.names,
                                                                             method = "method.AUC",
                                                                             verbose = FALSE))
-    con.list.labels <- paste0("con.model.", names(partitions.outcome.and.tc))
-    ## Make predictions on all partitions
-    predictions <- lapply(setNames(partitions.outcome.and.tc, nm = con.list.labels),
+    ## Extract training sets
+    training.and.validation.sublists <- partitions.outcome.and.tc[-grep("test", names(partitions.outcome.and.tc))]
+    con.list.labels <- paste0("con.model.", names(training.and.validation.sublists))
+    ## Make predictions on the validation set
+    predictions <- lapply(setNames(training.and.validation.sublists, nm = con.list.labels),
                           function (partition.list) predict(object = fitted.sl,
                                                             newdata = partition.list$x,
                                                             onlySL = TRUE)$pred)
@@ -42,8 +47,22 @@ PartitionTrainAndPredict <- function(study.sample, outcome.variable.name = "s30d
     ## Gridsearch the optimal cut-points for the predicted probabilities on
     ## the appropriate set
     optimal.breaks <- GridsearchBreaks(predictions = predictions[grepl(label, con.list.labels)][[1]],
-                                       outcome.vector = partitions.outcome.and.tc[[label]]$y)   
-    ## Bin predictions made on the test set
+                                       outcome.vector = partitions.outcome.and.tc[[label]]$y)
+    full.training.list <- list(y = unlist(lapply(training.and.validation.sublists, "[[", "y")),
+                               x = do.call(rbind, lapply(training.and.validation.sublists, "[[", "x")))
+    if (n.partitions == 3)
+        ## Train the model once again. Now, on both the training and validation sets
+        fitted.sl <- SuperLearner::SuperLearner(Y = full.training.list$y,
+                                                X = full.training.list$x,
+                                                family = binomial(),
+                                                SL.library = model.names,
+                                                method = "method.AUC",
+                                                verbose = FALSE)
+    ## Make predictions on the test set
+    predictions$con.model.test <- predict(object = fitted.sl,
+                                          newdata = partitions.outcome.and.tc$test$x,
+                                          onlySL = TRUE)$pred
+    ## Bin predictions made on the test set using the optimal cut-points
     cut.list.labels <- paste0("cut.model.", names(partitions.outcome.and.tc))
     binned.predictions <- lapply(setNames(predictions, nm = cut.list.labels),
                                  function (preds) as.numeric(cut(x = preds, breaks = c(-Inf, optimal.breaks, Inf),
