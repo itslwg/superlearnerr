@@ -24,7 +24,7 @@ LoadRequiredPackages <- function() {
                   "extrafont",
                   "gridExtra",
                   "ggpubr",
-                  "kableExtra",
+                  "gridExtra",
                   "caret")
     ## Require those packages using a loop
     for (package in packages) require(package, character.only = TRUE)
