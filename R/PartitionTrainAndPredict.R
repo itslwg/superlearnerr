@@ -21,7 +21,6 @@ PartitionTrainAndPredict <- function(study.sample,
         stop ("outome.variable.name must be of a character vector of length 1")     
     ## Partition the sample, and return the separate partitions, the corresponding outcome
     ## for both sets and tc in both sets
-    n.partitions = 3
     partitions.outcome.and.tc <- PartitionSample(study.sample = study.sample,
                                                  outcome.variable.name = outcome.variable.name,
                                                  n.partitions = n.partitions)
@@ -34,36 +33,36 @@ PartitionTrainAndPredict <- function(study.sample,
                                                                             method = "method.AUC",
                                                                             verbose = FALSE))
     ## Extract training sets
-    training.and.validation.sublists <- partitions.outcome.and.tc[-grep("test", names(partitions.outcome.and.tc))]
-    con.list.labels <- paste0("con.model.", names(training.and.validation.sublists))
+    train.validation <- partitions.outcome.and.tc[-grep("test", names(partitions.outcome.and.tc))]
+    con.list.labels <- paste0("con.model.", names(train.validation))
     ## Make predictions on the validation set
-    predictions <- lapply(setNames(training.and.validation.sublists, nm = con.list.labels),
+    predictions <- lapply(setNames(train.validation, nm = con.list.labels),
                           function (partition.list) predict(object = fitted.sl,
                                                             newdata = partition.list$x,
                                                             onlySL = TRUE)$pred)
     label <- ifelse(n.partitions == 2, "train", "validation")
     if (verbose)
-        message(paste("\nFinding Optimal breaks for continuous probabilities on the", label, "set..."))
+        message(paste("Finding optimal breaks for continuous probabilities on the", label, "set..."))
     ## Gridsearch the optimal cut-points for the predicted probabilities on
     ## the appropriate set
-    optimal.breaks <- GridsearchBreaks(predictions = predictions[grepl(label, con.list.labels)][[1]],
+    optimal.breaks <- GridsearchBreaks(predictions = predictions[grepl(label, con.list.labels)][[1]], 
                                        outcome.vector = partitions.outcome.and.tc[[label]]$y)
     full.training.list <- list(y = unlist(lapply(training.and.validation.sublists, "[[", "y")),
                                x = do.call(rbind, lapply(training.and.validation.sublists, "[[", "x")))
     if (n.partitions == 3)
-        ## Train the model once again. Now, on both the training and validation sets
-        fitted.sl <- SuperLearner::SuperLearner(Y = full.training.list$y,
-                                                X = full.training.list$x,
-                                                family = binomial(),
-                                                SL.library = model.names,
-                                                method = "method.AUC",
-                                                verbose = FALSE)
+        ## Train the model once again. Now on both the training and validation sets
+        fitted.sl <- with(full.training.list, SuperLearner::SuperLearner(Y = y,
+                                                                         X = x,
+                                                                         family = binomial(),
+                                                                         SL.library = model.names,
+                                                                         method = "method.AUC",
+                                                                         verbose = FALSE)
     ## Make predictions on the test set
     predictions$con.model.test <- predict(object = fitted.sl,
                                           newdata = partitions.outcome.and.tc$test$x,
                                           onlySL = TRUE)$pred
     ## Bin predictions made on the test set using the optimal cut-points
-    cut.list.labels <- paste0("cut.model.", names(partitions.outcome.and.tc))
+    cut.list.labels <- paste0("cut.model.", c("train", "validation", "test"))
     binned.predictions <- lapply(setNames(predictions, nm = cut.list.labels),
                                  function (preds) as.numeric(cut(x = preds, breaks = c(-Inf, optimal.breaks, Inf),
                                                                  labels = c("Green", "Yellow", "Orange", "Red"),
