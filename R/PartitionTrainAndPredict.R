@@ -56,7 +56,7 @@ PartitionTrainAndPredict <- function(study.sample,
                                                                          family = binomial(),
                                                                          SL.library = model.names,
                                                                          method = "method.AUC",
-                                                                         verbose = FALSE)
+                                                                         verbose = FALSE))
     ## Make predictions on the test set
     predictions$con.model.test <- predict(object = fitted.sl,
                                           newdata = partitions.outcome.and.tc$test$x,
