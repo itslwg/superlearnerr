@@ -1,41 +1,44 @@
-#' Create mortality plots
+#' CreateMortalityPlot
 #'
-#' Mortality plots
-#' @param study_sample Study sample object. No default.
+#' Creates a stacked bar plot representing under-triage and over-triage in each triage category.
+#' @param predictions.outcome.and.tc List. Predictions, outcome and clinicians triage as list. No default.
 #' @param save_plot_data_to_results Logical. If TRUE the plot data is saved to results. Defaults to TRUE.
 #' @export
-create.mortality.plot <- function(
-                                  study_sample,
-                                  save_plot_data_to_results = TRUE
-                                  )
-{
+CreateMortalityPlot <- function(predictions.outcome.and.tc,
+                                save.plot.data.to.results = TRUE) {
     ## Error handling
-    if (!is.list(study_sample)) stop("Study sample has to be a list")
+    if (!is.list(predictions.outcome.and.tc))
+        stop("predictions.outcome.and.tc must be list")
     ## Make plot data
-    plot_data <- do.call(rbind, lapply(c("pred_cat_test", "tc"), function(x) {
-        pred <- study_sample[[x]]
-        outcome <- study_sample$outcome_test
-        data_table <- table(pred, outcome)
-        n_survived <- data_table[, 1]
-        n_died <- data_table[, 2]
-        perc_died_y <- n_survived + n_died
-        perc_died <- paste0(round(prop.table(data_table, margin = 1)[, 2] * 100), "%")
-        pretty_name <- "SuperLearner"
-        if (x == "tc") pretty_name <- "Clinicians"
-        data <- data.frame(levels = rep(rownames(data_table), 2), y = c(n_survived, n_died), strata = rep(c("Survived", "Died"), each = 4), perc_died_y = c(perc_died_y, rep(NA, 4)), perc_died = c(perc_died, rep(NA, 4)))
-        data <- data.frame(data, x = rep(letters[1:4], 2), pretty_name = rep(pretty_name, nrow(data)))
+    plot.data <- do.call(rbind, lapply(c("cut.model.test", "tc.test"), function(x) {
+        pred <- predictions.outcome.and.tc[[x]]
+        outcome <- predictions.outcome.and.tc$y.test
+        mortality.to.category <- table(pred, outcome)
+        n.survived <- mortality.to.category[, 1]
+        n.died <- mortality.to.category[, 2]
+        perc.died.y <- n.survived + n.died
+        perc.died <- paste0(round(prop.table(mortality.to.category, margin = 1)[, 2] * 100), "%")
+        pretty.name <- "SuperLearner"
+        if (x == "tc.test")
+            pretty.name <- "Clinicians"
+        data <- data.frame(levels = rep(rownames(mortality.to.category), 2),
+                           y = c(n.survived, n.died), strata = rep(c("Survived", "Died"), each = 4),
+                           perc.died.y = c(perc.died.y, rep(NA, 4)), perc.died = c(perc.died, rep(NA, 4)))
+        data <- data.frame(data, x = rep(letters[1:4], 2), pretty.name = rep(pretty.name, nrow(data)))
+        print (data)
         rownames(data) <- NULL
         return(data)
     }))
     ## Save plot data to results
-    if (save_plot_data_to_results) results$mortality_plot_data <<- plot_data
+    if (save.plot.data.to.results)
+        bengaltiger::SaveToResults(plot.data, "mortality.plot.data")
     ## Plot function
-    colors <- brewer.pal(3, "Set2")
-    mortality.plot <- function(plot_data) {
-        levels <- levels(study_sample$tc)
-        plot_object <- ggplot(data = plot_data) +
+    colors <- RColorBrewer::brewer.pal(3, "Set2")
+    MortalityPlot <- function(plot.data) {
+        levels <- c("Green", "Yellow", "Orange", "Red")
+        plot.object <- ggplot(data = plot.data) +
             geom_col(aes(y = y, x = x, fill = strata), position = "stack") +
-            geom_text(aes(y = perc_died_y + 1, x = x, label = perc_died), size = 2, vjust = "bottom") +
+            geom_text(aes(y = perc.died.y + 1, x = x, label = perc.died), size = 2, vjust = "bottom") +
             xlab("Priority level") +
             ylab("Number of patients") +
             scale_x_discrete(labels = setNames(levels, letters[1:length(levels)])) + 
@@ -47,11 +50,12 @@ create.mortality.plot <- function(
                   legend.key.size = unit(4, "mm"),
                   legend.key = element_rect(size = 1, colour = "white", linetype = "solid"),
                   plot.margin = unit(c(2,2,2,2),"pt")) +
-            facet_wrap(~pretty_name) 
-        return(plot_object)
+            facet_wrap(~pretty.name) 
+        return(plot.object)
     }
     ## Create plot
-    mortality_plot <- mortality.plot(plot_data)
+    fig <- MortalityPlot(plot.data)
+    print (fig)
     ## Save plot
-    save.plot(mortality_plot, "mortality_plot")
+    save.plot(fig, "mortality.plot")
 }
