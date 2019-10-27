@@ -25,9 +25,15 @@ LoadRequiredPackages <- function() {
                   "gridExtra",
                   "ggpubr",
                   "gridExtra",
-                  "caret")
+                  "caret",
+                  "bengaltiger",
+                  "boot",
+                  "ROCR",
+                  "kableExtra",
+                  "rmarkdown")
     ## Require those packages using a loop
     for (package in packages) require(package, character.only = TRUE)
     ## Save list of packages to parent environment
     .package_list <<- packages
 }
+
