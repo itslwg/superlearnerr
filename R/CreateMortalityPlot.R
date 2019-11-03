@@ -6,12 +6,14 @@
 #' @param outcome.label Character vector of length 1. List label of the outcome.variable. Defaults to "y.test". 
 #' @param pretty.names Character vector of length 1. Pretty names for the models to use in the plot. If NULL, Defaults to c("SuperLearner", "Clinicians") 
 #' @param save.plot.data.to.results Logical. If TRUE the plot data is saved to results. Defaults to TRUE.
+#' @param ... Additional arguments for SavePlot.
 #' @export
 CreateMortalityPlot <- function(predictions.outcome.and.tc,
                                 model.labels = NULL,
                                 outcome.label = "y.test",
                                 pretty.names = c("SuperLearner", "Clinicians"),
-                                save.plot.data.to.results = TRUE) {
+                                save.plot.data.to.results = TRUE,
+                                ...) {
     ## Error handling
     if (!is.list(predictions.outcome.and.tc))
         stop("predictions.outcome.and.tc must be list")
@@ -34,7 +36,6 @@ CreateMortalityPlot <- function(predictions.outcome.and.tc,
         rownames(data) <- NULL
         return(data)
     }, model.labels, pretty.names, SIMPLIFY = FALSE))
-    print (plot.data)
     ## Save plot data to results
     if (save.plot.data.to.results)
         bengaltiger::SaveToResults(plot.data, "mortality.plot.data")
@@ -63,7 +64,7 @@ CreateMortalityPlot <- function(predictions.outcome.and.tc,
     }
     ## Create plot
     fig <- MortalityPlot(plot.data)
-    print (fig)
     ## Save plot
-    save.plot(fig, "mortality.plot")
+    SavePlot(plot.object = fig, file.name = "mortality.plot",
+             ...)
 }
