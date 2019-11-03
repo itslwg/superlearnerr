@@ -57,5 +57,6 @@ PlotRoc <- function(plot.data, device = "eps", y.name = NULL, x.name = NULL,
         SavePlot(plot.object = plot.object,
                  file.name = file.name,
                  device = device)
-    if (return.plot) return(plot.object)
+    if (return.plot)
+        return (plot.object)
 }

@@ -12,7 +12,8 @@ SavePlot <- function(plot.object, file.name, width = 13.2, height = width * 0.65
                      device = "eps", convert.pdf.to.eps = TRUE) {
     ## Setup device
     font.device <- device
-    if (device == "eps") font.device = "postscript"
+    if (device == "eps")
+        font.device = "postscript"
     ## Generate full file name
     full.file.name <- paste0(file.name, ".", device)
     ## Setup ggplot arguments depending on device

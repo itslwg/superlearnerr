@@ -76,7 +76,10 @@ CreateRocPlot <- function(predictions.outcome.and.tc,
     }))
     ## Create and save plots
     plot.name <- ifelse(roc.or.precrec == "roc", yes = "roc.plot", no = "prec.rec.plot")
-    PlotRoc(plot.data = plot.data, y.name = measures[[1]],
-            x.name = measures[[2]], ylab = measures[[3]],
-            xlab = measures[[4]], file.name = plot.name, ...)
+    plt <- PlotRoc(plot.data = plot.data, y.name = measures[[1]],
+                   x.name = measures[[2]], ylab = measures[[3]],
+                   xlab = measures[[4]], file.name = plot.name,
+                   ...)
+    if (!is.null(plt))
+        return (plt)
 }
