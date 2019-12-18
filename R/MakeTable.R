@@ -18,12 +18,16 @@ MakeTable <- function(df, table.name, footnote = NULL,
     if (!(file.format %in% c("docx", "rmd", "pdf")) | !bengaltiger::IsLength1(file.format)) 
         stop("file.format has to be one of docx, rmd, or pdf")
     preamble <- "library(kableExtra)\nlibrary(knitr)\n"
-    call <- paste0(preamble, getCall(...))
+    call <- paste0(preamble, getCall(...), "%>% kable_styling(position = \"center\")")
     if (!is.null(footnote))
         call <- paste(call, "%>% footnote(symbol = footnote)")
     if (save.to.disk) {
         file.name <- paste0(table.name, ".rmd")
-        md.call <- paste("```{r echo = FALSE, results = 'asis'} \n",
+        md.call <- paste0("---\n",
+                          "header-includes:\n",
+                          "- \\usepackage{booktabs}\n",
+                          "---\n",
+                          "```{r echo = FALSE, results = 'asis'} \n",
                          call, "\n",
                          "```")
         write(md.call, file.name)
