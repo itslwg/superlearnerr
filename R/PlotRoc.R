@@ -8,23 +8,26 @@
 #' @param ylab Character vector of length 1. The y label. Defaults to NULL in which case the variable name is used.
 #' @param xlab Character vector of length 1. The x label. Defaults to NULL in which case the variable name is used.
 #' @param file.name Character vector of length 1. If not NULL the plot object will be saved to disk using the name provided. Defaults to NULL.
-#' @param return.plot Logical. If TRUE the plot object is returned. Defaults to FALSE.
 #' @param subscript Logical. If TRUE, underscores in pretty names in converted to LaTex expression. Defaults to FALSE.
 #' @export
 PlotRoc <- function(plot.data, device = "eps", y.name = NULL, x.name = NULL,
                     ylab = NULL, xlab = NULL, file.name = NULL,
-                    return.plot = FALSE, subscript = FALSE) {
+                    subscript = FALSE) {
     ## Number of colors and linetypes
     n <- length(levels(as.factor(plot.data$pretty.name)))
     ## Define colors and linetypes
     colors <- RColorBrewer::brewer.pal(n, "Set1")
     line.types <- c(1:n)
     ## Get y and x variables
-    if (is.null(y.name)) y.name <- names(plot.data)[1]
-    if (is.null(x.name)) x.name <- names(plot.data)[2]
+    if (is.null(y.name))
+        y.name <- names(plot.data)[1]
+    if (is.null(x.name))
+        x.name <- names(plot.data)[2]
     ## Define axis labels
-    if (is.null(ylab)) ylab <- gsub("EP", ")", gsub("BP", "(", gsub("_", " ", y.name)))
-    if (is.null(xlab)) xlab <- gsub("EP", ")", gsub("BP", "(", gsub("_", " ", x.name)))
+    if (is.null(ylab))
+        ylab <- gsub("EP", ")", gsub("BP", "(", gsub("_", " ", y.name)))
+    if (is.null(xlab))
+        xlab <- gsub("EP", ")", gsub("BP", "(", gsub("_", " ", x.name)))
     ## Get unique pretty names
     pretty.names <- as.list(as.character(unique(plot.data$pretty.name)))
     ## Detect underscores as subscripts in pretty names
@@ -57,6 +60,5 @@ PlotRoc <- function(plot.data, device = "eps", y.name = NULL, x.name = NULL,
         SavePlot(plot.object = plot.object,
                  file.name = file.name,
                  device = device)
-    if (return.plot)
-        return (plot.object)
+    return (plot.object)
 }
