@@ -5,7 +5,7 @@
 #' @param model.labels Character vector. The model labels in the predictions.outcome.and.tc list. Defaults to c("con.model.train","cut.model.train","con.model.test","cut.model.test", "tc.train", "tc.test")
 #' @param pretty.names Character vector. The pretty labels for the model labels. The labels that are used in the plot. Defaults to c("SuperLearner continuous prediction","SuperLearner priority levels","SuperLearner continuous prediction", "SuperLearner priority levels", "Clinicians priority levels", "Clinicians priority levels")
 #' @param roc.or.precrec String. To perform ROC or precision/recall analysis. Accepted values are "ROC" or "prec.rec". No default.
-#' @param ... Arguments for helper function RocrPlot.
+#' @param ... Arguments for helper function PlotRoc.
 #' @export
 CreateRocPlot <- function(predictions.outcome.and.tc,
                           model.labels = c("con.model.train",
@@ -80,6 +80,9 @@ CreateRocPlot <- function(predictions.outcome.and.tc,
                    x.name = measures[[2]], ylab = measures[[3]],
                    xlab = measures[[4]], file.name = plot.name,
                    ...)
-    if (!is.null(plt))
-        return (plt)
+    if (!is.null(file.name))
+        SavePlot(plot.object = plot.object,
+                 file.name = file.name,
+                 device = device)
+    return (plt)
 }
