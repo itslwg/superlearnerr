@@ -1,7 +1,9 @@
 Package: SupaLarna
-Title: What the Package Does (one line, title case)
+Title: Package for the SuperLearner vs clincians study
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
+Authors@R:
+	person("Ludvig", "Wärnberg Gerdin", email = "ludviggerdin@gmail.com", role = c("aut", "cre"))
+	person("Martin", "Gerdin Wärnberg", email = "martingerdin@gmail.com", role = c("aut", "cre"))   
 Description: What the package does (one paragraph).
 Depends: R (>= 3.4.4)
 Imports:
@@ -27,7 +29,13 @@ Imports:
 	gridExtra,
 	ggpubr,
 	desc,
-	latex2exp
+	latex2exp,
+	caret,
+	rmarkdown,
+	magrittr,
+	boot,
+	ROCR,
+	bengaltiger
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
