@@ -7,13 +7,16 @@
 #' @param models.names Character vector. The model names to stack in SuperLearner. Defaults to c("SL.gam", "SL.randomForest", "SL.nnet, SL.xgboost", "SL.svm")
 #' @param save.to.results Logical. If TRUE SuperLearner predictions, outcome and tc in each partition is saved to the Results list. Defaults to TRUE.
 #' @param verbose Logical. If TRUE the modelling process is printed to console. Defaults to FALSE.
+#' @param return.samples Logical vector of legnth 1. If TRUE the list of samples partitioned from the study.sample is returned. Defaults to TRUE. 
 #' @export
 PartitionTrainAndPredict <- function(study.sample,
                                      outcome.variable.name = "s30d",
                                      model.names = c("SL.randomForest"),
                                      n.partitions = 2,
                                      save.to.results = TRUE,
-                                     verbose = FALSE){
+                                     boot = FALSE,
+                                     verbose = FALSE,
+                                     return.samples = TRUE){
     ## Error handling
     if (!is.data.frame(study.sample))
         stop ("data must be of type data frame")
@@ -21,19 +24,24 @@ PartitionTrainAndPredict <- function(study.sample,
         stop ("outome.variable.name must be of a character vector of length 1")     
     ## Partition the sample, and return the separate partitions, the corresponding outcome
     ## for both sets and tc in both sets
-    partitions.outcome.and.tc <- PartitionSample(study.sample = study.sample,
-                                                 outcome.variable.name = outcome.variable.name,
-                                                 n.partitions = n.partitions)
+    partitions <- PartitionSample(study.sample = study.sample,
+                                  outcome.variable.name = outcome.variable.name,
+                                  n.partitions = n.partitions)
     if (verbose)
         message("Fitting SuperLearner...")
     ## Fit the model to the training data
-    fitted.sl <- with(partitions.outcome.and.tc, SuperLearner::SuperLearner(Y = train$y, X = train$x,
-                                                                            family = binomial(),
-                                                                            SL.library = model.names,
-                                                                            method = "method.AUC",
-                                                                            verbose = FALSE))
+    fitted.sl <- with(partitions, SuperLearner::SuperLearner(Y = train$y, X = train$x,
+                                                             family = binomial(),
+                                                             SL.library = model.names,
+                                                             method = "method.AUC",
+                                                             verbose = FALSE))
+    if (!boot) {
+        if (verbose)
+            message("SuperLearner object savevd to disk ...")
+        saveRDS(fitted.sl, file = "SuperLearner.rds")   
+    }
     ## Extract training sets
-    train.validation <- partitions.outcome.and.tc[-grep("test", names(partitions.outcome.and.tc))]
+    train.validation <- partitions[-grep("test", names(partitions))]
     con.list.labels <- paste0("con.model.", names(train.validation))
     ## Make predictions on the validation set
     predictions <- lapply(setNames(train.validation, nm = con.list.labels),
@@ -46,20 +54,18 @@ PartitionTrainAndPredict <- function(study.sample,
     ## Gridsearch the optimal cut-points for the predicted probabilities on
     ## the appropriate set
     optimal.breaks <- GridsearchBreaks(predictions = predictions[grepl(label, con.list.labels)][[1]], 
-                                       outcome.vector = partitions.outcome.and.tc[[label]]$y)
-    full.training.list <- list(y = unlist(lapply(training.and.validation.sublists, "[[", "y")),
-                               x = do.call(rbind, lapply(training.and.validation.sublists, "[[", "x")))
+                                       outcome.vector = partitions[[label]]$y)
+    full.training.list <- list(y = unlist(lapply(train.validation, "[[", "y")),
+                               x = do.call(rbind, lapply(train.validation, "[[", "x")))
     if (n.partitions == 3)
         ## Train the model once again. Now on both the training and validation sets
-        fitted.sl <- with(full.training.list, SuperLearner::SuperLearner(Y = y,
-                                                                         X = x,
-                                                                         family = binomial(),
+        fitted.sl <- with(full.training.list, SuperLearner::SuperLearner(Y = y, X = x, family = binomial(),
                                                                          SL.library = model.names,
                                                                          method = "method.AUC",
                                                                          verbose = FALSE))
     ## Make predictions on the test set
     predictions$con.model.test <- predict(object = fitted.sl,
-                                          newdata = partitions.outcome.and.tc$test$x,
+                                          newdata = partitions$test$x,
                                           onlySL = TRUE)$pred
     ## Bin predictions made on the test set using the optimal cut-points
     cut.list.labels <- paste0("cut.model.", c("train", "validation", "test"))
@@ -69,17 +75,21 @@ PartitionTrainAndPredict <- function(study.sample,
                                                                  include.lowest = TRUE)))
     ## Adds suffixes to
     NewLabelsAndNumeric <- function(label) {
-        new.labels <- paste0(label, ".", names(partitions.outcome.and.tc))
-        new.list <- lapply(setNames(partitions.outcome.and.tc, nm = new.labels),
+        new.labels <- paste0(label, ".", names(partitions))
+        new.list <- lapply(setNames(partitions, nm = new.labels),
                            function (partition.list) as.numeric(partition.list[[label]]))
         return (new.list)
     }
-    return.object <- c(predictions,
-                       binned.predictions,
-                       NewLabelsAndNumeric("y"),
-                       NewLabelsAndNumeric("tc"))
+    return.object <- list(predictions.list = c(predictions, binned.predictions,
+                                               NewLabelsAndNumeric("y"),
+                                               NewLabelsAndNumeric("tc")))
+    if (return.samples) {
+        return.object$samples <- lapply(partitions, "[[", "x")
+    }
     ## Save the predictions, outcome and clinicians tc in each partition to the results list
-    if (save.to.results)
-        bengaltiger::SaveToResults(output.object = return.object, object.name = "predictions.outcome.and.tc")
+    if (save.to.results) {
+        for (i in seq_along(return.object))
+            bengaltiger::SaveToResults(return.object[[i]], names(return.object)[i])
+    }
     return (return.object)
 }
