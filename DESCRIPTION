@@ -5,10 +5,12 @@ Authors@R:
 	person("Ludvig", "Wärnberg Gerdin", email = "ludviggerdin@gmail.com", role = c("aut", "cre"))
 	person("Martin", "Gerdin Wärnberg", email = "martingerdin@gmail.com", role = c("aut", "cre"))   
 Description: What the package does (one paragraph).
-Depends: R (>= 3.4.4)
+Depends:
+	R (>= 3.4.4),
+	SuperLearner,
+	caret
 Imports:
 	methods,
-	SuperLearner,
 	data.table,
 	nricens,
 	dplyr,
@@ -30,7 +32,6 @@ Imports:
 	ggpubr,
 	desc,
 	latex2exp,
-	caret,
 	rmarkdown,
 	magrittr,
 	boot,
