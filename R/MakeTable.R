@@ -18,7 +18,8 @@ MakeTable <- function(df, table.name, footnote = NULL,
     if (!(file.format %in% c("docx", "rmd", "pdf")) | !bengaltiger::IsLength1(file.format)) 
         stop("file.format has to be one of docx, rmd, or pdf")
     preamble <- "library(kableExtra)\nlibrary(knitr)\n"
-    call <- paste0(preamble, getCall(...), "%>% kable_styling(position = \"center\")")
+    call <- paste0(preamble, getCall(...)) # "%>% kable_styling(position = \"center\")")
+    print (call)
     if (!is.null(footnote))
         call <- paste(call, "%>% footnote(symbol = footnote)")
     if (save.to.disk) {
