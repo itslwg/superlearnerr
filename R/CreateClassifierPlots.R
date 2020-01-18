@@ -1,64 +1,72 @@
-#' Generate ROCR plot for all SL learners
+#' Generate Precision/Recall and ROC-curves for classifiers
 #'
-#' Plots receiver operating characteristics curves of all learners included in SL.
-#' @param prepped_sample The prepped_sample list. No default.
+#' Plots receiver operating characteristics and precision/recall curves of all learners included in SL.
+#' @param sample data.frame Sample on which to base the predictions. No default.
+#' @param outcomes Numeric vector. Outcome from the sample. No default.
+#' @param superlearner.object.path The path to the SuperLearner object as generated from the SuperLearner::SuperLearner() method. Default: "./superlearner.rds"
+#' @param pretty.model.nms Character vector. Pretty model names for plot. Defaults to c("SuperLearner", "GLMnet", "GLM", "Random Forest", "XGboost", "GAM")
+#' @param ... Additional arguments for SavePlot. 
 #' @export
-create.ROCR.all <- function(
-                            prepped_sample
-                            )
-{
+CreateClassifierPlots <- function(sample, outcomes,
+                                  superlearner.object.path = "./SuperLearner.Rds",
+                                  pretty.model.nms = c("SuperLearner",
+                                                       "GLMnet",
+                                                       "GLM",
+                                                       "Random Forest",
+                                                       "XGboost",
+                                                       "GAM"),
+                                  file.name = "roc.prec.rec", device = "pdf",
+                                  ...) {
     ## Load model object
-    superlearner <- readRDS("./superlearner.rds")
+    superlearner.object <- readRDS("./SuperLearner.rds")
     ## Get predictions of SL learners from training set
-    model_data <- data.frame(do.call(cbind, predict(superlearner_object, newdata = prepped_sample$x_review)))
-    ## Initiate vector with titles for plot
-    pretty_names <- c("SuperLearner",
-                      "GLMnet",
-                      "GLM",
-                      "Random Forest",
-                      "XGboost",
-                      "GAM")
+    model.data <- data.frame(do.call(cbind, predict(superlearner.object, newdata = sample)))
     ## Initiate list to populate with dataframe columns and, then, fill
-    predictions_list <- lapply(setNames(model_data, nm = pretty_names), function(x) x)
-    ## Define functions
-    get.perf.list <- function(predictions_list, measures, outcome) {
-        lapply(setNames(nm = names(predictions_list)), function(model) {
-            pred <- ROCR::prediction(as.numeric(predictions_list[[model]]), outcome)
-            perf <- ROCR::performance(pred, measure = measures$measure, x.measure = measures$x.measure)
-            return(perf)
-        })
-    }
-    create.plot.data <- function(perf_list, set) {
-        do.call(rbind, lapply(setNames(nm = names(perf_list)), function(model) {
-            data <- perf_list[[model]]
-            new_data <- cbind(data@y.values[[1]], data@x.values[[1]])
-            y_name <- gsub(" ", "_", data@y.name)
-            x_name <- gsub(" ", "_", data@x.name)
-            if (x_name == "Recall") x_name <- paste0("True_positive_rate_BP", tolower(x_name), "EP")
-            new_data <- data.frame(new_data,
-                                   rep(model, nrow(new_data)),
-                                   rep(set, nrow(new_data)))
-            colnames(new_data) <- c(y_name, x_name, "pretty_name", "set")
-            return(new_data)
-        }))
-    }
+    predictions.list <- lapply(setNames(model.data, nm = pretty.model.nms), function(x) x)
     ## Get true positive and false positive rates
-    outcome <- prepped_sample$y_review
     measures <- list(measure = "tpr", x.measure = "fpr")
-    tpr_fpr <- get.perf.list(predictions_list, measures, outcome)
-    roc_plot_data <- create.plot.data(tpr_fpr, "A")
+    tpr.fpr <- GetPerformanceList(predictions.list, measures, outcomes)
+    roc.plot.data <- CreatePlotData(tpr.fpr, "A")
     ## Get recall and precision
-    prec_rec <- get.perf.list(predictions_list, list(measure = "prec", x.measure = "rec"), outcome)
-    prec_plot_data <- create.plot.data(prec_rec, "B")
+    prec.rec <- GetPerformanceList(predictions.list, list(measure = "prec", x.measure = "rec"), outcomes)
+    prec.plot.data <- CreatePlotData(prec.rec, "B")
     ## Create plots
-    roc_plot <- rocr.plot(plot_data = roc_plot_data, return_plot = TRUE)
-    prec_rec_plot <- rocr.plot(plot_data = prec_plot_data, return_plot = TRUE)
+    roc.plot <- PlotRoc(roc.plot.data)
+    prec.rec.plot <- PlotRoc(prec.plot.data)
     ## Arrange plot grid
-    combined_plot <- ggarrange(roc_plot, prec_rec_plot,
-                               ncol = 2,
-                               common.legend = TRUE,
-                               legend = "bottom",
-                               align = "hv")
+    combined.plot <- ggpubr::ggarrange(roc.plot, prec.rec.plot,
+                                       ncol = 2,
+                                       common.legend = TRUE,
+                                       legend = "bottom",
+                                       align = "hv")
     ## Save plot
-    save.plot(combined_plot, "roc_prec_plots", device = "eps")
+    SavePlot(combined.plot,
+             file.name = file.name,
+             device = device,
+             ...)
+}
+#' Creates a performance list for plotting
+#' @param predictions.list List. . No default.
+#' @param outcomes Numeric vector. Outcome from the sample. No default.
+GetPerformanceList <- function(predictions.list, measures, outcomes) {
+    lapply(setNames(nm = names(predictions.list)), function(model.preds)
+        EvaluateWithRocr(model.preds, outcomes, only.return.estimate = FALSE)  )
+}
+#' Creates a performance list for plotting
+#' @param perf.list List. Performance list created with GetPerformanceList. No default.
+#' @param set Character vector of length 1. Identifier for plots. No default. 
+CreatePlotData <- function(perf.list, set) {
+    do.call(rbind, lapply(setNames(nm = names(perf.list)), function(model) {
+        data <- perf.list[[model]]
+        new.data <- cbind(data@y.values[[1]], data@x.values[[1]])
+        y.name <- gsub(" ", ".", data@y.name)
+        x.name <- gsub(" ", ".", data@x.name)
+        if (x.name == "Recall")
+            x.name <- paste0("True_positive_rate_BP", tolower(x.name), "EP")
+        new.data <- data.frame(new.data,
+                               rep(model, nrow(new.data)),
+                               rep(set, nrow(new.data)))
+        colnames(new.data) <- c(y.name, x.name, "pretty.name", "set")
+        return(new.data)
+    }))
 }

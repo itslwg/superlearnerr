@@ -1,7 +1,8 @@
 #' Make learner weight, risk, and AUROCC table function
 #'
 #' This function generates a risk, learner weight and learner-AUROCC table.
-#' @param samples.and.predictions List. Partitions, predictions, and outcomes. No default.
+#' @param sample data.frame. Data for SuperLearner predictions. No default.
+#' @param outcomes Numeric vector. Outcome from the sample. No default.
 #' @param table.name Character vector of length 1. Used for the file name and label. Defaults to "coeff.risk"
 #' @param superlearner.object.path The path to the SuperLearner object as generated from the SuperLearner::SuperLearner() method. Default: "./superlearner.rds"
 #' @param caption Character vector of length 1. Used as caption for caption in rendered table. Defaults to  "10 fold cross validated risk and area under the receiver operating curve characteristics (AUROCC) in the training sample, weight, and AUROCC in the test sample for SuperLearner and each included learner",

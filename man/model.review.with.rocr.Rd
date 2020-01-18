@@ -4,8 +4,9 @@
 \alias{model.review.with.rocr}
 \title{Review model with rocr package function}
 \usage{
-model.review.with.rocr(study_sample, outcome_name, model_names = c("pred_cat",
-  "tc"), measure = "f")
+model.review.with.rocr(study_sample, outcome_name,
+  model_names = c("pred_cat", "tc"), measure = "f",
+  models_to_invert = NULL)
 }
 \arguments{
 \item{study_sample}{The study sample list. No default.}
@@ -15,6 +16,10 @@ model.review.with.rocr(study_sample, outcome_name, model_names = c("pred_cat",
 \item{model_names}{Character vector with list name of predictions. Default: c('pred_cat', 'tc')}
 
 \item{measure}{String. Performance measure for ROCR prediction object. Defaults to "auc".}
+
+\item{models_to_invert}{Character vector. Names of models to invert. Defaults to NULL.}
+
+\item{invert}{Logical. If TRUE, 1 - measure is returned. Defaults to FALSE.}
 }
 \description{
 This function reviews a model using the rocr package.

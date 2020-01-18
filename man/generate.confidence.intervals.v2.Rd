@@ -4,8 +4,8 @@
 \alias{generate.confidence.intervals.v2}
 \title{Confidence interval function}
 \usage{
-generate.confidence.intervals.v2(study_sample, model_names, the_func, samples,
-  diffci_or_ci, outcome_name, digits = 2, ...)
+generate.confidence.intervals.v2(study_sample, model_names, the_func,
+  samples, diffci_or_ci, outcome_name, digits = 2, ...)
 }
 \arguments{
 \item{study_sample}{The study sample list. No default.}

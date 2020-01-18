@@ -5,7 +5,7 @@
 \title{Generate reclassification tables and Net Reclassification Index (NRI)}
 \usage{
 model.review.reclassification(study_sample, model_names,
-  outcome_name = "s30d")
+  outcome_name = "s30d", models_to_invert = NULL)
 }
 \arguments{
 \item{study_sample}{Sample as data frame.  No default}
@@ -13,6 +13,8 @@ model.review.reclassification(study_sample, model_names,
 \item{model_names}{Names of list elements with model predictions in study_sample. Character vector. No default.}
 
 \item{outcome_name}{Name of outcome variable. As string. Defauls to "s30d".}
+
+\item{models_to_invert}{Character vector. Names of models to invert. Defaults to NULL.}
 }
 \description{
 This function compares categorisation of categorised SuperLearner (SL) predictions and clinician's predictions. Analysis is conducted with nribin.

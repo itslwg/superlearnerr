@@ -5,10 +5,12 @@
 \title{Generate predictions with SuperLearner}
 \usage{
 predictions.with.superlearner(prepped_sample, models = c("SL.glmnet",
-  "SL.glm", "SL.randomForest", "SL.xgboost", "SL.gam"), save_breaks = FALSE,
-  save_all_predictions = FALSE, save_superlearner = FALSE, sample = TRUE,
+  "SL.glm", "SL.randomForest", "SL.xgboost", "SL.gam"),
+  save_breaks = FALSE, save_all_predictions = FALSE,
+  save_superlearner = FALSE, sample = TRUE,
   gridsearch_parallel = FALSE, n_cores = NULL, verbose = TRUE,
-  log = FALSE, boot = FALSE, write_to_disk = FALSE, clean_start = FALSE)
+  log = FALSE, boot = FALSE, write_to_disk = FALSE,
+  clean_start = FALSE)
 }
 \arguments{
 \item{prepped_sample}{Data as prepared by prep.data.for.superlearner as list. No default.}

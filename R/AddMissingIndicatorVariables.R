@@ -1,4 +1,4 @@
-#' Add missing indicator variables function
+#' Add missing indicator variables
 #'
 #' Creates missing indicator variables for each predictor variable (feature) with missing values
 #' @param study.sample Data Frame. The study sample. No default
@@ -31,7 +31,6 @@ AddMissingIndicatorVariables <- function(study.sample, outcome.name = "s30d",
     ## Count number of missing values in each feature
     missing.data.counts <- lapply(feature.data, GetMissingInfo)
     missing.data.matrix <- do.call(rbind, missing.data.counts)
-    ## results$missing.data.table <<- create.missing.data.table(missing.data.matrix)
     ## Create a dummy variable for each feature with missing
     indicator.variables <- lapply(feature.data, GetMissingInfo, variable = TRUE)
     indicator.data <- do.call(cbind, indicator.variables)

@@ -11,7 +11,7 @@ create.ROCR.plots.v2(study_sample, outcome_name, device = "eps",
   pretty_names = c("SuperLearner continuous prediction",
   "SuperLearner priority levels", "SuperLearner continuous prediction",
   "SuperLearner priority levels", "Clinicians priority levels"),
-  subscript = FALSE)
+  subscript = FALSE, models_to_invert = NULL)
 }
 \arguments{
 \item{study_sample}{Study sample list. No default.}
@@ -29,6 +29,8 @@ create.ROCR.plots.v2(study_sample, outcome_name, device = "eps",
 \item{pretty_names}{Names to be used in plots. As character vector. Defaults to c("SuperLearner continuous prediction", "SuperLearner priority levels", "SuperLearner continuous prediction", "SuperLearner priority levels", "Clinicians priority levels")}
 
 \item{subscript}{Logical. If TRUE, underscores in pretty names in converted to expression. Passed to rocr.plots. Defaults to FALSE.}
+
+\item{models_to_invert}{Character vector. Names of models to invert. Defaults to NULL.}
 }
 \description{
 Plots reciever operating charecteristiqs curves or precision/recall curves.
