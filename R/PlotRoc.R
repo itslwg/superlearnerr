@@ -56,9 +56,6 @@ PlotRoc <- function(plot.data, device = "eps", y.name = NULL, x.name = NULL,
         ggplot2::guides(colour = ggplot2::guide_legend(nrow = ceiling(n/3))) +
         ggplot2::facet_wrap(~set) +
         ggplot2::coord_equal(ratio=1)
-    if (!is.null(file.name))
-        SavePlot(plot.object = plot.object,
-                 file.name = file.name,
-                 device = device)
+
     return (plot.object)
 }

@@ -16,15 +16,9 @@ CreateMortalityTable <- function(predictions.outcome.and.tc,
                                  outcome.label = "s30d", pretty.names = NULL,
                                  scores.to.invert = NULL, save.to.disk = FALSE,
                                  file.format = "docx", ...) {
-    if (!is.null(scores.to.invert)) {
-        Inversion <- function(score) {
-            score.as.factor <- as.factor(score)
-            new.score <- forcats::fct_rev(score.as.factor)
-            return (as.numeric(new.score))
-        }
-        for (score.label in scores.to.invert)
-            predictions.outcome.and.tc[[score.label]] <- Inversion(predictions.outcome.and.tc[[score.label]])
-    }
+    if (!is.null(scores.to.invert))
+        predictions.outcome.and.tc <- invert.levels(predictions.outcome.and.tc,
+                                                    scores.to.invert)
     nms <- names(predictions.outcome.and.tc)
     if (is.null(model.labels))
         model.labels <- nms[!(nms %in% outcome.label)]   
@@ -41,6 +35,7 @@ CreateMortalityTable <- function(predictions.outcome.and.tc,
     } else {
         colnames(tbl) <- model.labels
     }
+    tbl <- as.data.frame(t(tbl))
     if (save.to.disk)
         MakeTable(df = tbl, "mortality.table",
                   save.to.disk = save.to.disk,
