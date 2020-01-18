@@ -46,11 +46,12 @@ CreateClassifierPlots <- function(sample, outcomes,
              ...)
 }
 #' Creates a performance list for plotting
-#' @param predictions.list List. . No default.
+#' @param predictions.list List. No default.
 #' @param outcomes Numeric vector. Outcome from the sample. No default.
 GetPerformanceList <- function(predictions.list, measures, outcomes) {
-    lapply(setNames(nm = names(predictions.list)), function(model.preds)
-        EvaluateWithRocr(model.preds, outcomes, only.return.estimate = FALSE)  )
+    lapply(setNames(nm = names(predictions.list)), function(model) {
+        EvaluateWithRocr(predictions.list[[model]], outcomes, measures, only.return.estimate = FALSE)
+    })
 }
 #' Creates a performance list for plotting
 #' @param perf.list List. Performance list created with GetPerformanceList. No default.
