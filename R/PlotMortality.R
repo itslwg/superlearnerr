@@ -7,6 +7,7 @@
 PlotMortality <- function(plot.data, levels = c("Green", "Yellow", "Orange", "Red")) {
     if (!all(sapply(levels, is.character)))
         stop("levels should be a character vector.")
+    colors <- RColorBrewer::brewer.pal(3, "Set2")
     # Create and return plot object
     plot.object <- ggplot2::ggplot(data = plot.data) +
         ggplot2::geom_col(ggplot2::aes(y = y, x = x, fill = strata), position = "stack") +

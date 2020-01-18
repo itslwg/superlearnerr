@@ -3,7 +3,8 @@
 #' Passes plo
 #' @param predictions.outcome.and.tc List. Predictions, outcome and clinicians triage as list. No default.
 #' @param model.labels Character vector of length 1. Element names for model predictions in predictions.outcome.and.tc. If NULL those model predictions whose list label contain "test" but also "cut", "CUT", or "tc". Defaults to NULL.
-#' @param file.name Character vector of length 1. File name to use for saving the plot. Defaults to NULL, and no plot is saved. 
+#' @param file.name Character vector of length 1. File name to use for saving the plot. Defaults to NULL, and no plot is saved.
+#' @param device Character vector of length 1. The device to use for saving ggplot. Defaults to "pdf".
 #' @param outcome.label Character vector of length 1. List label of the outcome.variable. Defaults to "y.test". 
 #' @param pretty.names Character vector of length 1. Pretty names for the models to use in the plot. If NULL, Defaults to c("SuperLearner", "Clinicians") 
 #' @param save.plot.data.to.results Logical. If TRUE the plot data is saved to results. Defaults to TRUE.
@@ -39,7 +40,6 @@ CreateMortalityPlot <- function(predictions.outcome.and.tc, file.name = NULL,
     }, model.labels, pretty.names, SIMPLIFY = FALSE))
     if (save.plot.data.to.results)
         bengaltiger::SaveToResults(plot.data, "mortality.plot.data")
-    colors <- RColorBrewer::brewer.pal(3, "Set2")
     ## Create plot and save plot
     plt <- PlotMortality(plot.data)
     if (!is.null(file.name))
