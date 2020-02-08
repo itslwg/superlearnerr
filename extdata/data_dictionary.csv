@@ -24,6 +24,7 @@ hd,,,,,,,,,No
 s24h,,,,,,,,,No
 delay,Time between injury and arrival to participating centre in minutes,Delay,quan,,,,,Yes,Yes
 seqn,Consecutive number assigned based on date and time of arrival,,quan,,,,,No,No
-s30d,All cause 30-day mortality,,qual,"0,1,2","""0 = No"", ""1 = Yes"", ""2 = Yes""",,,Yes,No
-set,Data set,,qual,,,,,Yes,Yes
+s30d,All cause 30-day mortality,,qual,"0,1,2","""0 = No"", ""1 = Yes"", ""2 = No""",,,Yes,No
 ic,Informed consent,,qual,"0,1","""0 = No"", ""1 = Yes""",,,No,No
+daicu,Date of admission to the ICU,,date,,,,"""%Y-%m-%d""",No,No
+taicu,Time of admission to the ICU,,time,,,,"""%H:%M""",No,No
