@@ -28,3 +28,13 @@ s30d,All cause 30-day mortality,,qual,"0,1,2","""0 = No"", ""1 = Yes"", ""2 = No
 ic,Informed consent,,qual,"0,1","""0 = No"", ""1 = Yes""",,,No,No
 daicu,Date of admission to the ICU,,date,,,,"""%Y-%m-%d""",No,No
 taicu,Time of admission to the ICU,,time,,,,"""%H:%M""",No,No
+iss,Severity Injury Score,,quan,,,,,No,No
+iss15,Severity Injury Score over 15,,qual,"0,1","""0 = No"", ""1 = Yes""",,,No,Yes
+majors24h,Major surgery within 24 hours to arrivial,,qual,"0,1","""0 = No"", ""1 = Yes""",,,No,Yes
+composite,Composite outcome,,qual,"0,1","""0 = No"", ""1 = Yes""",,,No,Yes
+snomed,Coding of surgery according to SNOMED,,text,,,,,No,No
+nomesco,Coding of surgery accoring to NOMESCO,,text,,,,,No,No
+tos,Time of surgery,,time,,,,"""%H:%M""",No,No
+dos,Date of surgery,,date,,,,"""%Y-%m-%d""",No,No
+icu48h,Admission to the ICU within 48 hours to arrivial,,qual,"0,1","""0 = No"", ""1 = Yes""",,,Yes,Yes
+s,Description of surgical intervention,,text,,,,,No,No
