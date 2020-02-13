@@ -8,11 +8,6 @@ PrepareStudySample <- function(study.sample, data.dictionary) {
     ## Error handling
     if (!is.data.frame(study.sample))
         stop("Study sample has to be type data frame.")
-    SplitLabels <- function(labels) {
-        ## Remove quotation marks and split on commas
-        labels <- trimws(gsub("\\\"", "", unlist(strsplit(labels, ","))))
-        return (labels)
-    }
     ## If seqn in dataset, remove seqn to later bind it to the dataframe
     seqn.in.data <- FALSE
     if ("seqn" %in% names(study.sample)) {
@@ -44,4 +39,12 @@ PrepareStudySample <- function(study.sample, data.dictionary) {
         study.sample <- data.frame(study.sample, seqn = seqn)
     return(study.sample)
 }
-
+#' SplitLabels
+#'
+#' Helper function for PrepareStudySample
+#' @param labels Character vector. Strings in which to remove commas commas and swap out backslashes. No default.
+SplitLabels <- function(labels) {
+    ## Remove quotation marks and split on commas
+    labels <- trimws(gsub("\\\"", "", unlist(strsplit(labels, ","))))
+    return (labels)
+}
