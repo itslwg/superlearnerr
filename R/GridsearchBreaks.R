@@ -2,16 +2,16 @@
 #'
 #' Performs a gridsearch to identify breaks to optimise a provided loss function
 #' @param predictions Numeric vector. Predicted probabilites. No default.
-#' @param outcome.vector Numeric vecotr. The outcome of interest. No default.
+#' @param outcome.vector Numeric vector. The outcome of interest. No default.
 #' @param grid Numeric vector. All values to be combined and searched. Defaults to seq(0.01, 0.99, 0.01).
 #' @param n.breaks Numeric vector of length 1. The number of breaks in the predicted probabilites, i.e. cut-points. Defaults to 3.
 #' @param loss.function Character vector of length 1. The name of the loss metric, e.g. auc. For now any performance measure included in ROCR is accepted. Defaults to "auc".
-#' @param sample Logical. If TRUE loss is only calculated for 10% of possible breaks. Defaults to TRUE.
-#' @param parallel Logical. If TRUE the gridsearch is done in parallel. Defaults to FALSE.
+#' @param sample Logical vector of length 1. If TRUE loss is only calculated for 10% of possible breaks. Defaults to TRUE.
+#' @param parallel Logical vector of length 1. If TRUE the gridsearch is done in parallel. Defaults to FALSE.
 #' @param n.cores Numeric vector of length 1. The number of cores to use for parallel computing. Defaults to NULL.
-#' @param save.plot Logical. If TRUE a wireframe plot is saved to disk. Defaults to FALSE.
-#' @param verbose Logical. If TRUE then information is printed as the gridsearch runs. Defaults to FALSE. Currently ignored.
-#' @param maximise Logical. If TRUE, grid search maximizes performance metric. Defaults to TRUE.
+#' @param save.plot Logical vector of length 1. If TRUE a wireframe plot is saved to disk. Defaults to FALSE.
+#' @param verbose Logical vector of length 1. If TRUE then information is printed as the gridsearch runs. Defaults to FALSE. Currently ignored.
+#' @param maximise Logical vector of length 1. If TRUE, grid search maximizes performance metric. Defaults to TRUE.
 #' @importFrom foreach %dopar%
 #' @export
 GridsearchBreaks <- function(predictions, outcome.vector,
@@ -32,14 +32,6 @@ GridsearchBreaks <- function(predictions, outcome.vector,
         breaks.to.search <- breaks.to.search[sample(1:length(breaks.to.search), ceiling(length(breaks.to.search) * 0.1))]
     if (verbose)
         message("Estimating loss for each of ", length(breaks.to.search), " possible cutpoints combinations")
-    ## Define function to estimate loss for each set of cut points (breaks)
-    EstimateLoss <- function(breaks) {
-        breaks <- c(-Inf, breaks, Inf)
-        groupings <- as.numeric(cut(predictions, breaks = breaks))
-        loss <- EvaluateWithRocr(predictions = groupings, outcome.vector = outcome.vector,
-                                 measure = loss.function)
-        return(loss)
-    }
     ## Do gridsearch
     if (parallel) {
         if (is.null(n.cores)) {
@@ -57,7 +49,7 @@ GridsearchBreaks <- function(predictions, outcome.vector,
         parallel::stopCluster(cl)
         loss.list <- do.call(c, parallel.list)
     } else {
-        loss.list <- lapply(breaks.to.search, EstimateLoss)   
+        loss.list <- lapply(breaks.to.search, EstimateLoss, predictions = predictions)   
     }
     loss.data <- data.frame(breaks = do.call(rbind, breaks.to.search), auc = unlist(loss.list))
     ## Make and save plot
@@ -70,4 +62,15 @@ GridsearchBreaks <- function(predictions, outcome.vector,
     ## Get optimal cutoffs
     optimal.cutpoints <- unlist(loss.data[optimise.order, 1:n.breaks][1, ])
     return (optimal.cutpoints)
+}
+#' EstimateLoss
+#'
+#' Define function to estimate loss for each set of cut points (breaks)
+#' @param breaks Numeric vector. Breaks to test for the model scroe. No default 
+EstimateLoss <- function(predictions, breaks) {
+    breaks <- c(-Inf, breaks, Inf)
+    groupings <- as.numeric(cut(predictions, breaks = breaks))
+    loss <- EvaluateWithRocr(predictions = groupings, outcome.vector = outcome.vector,
+                             measure = loss.function)
+    return(loss)
 }
