@@ -1,3 +1,2 @@
-* README
-This is the R package for functions used in the "SuperLearner vs
-clinicians" study. 
+* Introduction
+Scripts used in the "SuperLearner vs Clinicians" study. 
