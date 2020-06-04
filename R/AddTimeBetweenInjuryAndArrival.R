@@ -34,7 +34,5 @@ AddTimeBetweenInjuryAndArrival <- function(study.sample, data.dictionary) {
     })
     ## Calculate delay and put back in study data
     study.sample$delay <- with(datetime.data, as.numeric(difftime(doar.toar, doi.toi, units = "mins")))
-    ## Drop date and time variables from study data
-    study.sample <- study.sample[, !(colnames(study.sample) %in% required.variables)]
     return(study.sample)
 }
