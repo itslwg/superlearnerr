@@ -10,7 +10,7 @@ SetToOutcome <- function(study.sample) {
     ## Set s30d to dead if we know that patients were dead on discharge or at 24
     ## hours
     study.sample[study.sample$hd == 1 & !is.na(study.sample$hd) | study.sample$s24h == 1 & !is.na(study.sample$s24h), "s30d"] <- "Yes"
-    ## Finally remove s24h and hd from the dataset
-    study.sample <- study.sample[, -grep("s24h|hd", colnames(study.sample))]
+    ## Finally remove  hd from the dataset
+    study.sample <- study.sample[, -grep("hd", colnames(study.sample))]
     return (study.sample)
 }
