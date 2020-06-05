@@ -1,2 +1,2 @@
-* Introduction
-Scripts used in the "SuperLearner vs Clinicians" study. 
+Functions used in the “SuperLearner vs Clinicians” study.
+
