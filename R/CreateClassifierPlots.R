@@ -3,12 +3,12 @@
 #' Plots receiver operating characteristics and precision/recall curves of all learners included in SL.
 #' @param sample data.frame Sample on which to base the predictions. No default.
 #' @param outcomes Numeric vector. Outcome from the sample. No default.
-#' @param superlearner.object.path The path to the SuperLearner object as generated from the SuperLearner::SuperLearner() method. Default: "./superlearner.rds"
+#' @param superlearner.object.path The path to the SuperLearner object as generated from the SuperLearner::SuperLearner() method. Default: "./SuperLearner_s30d.rds"
 #' @param pretty.model.nms Character vector. Pretty model names for plot. Defaults to c("SuperLearner", "GLMnet", "GLM", "Random Forest", "XGboost", "GAM")
 #' @param ... Additional arguments for SavePlot. 
 #' @export
 CreateClassifierPlots <- function(sample, outcomes,
-                                  superlearner.object.path = "./SuperLearner.Rds",
+                                  superlearner.object.path = "./SuperLearner_s30d.rds",
                                   pretty.model.nms = c("SuperLearner",
                                                        "GLMnet",
                                                        "GLM",
@@ -18,7 +18,7 @@ CreateClassifierPlots <- function(sample, outcomes,
                                   file.name = "roc.prec.rec", device = "pdf",
                                   ...) {
     ## Load model object
-    superlearner.object <- readRDS("./SuperLearner.rds")
+    superlearner.object <- readRDS(superlearner.object.path)
     ## Get predictions of SL learners from training set
     model.data <- data.frame(do.call(cbind, predict(superlearner.object, newdata = sample)))
     ## Initiate list to populate with dataframe columns and, then, fill

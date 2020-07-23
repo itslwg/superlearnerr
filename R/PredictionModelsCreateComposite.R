@@ -8,7 +8,7 @@
 PredictionModelsCreateComposite <- function(study_data) {
 
     study_data <- study_data %>%
-        dplyr::mutate(composite = ifelse(icu48h == 1 | s24h == "Yes" | majors24h == 1 | iss15 == 1, 1, 0))
+        dplyr::mutate(composite = factor(ifelse(icu48h == 1 | s24h == "Yes" | majors24h == 1 | iss15 == 1, 1, 0)))
 
     return (study_data)
 }

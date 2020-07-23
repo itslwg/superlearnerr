@@ -2,7 +2,7 @@
 #'
 #' Prepares the study data using the data dictionary.
 #' @param study.sample data.frame. The study data frame. No default.
-#' @param data.dictionary list. The data dictionary object. No default.
+#' @param data.dictionary List. The data dictionary object. No default.
 #' @export
 PrepareStudySample <- function(study.sample, data.dictionary) {
     ## Error handling

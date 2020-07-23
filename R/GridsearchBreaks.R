@@ -16,8 +16,10 @@
 #' @export
 GridsearchBreaks <- function(predictions, outcome.vector,
                              grid = seq(0.01, 0.99, 0.01),
-                             n.breaks = 3, loss.function = "auc", sample = TRUE,
-                             parallel = FALSE, n.cores = NULL, save.plot = FALSE,
+                             n.breaks = 3,
+                             loss.function="auc",
+                             sample = TRUE, parallel = FALSE,
+                             n.cores = NULL, save.plot = FALSE,
                              verbose = FALSE, maximise = TRUE) {
     ## Verify that outcomes is a vector of binary data with 0 and 1
     if (!all(levels(as.factor(outcome.vector)) %in% c("0", "1")))
@@ -45,11 +47,16 @@ GridsearchBreaks <- function(predictions, outcome.vector,
         cl <- parallel::makeCluster(n.cores)
         doParallel::registerDoParallel(cl)
         message("Running gridsearch for optimal cutpoints in parallel on ", n.cores, " cores")
-        parallel.list <- foreach::foreach(breaks.to.search = parallel.breaks) %dopar% lapply(breaks.to.search, EstimateLoss)
+        parallel.list <- foreach::foreach(breaks.to.search = parallel.breaks) %dopar% lapply(breaks.to.search, EstimateLoss, predictions=predictions, outcome.vector=outcome.vector)
         parallel::stopCluster(cl)
         loss.list <- do.call(c, parallel.list)
     } else {
-        loss.list <- lapply(breaks.to.search, EstimateLoss, predictions = predictions)   
+        loss.list <- lapply(
+            breaks.to.search,
+            EstimateLoss,
+            predictions=predictions,
+            outcome.vector=outcome.vector
+            )   
     }
     loss.data <- data.frame(breaks = do.call(rbind, breaks.to.search), auc = unlist(loss.list))
     ## Make and save plot
@@ -61,16 +68,18 @@ GridsearchBreaks <- function(predictions, outcome.vector,
         optimise.order <- order(loss.data$auc)
     ## Get optimal cutoffs
     optimal.cutpoints <- unlist(loss.data[optimise.order, 1:n.breaks][1, ])
+
     return (optimal.cutpoints)
 }
 #' EstimateLoss
 #'
 #' Define function to estimate loss for each set of cut points (breaks)
 #' @param breaks Numeric vector. Breaks to test for the model scroe. No default 
-EstimateLoss <- function(predictions, breaks) {
+EstimateLoss <- function(predictions, outcome.vector, breaks) {
     breaks <- c(-Inf, breaks, Inf)
     groupings <- as.numeric(cut(predictions, breaks = breaks))
     loss <- EvaluateWithRocr(predictions = groupings, outcome.vector = outcome.vector,
                              measure = loss.function)
     return(loss)
 }
+

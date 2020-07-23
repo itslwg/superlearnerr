@@ -7,7 +7,8 @@
 #' @param models.names Character vector. The model names to stack in SuperLearner. Defaults to c("SL.gam", "SL.randomForest", "SL.nnet, SL.xgboost", "SL.svm")
 #' @param save.to.results Logical. If TRUE SuperLearner predictions, outcome and tc in each partition is saved to the Results list. Defaults to TRUE.
 #' @param verbose Logical. If TRUE the modelling process is printed to console. Defaults to FALSE.
-#' @param return.samples Logical vector of legnth 1. If TRUE the list of samples partitioned from the study.sample is returned. Defaults to TRUE. 
+#' @param return.samples Logical vector of length 1. If TRUE the list of samples partitioned from the study.sample is returned. Defaults to TRUE.
+#' @param use.fitted.sl Logical vector of length 1. If TRUE the file. Default/No default. 
 #' @export
 PartitionTrainAndPredict <- function(study.sample,
                                      outcome.variable.name = "s30d",
@@ -16,7 +17,8 @@ PartitionTrainAndPredict <- function(study.sample,
                                      save.to.results = TRUE,
                                      boot = FALSE,
                                      verbose = FALSE,
-                                     return.samples = TRUE){
+                                     return.samples = TRUE,
+                                     use.fitted.sl = FALSE){
     ## Error handling
     if (!is.data.frame(study.sample))
         stop ("data must be of type data frame")
@@ -27,18 +29,37 @@ PartitionTrainAndPredict <- function(study.sample,
     partitions <- PartitionSample(study.sample = study.sample,
                                   outcome.variable.name = outcome.variable.name,
                                   n.partitions = n.partitions)
-    if (verbose)
-        message("Fitting SuperLearner...")
+    fitted.sl <- ""
+    sl.object.file <- paste0("SuperLearner_", outcome.variable.name, ".rds")
     ## Fit the model to the training data
-    fitted.sl <- with(partitions, SuperLearner::SuperLearner(Y = train$y, X = train$x,
-                                                             family = binomial(),
-                                                             SL.library = model.names,
-                                                             method = "method.AUC",
-                                                             verbose = FALSE))
-    if (!boot) {
+    if (use.fitted.sl) {
+        if (file.exists(sl.object.file)) {
+            if (verbose)
+                message(paste0("Fetching ", sl.object.file, "..."))
+            fitted.sl <- readRDS(sl.object.file)
+        } else {
+            if (verbose) {
+                message(paste("No", sl.object.file, "object have been saved to disk. Ignoring use.fitted.sl."))
+                message("Fitting SuperLearner...")
+            }
+            fitted.sl <- with(partitions, SuperLearner::SuperLearner(Y = train$y, X = train$x,
+                                                                     family = binomial(),
+                                                                     SL.library = model.names,
+                                                                     method = "method.AUC",
+                                                                     verbose = FALSE))  
+        }
+    } else {
+        message("Fitting SuperLearner...")        
+        fitted.sl <- with(partitions, SuperLearner::SuperLearner(Y = train$y, X = train$x,
+                                                                 family = binomial(),
+                                                                 SL.library = model.names,
+                                                                 method = "method.AUC",
+                                                                 verbose = FALSE))
+    }
+    if (!boot | !use.fitted.sl) {
+        saveRDS(fitted.sl, file = sl.object.file)
         if (verbose)
-            message("SuperLearner object savevd to disk ...")
-        saveRDS(fitted.sl, file = "SuperLearner.rds")   
+            message(paste0("SuperLearner object saved to disk as ", sl.object.file, "..."))
     }
     ## Extract training sets
     train.validation <- partitions[-grep("test", names(partitions))]
@@ -73,7 +94,6 @@ PartitionTrainAndPredict <- function(study.sample,
                                  function (preds) as.numeric(cut(x = preds, breaks = c(-Inf, optimal.breaks, Inf),
                                                                  labels = c("Green", "Yellow", "Orange", "Red"),
                                                                  include.lowest = TRUE)))
-    ## Adds suffixes to
     NewLabelsAndNumeric <- function(label) {
         new.labels <- paste0(label, ".", names(partitions))
         new.list <- lapply(setNames(partitions, nm = new.labels),

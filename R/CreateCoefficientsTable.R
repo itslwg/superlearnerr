@@ -15,7 +15,7 @@
 #' @param ... Additional arguments passes to MakeTable. 
 #' @export
 CreateCoefficientsTable <- function(sample, outcomes, table.name = "coeff.risk",
-                                    superlearner.object.path = "./SuperLearner.rds",
+                                    superlearner.object.path = "./SuperLearner_s30d.rds",
                                     caption = "10 fold cross validated risk and area under
                                                the receiver operating curve characteristics
                                                (AUROCC) in the training sample, weight, and
